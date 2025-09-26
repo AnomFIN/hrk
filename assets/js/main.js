@@ -1,6 +1,6 @@
 const nav = document.querySelector('.nav');
 const navToggle = document.querySelector('.nav__toggle');
-const navLinks = document.querySelector('.nav__links');
+const navLinks = document.getElementById('site-navigation');
 
 const setNavState = (isOpen) => {
     if (navLinks) {
