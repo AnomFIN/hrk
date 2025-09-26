@@ -14,12 +14,12 @@
     <header class="hero" id="etusivu">
         <nav class="nav">
             <div class="nav__logo">Harjun Raskaskone Oy</div>
-            <button class="nav__toggle" aria-label="Avaa valikko">
+            <button class="nav__toggle" aria-label="Avaa valikko" aria-expanded="false" aria-controls="site-navigation">
                 <span></span>
                 <span></span>
                 <span></span>
             </button>
-            <ul class="nav__links">
+            <ul class="nav__links" id="site-navigation">
                 <li><a href="#yritys">Yritys</a></li>
                 <li><a href="#palvelut">Palvelut</a></li>
                 <li><a href="#vuokraus">Vuokraus</a></li>
@@ -369,13 +369,13 @@
                     <span>Hae tuotetta</span>
                     <input type="search" id="store-search" name="store-search" placeholder="Esim. jarrusatula, TraXon tai Webasto">
                 </label>
-                <div class="store__filters" role="tablist" aria-label="Tuotekategoriat">
-                    <button type="button" class="store__filter is-active" data-filter="all" role="tab" aria-selected="true">Kaikki</button>
-                    <button type="button" class="store__filter" data-filter="voimansiirto" role="tab" aria-selected="false">Voimansiirto</button>
-                    <button type="button" class="store__filter" data-filter="jarrut" role="tab" aria-selected="false">Jarrut</button>
-                    <button type="button" class="store__filter" data-filter="ilmanhuolto" role="tab" aria-selected="false">Ilmanhuolto</button>
-                    <button type="button" class="store__filter" data-filter="hydrauliikka" role="tab" aria-selected="false">Hydrauliikka</button>
-                    <button type="button" class="store__filter" data-filter="sahko" role="tab" aria-selected="false">Sähkö &amp; varusteet</button>
+                <div class="store__filters" role="group" aria-label="Tuotekategoriat">
+                    <button type="button" class="store__filter is-active" data-filter="all" aria-pressed="true">Kaikki</button>
+                    <button type="button" class="store__filter" data-filter="voimansiirto" aria-pressed="false">Voimansiirto</button>
+                    <button type="button" class="store__filter" data-filter="jarrut" aria-pressed="false">Jarrut</button>
+                    <button type="button" class="store__filter" data-filter="ilmanhuolto" aria-pressed="false">Ilmanhuolto</button>
+                    <button type="button" class="store__filter" data-filter="hydrauliikka" aria-pressed="false">Hydrauliikka</button>
+                    <button type="button" class="store__filter" data-filter="sahko" aria-pressed="false">Sähkö &amp; varusteet</button>
                 </div>
             </div>
             <div class="store__status">

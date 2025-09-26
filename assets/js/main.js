@@ -2,17 +2,29 @@ const nav = document.querySelector('.nav');
 const navToggle = document.querySelector('.nav__toggle');
 const navLinks = document.querySelector('.nav__links');
 
-const toggleNav = () => {
-    navLinks.classList.toggle('nav__links--open');
-    navToggle.classList.toggle('nav__toggle--active');
+const setNavState = (isOpen) => {
+    if (navLinks) {
+        navLinks.classList.toggle('nav__links--open', isOpen);
+    }
+
+    if (navToggle) {
+        navToggle.classList.toggle('nav__toggle--active', isOpen);
+        navToggle.setAttribute('aria-expanded', String(isOpen));
+    }
 };
 
-navToggle?.addEventListener('click', toggleNav);
+navToggle?.addEventListener('click', () => {
+    if (!navLinks) {
+        return;
+    }
+
+    const isOpen = !navLinks.classList.contains('nav__links--open');
+    setNavState(isOpen);
+});
 
 navLinks?.addEventListener('click', (event) => {
     if (event.target.matches('a')) {
-        navLinks.classList.remove('nav__links--open');
-        navToggle.classList.remove('nav__toggle--active');
+        setNavState(false);
     }
 });
 
@@ -74,11 +86,11 @@ storeFilters.forEach((button) => {
 
         storeFilters.forEach((item) => {
             item.classList.remove('is-active');
-            item.setAttribute('aria-selected', 'false');
+            item.setAttribute('aria-pressed', 'false');
         });
 
         button.classList.add('is-active');
-        button.setAttribute('aria-selected', 'true');
+        button.setAttribute('aria-pressed', 'true');
         updateStoreVisibility();
     });
 });
@@ -92,11 +104,15 @@ if (storeCards.length) {
 }
 
 const trapFocus = (event) => {
-    if (!navLinks?.classList.contains('nav__links--open')) {
+    if (!navLinks || !navLinks.classList.contains('nav__links--open')) {
         return;
     }
 
     const focusableElements = navLinks.querySelectorAll('a');
+    if (!focusableElements.length) {
+        return;
+    }
+
     const first = focusableElements[0];
     const last = focusableElements[focusableElements.length - 1];
 
@@ -112,22 +128,22 @@ const trapFocus = (event) => {
 navLinks?.addEventListener('keydown', trapFocus);
 
 document.addEventListener('click', (event) => {
-    if (!navLinks?.classList.contains('nav__links--open')) {
+    if (!navLinks || !navLinks.classList.contains('nav__links--open')) {
         return;
     }
 
-    if (!navLinks.contains(event.target) && !navToggle.contains(event.target)) {
-        navLinks.classList.remove('nav__links--open');
-        navToggle.classList.remove('nav__toggle--active');
+    if (!navLinks.contains(event.target) && (!navToggle || !navToggle.contains(event.target))) {
+        setNavState(false);
     }
 });
 
 window.addEventListener('resize', () => {
     if (window.innerWidth > 960) {
-        navLinks?.classList.remove('nav__links--open');
-        navToggle?.classList.remove('nav__toggle--active');
+        setNavState(false);
     }
 });
+
+setNavState(false);
 
 const faqQuestions = document.querySelectorAll('.faq__question');
 
