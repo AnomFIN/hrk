@@ -2,17 +2,34 @@ const nav = document.querySelector('.nav');
 const navToggle = document.querySelector('.nav__toggle');
 const navLinks = document.querySelector('.nav__links');
 
-const toggleNav = () => {
-    navLinks.classList.toggle('nav__links--open');
-    navToggle.classList.toggle('nav__toggle--active');
+const setNavState = (isOpen) => {
+    if (!navLinks || !navToggle) {
+        return;
+    }
+
+    navLinks.classList.toggle('nav__links--open', isOpen);
+    navToggle.classList.toggle('nav__toggle--active', isOpen);
+    navToggle.setAttribute('aria-expanded', String(isOpen));
 };
+
+const toggleNav = () => {
+    if (!navLinks) {
+        return;
+    }
+
+    const willOpen = !navLinks.classList.contains('nav__links--open');
+    setNavState(willOpen);
+};
+
+const closeNav = () => setNavState(false);
+
+setNavState(false);
 
 navToggle?.addEventListener('click', toggleNav);
 
 navLinks?.addEventListener('click', (event) => {
     if (event.target.matches('a')) {
-        navLinks.classList.remove('nav__links--open');
-        navToggle.classList.remove('nav__toggle--active');
+        closeNav();
     }
 });
 
@@ -36,6 +53,7 @@ const storeFilters = document.querySelectorAll('.store__filter');
 const storeCards = document.querySelectorAll('.store-card');
 const storeSearchInput = document.getElementById('store-search');
 const storeCount = document.querySelector('[data-store-count]');
+const storeEmpty = document.querySelector('[data-store-empty]');
 
 const getActiveFilter = () => {
     return document.querySelector('.store__filter.is-active')?.dataset.filter ?? 'all';
@@ -63,6 +81,14 @@ const updateStoreVisibility = () => {
 
     if (storeCount) {
         storeCount.textContent = visibleCount;
+    }
+
+    if (storeEmpty) {
+        if (visibleCount === 0) {
+            storeEmpty.removeAttribute('hidden');
+        } else {
+            storeEmpty.setAttribute('hidden', '');
+        }
     }
 };
 
@@ -116,16 +142,21 @@ document.addEventListener('click', (event) => {
         return;
     }
 
-    if (!navLinks.contains(event.target) && !navToggle.contains(event.target)) {
-        navLinks.classList.remove('nav__links--open');
-        navToggle.classList.remove('nav__toggle--active');
+    if (!navLinks.contains(event.target) && !navToggle?.contains(event.target)) {
+        closeNav();
     }
 });
 
 window.addEventListener('resize', () => {
     if (window.innerWidth > 960) {
-        navLinks?.classList.remove('nav__links--open');
-        navToggle?.classList.remove('nav__toggle--active');
+        closeNav();
+    }
+});
+
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && navLinks?.classList.contains('nav__links--open')) {
+        closeNav();
+        navToggle?.focus();
     }
 });
 

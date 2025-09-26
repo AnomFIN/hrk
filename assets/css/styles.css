@@ -822,6 +822,10 @@ p {
     font-weight: 500;
 }
 
+.store__status-count {
+    margin: 0;
+}
+
 .store__status-link {
     color: var(--color-primary-dark);
     font-weight: 600;
@@ -843,6 +847,18 @@ p {
 
 .store__status-link:hover::after {
     transform: scaleX(1);
+}
+
+.store__empty {
+    max-width: var(--max-width);
+    margin: 1.75rem auto 0;
+    padding: 1.25rem 1.5rem;
+    border: 1px dashed rgba(11, 27, 43, 0.15);
+    border-radius: var(--radius-md);
+    background: var(--color-white);
+    text-align: center;
+    color: var(--color-muted);
+    font-size: 0.95rem;
 }
 
 .store__grid {

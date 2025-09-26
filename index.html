@@ -14,12 +14,12 @@
     <header class="hero" id="etusivu">
         <nav class="nav">
             <div class="nav__logo">Harjun Raskaskone Oy</div>
-            <button class="nav__toggle" aria-label="Avaa valikko">
+            <button class="nav__toggle" aria-label="Avaa valikko" aria-expanded="false" aria-controls="nav-links">
                 <span></span>
                 <span></span>
                 <span></span>
             </button>
-            <ul class="nav__links">
+            <ul class="nav__links" id="nav-links">
                 <li><a href="#yritys">Yritys</a></li>
                 <li><a href="#palvelut">Palvelut</a></li>
                 <li><a href="#vuokraus">Vuokraus</a></li>
@@ -379,9 +379,10 @@
                 </div>
             </div>
             <div class="store__status">
-                <p><span data-store-count>8</span> tuotetta esillä &mdash; koko HardParts-varasto kirjautuneille yritysasiakkaille.</p>
+                <p class="store__status-count" aria-live="polite"><span data-store-count>8</span> tuotetta esillä &mdash; koko HardParts-varasto kirjautuneille yritysasiakkaille.</p>
                 <a class="store__status-link" href="#yhteys">Tarvitsetko apua valintaan?</a>
             </div>
+            <p class="store__empty" data-store-empty hidden aria-live="polite">Ei osumia hakuehdoilla. Poista suodattimia tai ota yhteys AnomFIN × AnomTools -tiimiin, niin etsimme oikean ratkaisun.</p>
             <div class="store__grid">
                 <article class="store-card" data-categories="jarrut">
                     <span class="store-card__badge">Raskas sarja</span>
