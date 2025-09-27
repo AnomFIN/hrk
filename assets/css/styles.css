@@ -471,6 +471,124 @@ p {
     color: rgba(255, 255, 255, 0.85);
 }
 
+.calculator {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2.5rem;
+    align-items: start;
+}
+
+.calculator__form,
+.calculator__results {
+    border-radius: var(--radius-lg);
+    padding: 2.5rem;
+    background: rgba(10, 18, 30, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 25px 60px rgba(11, 27, 43, 0.25);
+    backdrop-filter: blur(8px);
+}
+
+.calculator__form {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.calculator__fields {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.field {
+    display: grid;
+    gap: 0.6rem;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 0.95rem;
+}
+
+.field input {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--color-white);
+    font-size: 1rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.field input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(255, 183, 3, 0.25);
+}
+
+.field input::placeholder {
+    color: rgba(255, 255, 255, 0.45);
+}
+
+.calculator__helper {
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 0.9rem;
+}
+
+.calculator__submit {
+    justify-self: start;
+}
+
+.calculator__results {
+    display: grid;
+    gap: 1.25rem;
+    color: var(--color-white);
+}
+
+.calculator__results h3 {
+    font-size: 1.4rem;
+}
+
+.calculator__results ul {
+    list-style: none;
+    display: grid;
+    gap: 1rem;
+}
+
+.calculator__results li {
+    display: grid;
+    gap: 0.25rem;
+}
+
+.calculator__results li span {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.7);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.calculator__results strong {
+    font-size: 1.3rem;
+    color: var(--color-primary);
+}
+
+.calculator__placeholder {
+    color: rgba(255, 255, 255, 0.65);
+}
+
+.calculator__hint {
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 0.9rem;
+}
+
+.calculator__signature {
+    margin-top: 2.5rem;
+    text-align: center;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.75);
+    text-transform: uppercase;
+}
+
 .contact {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -646,6 +764,11 @@ p {
 
     .section {
         padding: 4rem 1.25rem;
+    }
+
+    .calculator__form,
+    .calculator__results {
+        padding: 2rem;
     }
 
     .contact__form {
