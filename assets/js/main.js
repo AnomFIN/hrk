@@ -69,3 +69,55 @@ window.addEventListener('resize', () => {
         navToggle?.classList.remove('nav__toggle--active');
     }
 });
+
+const calculatorForm = document.getElementById('savings-calculator');
+const calculatorResult = document.getElementById('savings-result');
+
+const formatCurrency = (value) =>
+    new Intl.NumberFormat('fi-FI', {
+        style: 'currency',
+        currency: 'EUR',
+        maximumFractionDigits: 0,
+    }).format(Math.round(value));
+
+const formatHours = (value) =>
+    new Intl.NumberFormat('fi-FI', {
+        maximumFractionDigits: value < 10 ? 1 : 0,
+    }).format(value);
+
+calculatorForm?.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(calculatorForm);
+    const machines = Number(formData.get('machines'));
+    const downtime = Number(formData.get('downtime'));
+    const hourlyCost = Number(formData.get('hourlyCost'));
+    const prevented = Number(formData.get('prevented'));
+
+    if ([machines, downtime, hourlyCost, prevented].some((value) => Number.isNaN(value) || value < 0)) {
+        calculatorResult.innerHTML =
+            '<p class="calculator__placeholder">Tarkista syötetyt arvot. Kaikkien lukujen tulee olla positiivisia.</p>';
+        return;
+    }
+
+    const effectiveness = Math.min(Math.max(prevented, 0), 100) / 100;
+    const regainedHours = machines * downtime * effectiveness;
+    const monthlySavings = regainedHours * hourlyCost;
+    const annualSavings = monthlySavings * 12;
+
+    if (monthlySavings <= 0) {
+        calculatorResult.innerHTML =
+            '<p class="calculator__placeholder">Lisää ennakoivan kunnossapidon vaikutusta nähdäksesi säästöt. AnomFIN • AnomTools auttaa mitoittamaan tavoitteet.</p>';
+        return;
+    }
+
+    calculatorResult.innerHTML = `
+        <h3>Arvio säästöistä</h3>
+        <p>Ennakoiva kunnossapito voi palauttaa <strong>${formatHours(regainedHours)}</strong> tuotantotuntia kuukausittain.</p>
+        <ul>
+            <li><span>Kuukausittainen hyöty</span><strong>${formatCurrency(monthlySavings)}</strong></li>
+            <li><span>Vuosittainen hyöty</span><strong>${formatCurrency(annualSavings)}</strong></li>
+        </ul>
+        <p class="calculator__hint">Arvio perustuu AnomFIN • AnomTools tilannehuollon datamalliin. Räätälöidyt laskelmat saat kattavan kuntokartoituksen yhteydessä.</p>
+    `;
+});
