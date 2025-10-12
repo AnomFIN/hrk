@@ -97,133 +97,54 @@ document.addEventListener('keydown', (event) => {
     }
 });
 
-setNavState(isNavOpen());
-
-const storeEl = document.querySelector('[data-store]');
+const calculatorForm = document.getElementById('savings-calculator');
+const calculatorResult = document.getElementById('savings-result');
 
 const formatCurrency = (value) =>
-    new Intl.NumberFormat('fi-FI', { style: 'currency', currency: 'EUR' }).format(value);
+    new Intl.NumberFormat('fi-FI', {
+        style: 'currency',
+        currency: 'EUR',
+        maximumFractionDigits: 0,
+    }).format(Math.round(value));
 
-if (storeEl) {
-    const cartItemsEl = storeEl.querySelector('[data-cart-items]');
-    const cartTotalEl = storeEl.querySelector('[data-cart-total]');
-    const cartEmptyEl = storeEl.querySelector('[data-cart-empty]');
-    const cartCountEls = document.querySelectorAll('[data-cart-count]');
-    const addToCartButtons = storeEl.querySelectorAll('[data-add-to-cart]');
+const formatHours = (value) =>
+    new Intl.NumberFormat('fi-FI', {
+        maximumFractionDigits: value < 10 ? 1 : 0,
+    }).format(value);
 
-    const cart = [];
+calculatorForm?.addEventListener('submit', (event) => {
+    event.preventDefault();
 
-    const updateCartCount = () => {
-        const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-        cartCountEls.forEach((el) => {
-            el.textContent = String(itemCount);
-        });
-    };
+    const formData = new FormData(calculatorForm);
+    const machines = Number(formData.get('machines'));
+    const downtime = Number(formData.get('downtime'));
+    const hourlyCost = Number(formData.get('hourlyCost'));
+    const prevented = Number(formData.get('prevented'));
 
-    const updateCart = () => {
-        if (!cartItemsEl || !cartTotalEl || !cartEmptyEl) {
-            return;
-        }
+    if ([machines, downtime, hourlyCost, prevented].some((value) => Number.isNaN(value) || value < 0)) {
+        calculatorResult.innerHTML =
+            '<p class="calculator__placeholder">Tarkista syötetyt arvot. Kaikkien lukujen tulee olla positiivisia.</p>';
+        return;
+    }
 
-        cartItemsEl.innerHTML = '';
+    const effectiveness = Math.min(Math.max(prevented, 0), 100) / 100;
+    const regainedHours = machines * downtime * effectiveness;
+    const monthlySavings = regainedHours * hourlyCost;
+    const annualSavings = monthlySavings * 12;
 
-        if (!cart.length) {
-            cartEmptyEl.hidden = false;
-            cartTotalEl.textContent = formatCurrency(0);
-        } else {
-            cartEmptyEl.hidden = true;
-            const fragment = document.createDocumentFragment();
-            cart.forEach((item, index) => {
-                const li = document.createElement('li');
-                li.className = 'store__cart-item';
+    if (monthlySavings <= 0) {
+        calculatorResult.innerHTML =
+            '<p class="calculator__placeholder">Lisää ennakoivan kunnossapidon vaikutusta nähdäksesi säästöt. AnomFIN • AnomTools auttaa mitoittamaan tavoitteet.</p>';
+        return;
+    }
 
-                const titleWrapper = document.createElement('div');
-                titleWrapper.className = 'store__cart-item-title';
-
-                const nameEl = document.createElement('span');
-                nameEl.textContent = item.name;
-                const priceEl = document.createElement('span');
-                priceEl.textContent = `${item.displayPrice} × ${item.quantity} kpl`;
-
-                titleWrapper.append(nameEl, priceEl);
-
-                const removeBtn = document.createElement('button');
-                removeBtn.type = 'button';
-                removeBtn.className = 'store__cart-remove';
-                removeBtn.setAttribute('data-remove-item', String(index));
-                removeBtn.textContent = 'Poista';
-
-                li.append(titleWrapper, removeBtn);
-                fragment.append(li);
-            });
-
-            cartItemsEl.append(fragment);
-            const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-            cartTotalEl.textContent = formatCurrency(total);
-        }
-
-        updateCartCount();
-    };
-
-    addToCartButtons.forEach((button) => {
-        if (!button.dataset.originalLabel) {
-            button.dataset.originalLabel = button.textContent?.trim() ?? '';
-        }
-
-        button.addEventListener('click', () => {
-            const productCard = button.closest('[data-product]');
-            if (!productCard) {
-                return;
-            }
-
-            const name = productCard.dataset.product?.trim();
-            const priceValue = Number(productCard.dataset.price);
-            const priceDisplay = productCard.querySelector('.store-card__price')?.textContent?.trim();
-
-            if (!name || Number.isNaN(priceValue)) {
-                return;
-            }
-
-            const existing = cart.find((item) => item.name === name);
-            if (existing) {
-                existing.quantity += 1;
-            } else {
-                cart.push({
-                    name,
-                    price: priceValue,
-                    displayPrice: priceDisplay ?? formatCurrency(priceValue),
-                    quantity: 1,
-                });
-            }
-
-            updateCart();
-
-            button.classList.add('is-added');
-            button.disabled = true;
-            button.textContent = 'Lisätty!';
-
-            window.setTimeout(() => {
-                button.classList.remove('is-added');
-                button.disabled = false;
-                button.textContent = button.dataset.originalLabel ?? 'Lisää koriin';
-            }, 900);
-        });
-    });
-
-    storeEl.addEventListener('click', (event) => {
-        const removeBtn = event.target.closest('[data-remove-item]');
-        if (!removeBtn) {
-            return;
-        }
-
-        const index = Number(removeBtn.getAttribute('data-remove-item'));
-        if (Number.isNaN(index) || index < 0 || index >= cart.length) {
-            return;
-        }
-
-        cart.splice(index, 1);
-        updateCart();
-    });
-
-    updateCart();
-}
+    calculatorResult.innerHTML = `
+        <h3>Arvio säästöistä</h3>
+        <p>Ennakoiva kunnossapito voi palauttaa <strong>${formatHours(regainedHours)}</strong> tuotantotuntia kuukausittain.</p>
+        <ul>
+            <li><span>Kuukausittainen hyöty</span><strong>${formatCurrency(monthlySavings)}</strong></li>
+            <li><span>Vuosittainen hyöty</span><strong>${formatCurrency(annualSavings)}</strong></li>
+        </ul>
+        <p class="calculator__hint">Arvio perustuu AnomFIN • AnomTools tilannehuollon datamalliin. Räätälöidyt laskelmat saat kattavan kuntokartoituksen yhteydessä.</p>
+    `;
+});

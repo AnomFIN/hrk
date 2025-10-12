@@ -21,9 +21,10 @@
             </button>
             <ul class="nav__links" id="nav-menu">
                 <li><a href="#palvelut">Palvelut</a></li>
-                <li><a href="#paketit">Huoltopaketit</a></li>
-                <li><a href="#verkkokauppa">Verkkokauppa</a></li>
-                <li><a href="#referenssit">Asiakastarinat</a></li>
+                <li><a href="#vuokraus">Vuokraus</a></li>
+                <li><a href="#myynti">Myynti</a></li>
+                <li><a href="#referenssit">Referenssit</a></li>
+                <li><a href="#laskuri">Laskuri</a></li>
                 <li><a href="#yhteys">Yhteys</a></li>
                 <li class="nav__cart">
                     <a class="nav__cart-link" href="#verkkokauppa" aria-label="Siirry ostoskoriin">
@@ -280,7 +281,43 @@
             </div>
         </section>
 
-        <section class="section section--accent" aria-label="Nopeat faktat Helsinki eBike-Service Oy:stä">
+        <section class="section section--accent" id="laskuri">
+            <div class="section__intro">
+                <span class="kicker kicker--light">Työkalut</span>
+                <h2>AnomFIN Huoltosäästölaskuri</h2>
+                <p>Arvioi ennakoivan kunnossapidon vaikutus käyttökustannuksiin. AnomTools-analytiikkamme yhdistää kalustosi vikahistorian ja käyttöasteen, jotta tiedät kuinka paljon seisokkiaikaa voidaan poistaa.</p>
+            </div>
+            <div class="calculator">
+                <form class="calculator__form" id="savings-calculator" aria-describedby="savings-helper">
+                    <div class="calculator__fields">
+                        <label class="field">
+                            <span>Koneiden määrä</span>
+                            <input type="number" name="machines" id="machines" min="1" step="1" required placeholder="Esim. 12">
+                        </label>
+                        <label class="field">
+                            <span>Nykyinen seisokkiaika / kone / kk (h)</span>
+                            <input type="number" name="downtime" id="downtime" min="0" step="0.5" required placeholder="Esim. 6">
+                        </label>
+                        <label class="field">
+                            <span>Seisokkikustannus tunnilta (€)</span>
+                            <input type="number" name="hourlyCost" id="hourlyCost" min="0" step="10" required placeholder="Esim. 180">
+                        </label>
+                        <label class="field">
+                            <span>Arvioitu seisokin vähennys (%)</span>
+                            <input type="number" name="prevented" id="prevented" min="0" max="100" step="5" required placeholder="Esim. 35">
+                        </label>
+                    </div>
+                    <p class="calculator__helper" id="savings-helper">Tarkempi analyysi on saatavilla osana AnomFIN • AnomTools kunnonvalvontapalvelua.</p>
+                    <button type="submit" class="btn btn--primary calculator__submit">Laske säästöpotentiaali</button>
+                </form>
+                <div class="calculator__results" id="savings-result" aria-live="polite">
+                    <p class="calculator__placeholder">Syötä luvut ja näet välittömän arvion rahallisista ja ajallisista säästöistä.</p>
+                </div>
+            </div>
+            <p class="calculator__signature" aria-label="Laskelman tuottaja">AnomFIN • AnomTools</p>
+        </section>
+
+        <section class="section section--accent" aria-label="Nopeat faktat Harjun Raskaskone Oy:stä">
             <div class="facts">
                 <div>
                     <h3>Virallinen nimi</h3>
@@ -396,8 +433,9 @@
             <div>
                 <h4>Yritys</h4>
                 <ul>
-                    <li><a href="#referenssit">Asiakastarinat</a></li>
-                    <li><a href="#yhteys">Ota yhteyttä</a></li>
+                    <li><a href="#referenssit">Referenssit</a></li>
+                    <li><a href="#laskuri">Laskuri</a></li>
+                    <li><a href="#yhteys">Yhteydenotto</a></li>
                     <li><a href="#etusivu">Etusivu</a></li>
                 </ul>
             </div>
