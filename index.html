@@ -20,14 +20,14 @@
                 <span></span>
             </button>
             <ul class="nav__links" id="nav-menu">
-                <li><a href="#palvelut">Palvelut</a></li>
-                <li><a href="#vuokraus">Vuokraus</a></li>
-                <li><a href="#myynti">Myynti</a></li>
-                <li><a href="#referenssit">Referenssit</a></li>
-                <li><a href="#laskuri">Laskuri</a></li>
-                <li><a href="#yhteys">Yhteys</a></li>
+                <li><a class="nav__link" href="#palvelut">Palvelut</a></li>
+                <li><a class="nav__link" href="#vuokraus">Vuokraus</a></li>
+                <li><a class="nav__link" href="#myynti">Myynti</a></li>
+                <li><a class="nav__link" href="#referenssit">Referenssit</a></li>
+                <li><a class="nav__link" href="#laskuri">Laskuri</a></li>
+                <li><a class="nav__link" href="#yhteys">Yhteys</a></li>
                 <li class="nav__cart">
-                    <a class="nav__cart-link" href="#verkkokauppa" aria-label="Siirry ostoskoriin">
+                    <a class="nav__link nav__link--cart" href="#verkkokauppa" aria-label="Siirry ostoskoriin">
                         <span>Ostoskori</span>
                         <span class="nav__cart-count" data-cart-count aria-live="polite">0</span>
                     </a>
@@ -35,13 +35,15 @@
             </ul>
         </nav>
         <div class="hero__content">
+            <span class="hero__badge">Signature Experience • AnomFIN</span>
             <p class="hero__eyebrow">Sähköpyörien huolto-, myynti- ja vuokrauspalvelut Helsingissä</p>
             <h1>Helsinki eBike-Service Oy pitää sähköpyöräsi liikkeessä vuodenaikaan katsomatta</h1>
-            <p>Tarjoamme täyden palvelun sähköpyörähuollon, ammattimaiset yritysratkaisut sekä inspiroivan verkkokaupan, josta löydät laadukkaat pyörät, varaosat ja varusteet. Fiksu yhdistelmä huoltoa, palvelusopimuksia ja joustavaa verkkokauppaa tekee meistä sähköpyöräyritysten ja -harrastajien luotetun kumppanin.</p>
+            <p class="hero__lead">Tarjoamme täyden palvelun sähköpyörähuollon, ammattimaiset yritysratkaisut sekä inspiroivan verkkokaupan, josta löydät laadukkaat pyörät, varaosat ja varusteet. Fiksu yhdistelmä huoltoa, palvelusopimuksia ja joustavaa verkkokauppaa tekee meistä sähköpyöräyritysten ja -harrastajien luotetun kumppanin.</p>
             <div class="hero__actions">
                 <a class="btn btn--primary" href="#yhteys">Varaa huolto</a>
                 <a class="btn btn--ghost" href="#verkkokauppa">Tutustu verkkokauppaan</a>
             </div>
+            <p class="hero__signature">Jugi@AnomFIN curated • Premium EV cycling studio</p>
             <dl class="hero__stats">
                 <div>
                     <dt>15.12.2024</dt>
@@ -58,7 +60,11 @@
             </dl>
         </div>
         <div class="hero__image">
-            <img src="https://images.unsplash.com/photo-1509395176047-4a66953fd231?auto=format&fit=crop&w=1200&q=80" alt="Sähköpyörä huollossa modernissa pyöräpajassa" loading="lazy">
+            <img src="assets/ebikewp.webp" alt="Sähköpyörä huollossa modernissa pyöräpajassa" loading="lazy">
+            <div class="hero__image-chip" aria-hidden="true">
+                <span>Precision tuning</span>
+                <span>Jugi@AnomFIN</span>
+            </div>
         </div>
     </header>
 
@@ -71,7 +77,7 @@
             </div>
             <div class="grid grid--3">
                 <article class="card">
-                    <img src="https://images.unsplash.com/photo-1485965120184-e220f721d03e?auto=format&fit=crop&w=1200&q=80" alt="Mekaanikko säätää sähköpyörän vaihteita" loading="lazy">
+                    <img src="assets/editablew.webp" alt="AnomFINin mekaanikko säätää sähköpyörän voimansiirtoa" loading="lazy">
                     <div class="card__content">
                         <h3>Sähköpyörähuolto</h3>
                         <p>Diagnosointi, ohjelmistopäivitykset ja mekaaniset säädöt yhdellä käynnillä. Käytämme valmistajien hyväksymiä testereitä ja huoltosarjoja.</p>
