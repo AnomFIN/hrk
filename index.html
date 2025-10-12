@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Harjun Raskaskone Oy</title>
+    <title>Helsinki eBike-Service Oy</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
@@ -13,45 +13,51 @@
 <body>
     <header class="hero" id="etusivu">
         <nav class="nav">
-            <div class="nav__logo">Harjun Raskaskone Oy</div>
-            <button class="nav__toggle" aria-label="Avaa valikko">
+            <div class="nav__logo">Helsinki eBike-Service Oy</div>
+            <button class="nav__toggle" type="button" aria-label="Avaa valikko" aria-controls="nav-menu" aria-expanded="false">
                 <span></span>
                 <span></span>
                 <span></span>
             </button>
-            <ul class="nav__links">
+            <ul class="nav__links" id="nav-menu">
                 <li><a href="#palvelut">Palvelut</a></li>
-                <li><a href="#vuokraus">Vuokraus</a></li>
-                <li><a href="#myynti">Myynti</a></li>
-                <li><a href="#referenssit">Referenssit</a></li>
+                <li><a href="#paketit">Huoltopaketit</a></li>
+                <li><a href="#verkkokauppa">Verkkokauppa</a></li>
+                <li><a href="#referenssit">Asiakastarinat</a></li>
                 <li><a href="#yhteys">Yhteys</a></li>
+                <li class="nav__cart">
+                    <a class="nav__cart-link" href="#verkkokauppa" aria-label="Siirry ostoskoriin">
+                        <span>Ostoskori</span>
+                        <span class="nav__cart-count" data-cart-count aria-live="polite">0</span>
+                    </a>
+                </li>
             </ul>
         </nav>
         <div class="hero__content">
-            <p class="hero__eyebrow">Raskaan kaluston asiantuntija vuodesta 2019</p>
-            <h1>Luotettavat huolto-, vuokraus- ja myyntipalvelut työmaillesi</h1>
-            <p>Harjun Raskaskone Oy tarjoaa raskaan kaluston kunnossapitoa, kalustovuokrausta ja räätälöityjä ratkaisuja yrityksesi tarpeisiin. Olemme erikoistuneet pitämään koneesi liikkeessä ja projektisi aikataulussa.</p>
+            <p class="hero__eyebrow">Sähköpyörien huolto-, myynti- ja vuokrauspalvelut Helsingissä</p>
+            <h1>Helsinki eBike-Service Oy pitää sähköpyöräsi liikkeessä vuodenaikaan katsomatta</h1>
+            <p>Tarjoamme täyden palvelun sähköpyörähuollon, ammattimaiset yritysratkaisut sekä inspiroivan verkkokaupan, josta löydät laadukkaat pyörät, varaosat ja varusteet. Fiksu yhdistelmä huoltoa, palvelusopimuksia ja joustavaa verkkokauppaa tekee meistä sähköpyöräyritysten ja -harrastajien luotetun kumppanin.</p>
             <div class="hero__actions">
-                <a class="btn btn--primary" href="#yhteys">Pyydä tarjous</a>
-                <a class="btn btn--ghost" href="#palvelut">Tutustu palveluihin</a>
+                <a class="btn btn--primary" href="#yhteys">Varaa huolto</a>
+                <a class="btn btn--ghost" href="#verkkokauppa">Tutustu verkkokauppaan</a>
             </div>
             <dl class="hero__stats">
                 <div>
-                    <dt>911 000 €</dt>
-                    <dd>Liikevaihto 2024</dd>
+                    <dt>15.12.2024</dt>
+                    <dd>Perustettu Helsingissä</dd>
                 </div>
                 <div>
-                    <dt>+59 %</dt>
-                    <dd>Kasvu edellisvuodesta</dd>
+                    <dt>3 500+</dt>
+                    <dd>Huollettua sähköpyörää vuodessa</dd>
                 </div>
                 <div>
-                    <dt>40 %</dt>
-                    <dd>Omavaraisuusaste</dd>
+                    <dt>98 %</dt>
+                    <dd>Asiakastyytyväisyys (NPS)</dd>
                 </div>
             </dl>
         </div>
         <div class="hero__image">
-            <img src="https://images.unsplash.com/photo-1519638399535-1b036603ac77?auto=format&fit=crop&w=1200&q=80" alt="Työmaalla toimiva kaivinkone" loading="lazy">
+            <img src="https://images.unsplash.com/photo-1509395176047-4a66953fd231?auto=format&fit=crop&w=1200&q=80" alt="Sähköpyörä huollossa modernissa pyöräpajassa" loading="lazy">
         </div>
     </header>
 
@@ -59,181 +65,266 @@
         <section class="section section--light" id="palvelut">
             <div class="section__intro">
                 <span class="kicker">Palvelumme</span>
-                <h2>Kaikki raskaan kaluston tarpeet yhdestä paikasta</h2>
-                <p>Huollamme, korjaamme ja modernisoimme raskaita työkoneita kaikilla toimialoilla. Tarjoamme lisäksi joustavan vuokraus- ja myyntikaluston projektisi tueksi.</p>
+                <h2>Huippuluokan sähköpyörähuolto yhdellä käynnillä</h2>
+                <p>Huollamme ja modernisoimme sähköpyörät, kuljetuspyörät ja yritysflotit nopeasti ja takuulla. Asiakaslähtöinen palveluprosessi pitää pyöräsi turvallisena ja ajokunnossa vuoden ympäri.</p>
             </div>
             <div class="grid grid--3">
                 <article class="card">
-                    <img src="https://images.unsplash.com/photo-1516387938699-a93567ec168e?auto=format&fit=crop&w=1200&q=80" alt="Huoltoa saava kuorma-auto" loading="lazy">
+                    <img src="https://images.unsplash.com/photo-1485965120184-e220f721d03e?auto=format&fit=crop&w=1200&q=80" alt="Mekaanikko säätää sähköpyörän vaihteita" loading="lazy">
                     <div class="card__content">
-                        <h3>Huolto &amp; korjaus</h3>
-                        <p>Laaja huolto- ja korjauspalvelu raskaalle kalustolle: ennakoiva kunnossapito, vikadiagnostiikka ja hätäkorjaukset ympäri Suomea.</p>
+                        <h3>Sähköpyörähuolto</h3>
+                        <p>Diagnosointi, ohjelmistopäivitykset ja mekaaniset säädöt yhdellä käynnillä. Käytämme valmistajien hyväksymiä testereitä ja huoltosarjoja.</p>
                         <ul>
-                            <li>24/7 päivystys sopimusasiakkaille</li>
-                            <li>Liikkuvat huoltoautot</li>
-                            <li>OEM- ja tarvikeosat</li>
+                            <li>OEM-sertifioidut varaosat</li>
+                            <li>Huollot myös yritysfloteille</li>
+                            <li>Nopea huoltoraportti sähköisesti</li>
                         </ul>
                     </div>
                 </article>
                 <article class="card">
-                    <img src="https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=1200&q=80" alt="Vuokrattava pyöräkuormaaja" loading="lazy">
+                    <img src="https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?auto=format&fit=crop&w=1200&q=80" alt="Sähköpyörien vuokrauskalusto rivissä" loading="lazy">
                     <div class="card__content">
-                        <h3>Kalustovuokraus</h3>
-                        <p>Vuokraa modernit koneet lyhyt- tai pitkäaikaisiin projekteihin. Autamme valitsemaan juuri sinun työmaallesi sopivan kokonaisuuden.</p>
+                        <h3>Vuokraus ja testiajot</h3>
+                        <p>Moderni valikoima sähköpyöriä yritystapahtumiin, koeajoihin ja kausivuokraukseen. Räätälöimme paketit tarpeesi mukaan.</p>
                         <ul>
-                            <li>Koneet toimitettuna työmaalle</li>
-                            <li>Huolto sisältyy vuokraan</li>
-                            <li>Joustavat sopimukset</li>
+                            <li>Yritys- ja yhteisövuokraukset</li>
+                            <li>Huolto sisältyy sopimuksiin</li>
+                            <li>Kuljetus pääkaupunkiseudulla</li>
                         </ul>
                     </div>
                 </article>
                 <article class="card">
-                    <img src="https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=1200&q=80" alt="Raskaita koneita varastolla" loading="lazy">
+                    <img src="https://images.unsplash.com/photo-1529429617124-aee711a0fb7c?auto=format&fit=crop&w=1200&q=80" alt="Asiantuntija konsultoi yritystä sähköpyöräohjelmassa" loading="lazy">
                     <div class="card__content">
-                        <h3>Konsultointi &amp; projektituki</h3>
-                        <p>Tarjoamme käyttöön asiantuntijamme auttamaan kaluston hankinnassa, työmaasuunnittelussa ja kustannustehokkuuden optimoinnissa.</p>
+                        <h3>Konsultointi &amp; koulutus</h3>
+                        <p>Autamme yrityksiä käynnistämään sähköpyöräpalvelut. Tarjoamme henkilöstön koulutukset ja jatkuvan kunnossapitomallin.</p>
                         <ul>
-                            <li>Kalustoanalyysit ja kunnonvalvonta</li>
-                            <li>Projektikohtainen budjetointi</li>
-                            <li>Käyttökoulutukset</li>
+                            <li>Fleet management -suunnittelu</li>
+                            <li>Työsuhdepyöräohjelmat</li>
+                            <li>Käyttökoulutukset ja webinaarit</li>
                         </ul>
                     </div>
                 </article>
             </div>
         </section>
 
-        <section class="section" id="vuokraus">
+        <section class="section" id="paketit">
             <div class="section__intro">
-                <span class="kicker">Vuokrattavat koneet</span>
-                <h2>Moderni ja huollettu vuokrakalusto</h2>
-                <p>Valikoimamme kattaa maanrakennuksen, logistiikan ja teollisuuden tarpeet. Kaikki vuokrakoneemme toimitetaan huollettuina, vakuutettuina ja käyttövalmiina.</p>
+                <span class="kicker">Huoltopaketit</span>
+                <h2>Suunnitellut kokonaisuudet sähköpyörien ylläpitoon</h2>
+                <p>Valitse tarpeeseesi sopiva huoltopaketti. Jokainen paketti sisältää huolellisen tarkastuksen, koeajon ja raportoinnin. Yrityspaketteihin sisällytetään lisäksi kuukausittainen kalustokatsaus.</p>
             </div>
             <div class="grid grid--3">
                 <article class="product">
-                    <img src="https://images.unsplash.com/photo-1509395176047-4a66953fd231?auto=format&fit=crop&w=1200&q=80" alt="Volvo EC220 kaivinkone" loading="lazy">
+                    <img src="https://images.unsplash.com/photo-1485965120420-1ea49c4905c7?auto=format&fit=crop&w=1200&q=80" alt="Huoltopisteessä nosturilla oleva sähköpyörä" loading="lazy">
                     <div class="product__body">
-                        <h3>Volvo EC220EL kaivinkone</h3>
-                        <p>23 tonnin kaivinkone GPS-koneohjauksella ja tiltrotatorilla. Soveltuu vaativiin maanrakennustöihin.</p>
+                        <h3>Perushuolto</h3>
+                        <p>Kauden aloitukseen tai lopetukseen. Sisältää täyshuollon ja akutestin.</p>
                         <ul>
-                            <li>Vuokra: 1 590 €/viikko</li>
-                            <li>Lisävarusteet: iskuvasara, kauhat</li>
-                            <li>Kuljetus ja huolto sisältyvät</li>
+                            <li>Hinta: 129 €</li>
+                            <li>Ohjelmistopäivitykset</li>
+                            <li>Jarru- ja vaihdesäädöt</li>
                         </ul>
                     </div>
                 </article>
                 <article class="product">
-                    <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1200&q=80" alt="JCB pyöräkuormaaja" loading="lazy">
+                    <img src="https://images.unsplash.com/photo-1496200186974-4293800e2c20?auto=format&fit=crop&w=1200&q=80" alt="Yrityksen sähköpyöräflotta sisätiloissa" loading="lazy">
                     <div class="product__body">
-                        <h3>JCB 457 pyöräkuormaaja</h3>
-                        <p>Monipuolinen kuormaaja materiaalin käsittelyyn satamissa, terminaaleissa ja työmailla.</p>
+                        <h3>Premium-sopimus</h3>
+                        <p>Yrityksille ja aktiiviharrastajille, jotka tarvitsevat priorisoidun palvelun ja kuljetukset.</p>
                         <ul>
-                            <li>Vuokra: 1 250 €/viikko</li>
-                            <li>Varusteet: vilkku, vaaka, eri kauhat</li>
-                            <li>Voimansiirron täystakuu</li>
+                            <li>Hinta: alkaen 189 €/kk</li>
+                            <li>Varaosat -10 %</li>
+                            <li>Nouto &amp; palautus Helsingin alueella</li>
                         </ul>
                     </div>
                 </article>
                 <article class="product">
-                    <img src="https://images.unsplash.com/photo-1517971071642-34a2d3ecc9cd?auto=format&fit=crop&w=1200&q=80" alt="Manitou kurottaja" loading="lazy">
+                    <img src="https://images.unsplash.com/photo-1505678261036-a3fcc5e884ee?auto=format&fit=crop&w=1200&q=80" alt="Huoltoasiantuntija kiristää sähköpyörän pinnat" loading="lazy">
                     <div class="product__body">
-                        <h3>Manitou MT 1840 kurottaja</h3>
-                        <p>18 metrin nostokorkeus ja 4 tonnin nostokapasiteetti. Erinomainen työmaiden monitoimilaite.</p>
+                        <h3>Fleet Care 360</h3>
+                        <p>Laaja sopimus logistiikkayrityksille ja jakeluflotteille. Sisältää proaktiivisen kunnossapidon.</p>
                         <ul>
-                            <li>Vuokra: 980 €/viikko</li>
-                            <li>Sis. haarukat, henkilönostokori</li>
-                            <li>Etävalvonta ja käyttökoulutus</li>
+                            <li>Hinta: räätälöidään</li>
+                            <li>24/7 tukilinja</li>
+                            <li>Kuukausittaiset raportit</li>
                         </ul>
                     </div>
                 </article>
             </div>
         </section>
 
-        <section class="section section--dark" id="myynti">
+        <section class="section section--store" id="verkkokauppa">
             <div class="section__intro">
-                <span class="kicker kicker--light">Myynnissä</span>
-                <h2>Käytetyt ja uudet koneet nopeaan toimitukseen</h2>
-                <p>Kaikki myynnissä oleva kalusto on huollettu, tarkastettu ja valmiina töihin. Järjestämme myös rahoituksen ja käyttöönoton.</p>
+                <span class="kicker">Verkkokauppa</span>
+                <h2>Upea ja sulava ostokokemus sähköpyörille ja varusteille</h2>
+                <p>Tilaa huolella kuratoidut tuotteet kotiinkuljetuksella tai nouda ne huollon yhteydessä. Lisää tuotteet ostoskoriin ja viimeistele tilaus yhteydenotolla – tiimimme varmistaa oikeat koot ja yhteensopivuuden ennen toimitusta.</p>
             </div>
-            <div class="grid grid--3">
-                <article class="product product--overlay">
-                    <img src="https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=1200&q=80" alt="Doosan telakaivinkone" loading="lazy">
-                    <div class="product__body">
-                        <h3>Doosan DX300LC-7</h3>
-                        <p>2022, 2 150 h, puomi- ja aisavaihteella. Täydellinen huoltohistoria.</p>
-                        <span class="product__price">Myyntihinta: 245 000 € (alv 0 %)</span>
+            <div class="store" data-store>
+                <div class="store__cart" aria-live="polite">
+                    <h3>Ostoskori</h3>
+                    <p class="store__cart-empty" data-cart-empty>Ostoskorisi on vielä tyhjä. Lisää tuotteita ja hyödynnä asiantuntijoidemme tuki.</p>
+                    <ul class="store__cart-items" data-cart-items></ul>
+                    <div class="store__cart-summary">
+                        <span>Välisumma</span>
+                        <strong data-cart-total>0,00 €</strong>
                     </div>
-                </article>
-                <article class="product product--overlay">
-                    <img src="https://images.unsplash.com/photo-1516387938699-a93567ec168e?auto=format&fit=crop&w=1200&q=80" alt="Scania huoltoauto" loading="lazy">
-                    <div class="product__body">
-                        <h3>Scania R580 huoltoauto</h3>
-                        <p>2019, täydellinen varustelu liikkuvaan huoltoon, kompressori ja hydrauliikka.</p>
-                        <span class="product__price">Myyntihinta: 129 000 € (alv 0 %)</span>
-                    </div>
-                </article>
-                <article class="product product--overlay">
-                    <img src="https://images.unsplash.com/photo-1521206183636-7a950bafdcc2?auto=format&fit=crop&w=1200&q=80" alt="Liebherr torninosturi" loading="lazy">
-                    <div class="product__body">
-                        <h3>Liebherr 280 EC-H torninosturi</h3>
-                        <p>Vuosi 2020, nostokyky 12 t, vapaa korkeudenosto 84 m. Toimitus ja asennus koko Suomeen.</p>
-                        <span class="product__price">Myyntihinta: 465 000 € (alv 0 %)</span>
-                    </div>
-                </article>
+                    <p class="store__cart-note">Viimeistele tilauksesi lähettämällä ostoskori ja yhteystietosi asiantuntijallemme.</p>
+                    <a class="btn btn--primary" href="#yhteys">Ota yhteyttä myyntiin</a>
+                </div>
+                <div class="store__grid">
+                    <article class="store-card" data-product="Tenways CGO009" data-price="2599">
+                        <img src="https://images.unsplash.com/photo-1529429617124-aee711a0fb7c?auto=format&fit=crop&w=1200&q=80" alt="Tyylikäs kaupunkisähköpyörä harmaalla taustalla" loading="lazy">
+                        <div class="store-card__body">
+                            <span class="store-card__tag">Uutuus</span>
+                            <h3>Tenways CGO009 Urban</h3>
+                            <p>Kevyt hiilikuiturunko, hihnaveto ja 80 km kantama. Täydellinen kaupunkipyörään tottuneelle.</p>
+                            <div class="store-card__footer">
+                                <span class="store-card__price">2 599 €</span>
+                                <button class="btn btn--secondary" type="button" data-add-to-cart>Lisää koriin</button>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="store-card" data-product="Giro Manifest Spherical" data-price="289">
+                        <img src="https://images.unsplash.com/photo-1505678261036-a3fcc5e884ee?auto=format&fit=crop&w=1200&q=80" alt="Sähköpyöräkypärä työpöydällä" loading="lazy">
+                        <div class="store-card__body">
+                            <span class="store-card__tag">Turvallisuus</span>
+                            <h3>Giro Manifest Spherical</h3>
+                            <p>Huipputason kypärä MIPS-suojauksella ja erinomaisella ilmanvaihdolla ympärivuotiseen ajoon.</p>
+                            <div class="store-card__footer">
+                                <span class="store-card__price">289 €</span>
+                                <button class="btn btn--secondary" type="button" data-add-to-cart>Lisää koriin</button>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="store-card" data-product="Bosch PowerTube 625" data-price="799">
+                        <img src="https://images.unsplash.com/photo-1509395176047-4a66953fd231?auto=format&fit=crop&w=1200&q=80" alt="Sähköpyörän vara-akku pöydällä" loading="lazy">
+                        <div class="store-card__body">
+                            <span class="store-card__tag">Varaosat</span>
+                            <h3>Bosch PowerTube 625</h3>
+                            <p>Alkuperäinen 625 Wh akku Bosch Performance Line -järjestelmiin. Asennus ja diagnostiikka sisältyvät.</p>
+                            <div class="store-card__footer">
+                                <span class="store-card__price">799 €</span>
+                                <button class="btn btn--secondary" type="button" data-add-to-cart>Lisää koriin</button>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="store-card" data-product="WinterCare Kit" data-price="119">
+                        <img src="https://images.unsplash.com/photo-1604272011436-1d760c6fc1d8?auto=format&fit=crop&w=1200&q=80" alt="Talvihuoltosarja sähköpyörälle" loading="lazy">
+                        <div class="store-card__body">
+                            <span class="store-card__tag">Huoltosarja</span>
+                            <h3>WinterCare Kit</h3>
+                            <p>Talvihuoltoon suunniteltu kit, sisältää nastarenkaiden vaihdon ja täyshuollon ennen pakkasia.</p>
+                            <div class="store-card__footer">
+                                <span class="store-card__price">119 €</span>
+                                <button class="btn btn--secondary" type="button" data-add-to-cart>Lisää koriin</button>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="store-card" data-product="Cargo eBike Lease" data-price="249">
+                        <img src="https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=1200&q=80" alt="Tavarapyörä kaupunkimiljöössä" loading="lazy">
+                        <div class="store-card__body">
+                            <span class="store-card__tag">Yrityksille</span>
+                            <h3>Cargo eBike Lease</h3>
+                            <p>Kuukausivuokraus sisältäen huollot, vakuutukset ja varapyörät urbaaniin logistiikkaan.</p>
+                            <div class="store-card__footer">
+                                <span class="store-card__price">249 €/kk</span>
+                                <button class="btn btn--secondary" type="button" data-add-to-cart>Lisää koriin</button>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="store-card" data-product="Fast Charge Service" data-price="59">
+                        <img src="https://images.unsplash.com/photo-1523419409543-0c1df022bdd9?auto=format&fit=crop&w=1200&q=80" alt="Sähköpyörän akku latauksessa" loading="lazy">
+                        <div class="store-card__body">
+                            <span class="store-card__tag">Palvelu</span>
+                            <h3>Fast Charge Service</h3>
+                            <p>Akkujen tasapainotus, kapasiteettimittaus ja latausstrategian optimointi talvikaudelle.</p>
+                            <div class="store-card__footer">
+                                <span class="store-card__price">59 €</span>
+                                <button class="btn btn--secondary" type="button" data-add-to-cart>Lisää koriin</button>
+                            </div>
+                        </div>
+                    </article>
+                </div>
             </div>
         </section>
 
         <section class="section" id="referenssit">
             <div class="section__intro">
-                <span class="kicker">Referenssit</span>
-                <h2>Luotettu kumppani infrarakentajille ja logistiikalle</h2>
-                <p>Autamme asiakkaitamme pitämään kriittiset projektit aikataulussa ja kaluston toimintavarmana. Tässä muutamia onnistuneita toimituksia.</p>
+                <span class="kicker">Asiakastarinat</span>
+                <h2>Palvelemme yrityksiä, yhteisöjä ja intohimoisia sähköpyöräilijöitä</h2>
+                <p>Jokainen projekti alkaa tarpeen ymmärtämisestä. Näin asiakkaamme kuvaavat yhteistyötä Helsinki eBike-Service Oy:n kanssa.</p>
             </div>
             <div class="grid grid--3 testimonials">
                 <article class="testimonial">
-                    <p>“Harjun Raskaskoneen huoltotiimi pelasti työmaamme kriittisessä vaiheessa. Nopeus ja asiantuntemus tekivät vaikutuksen.”</p>
+                    <p>“Huoltosopimus on vapauttanut meidät keskittymään jakeluun. Pyörät ovat aina toimintavarmoja ja raportointi on selkeää.”</p>
                     <div class="testimonial__meta">
-                        <span class="testimonial__name">Mikko, työmaapäällikkö</span>
-                        <span class="testimonial__company">Länsirakentajat Oy</span>
+                        <span class="testimonial__name">Jenna, operatiivinen johtaja</span>
+                        <span class="testimonial__company">CityCourier Oy</span>
                     </div>
                 </article>
                 <article class="testimonial">
-                    <p>“Vuokrakaluston toimitus oli täsmällinen ja koneiden kunto erinomainen. Kommunikointi oli sujuvaa koko projektin ajan.”</p>
+                    <p>“Verkkokauppa on huippu. Löydän nopeasti varaosat ja tiimi varmistaa sopivuuden ennen toimitusta.”</p>
                     <div class="testimonial__meta">
-                        <span class="testimonial__name">Sari, logistiikkapäällikkö</span>
-                        <span class="testimonial__company">Nordic Terminals</span>
+                        <span class="testimonial__name">Tero, sähköpyöräharrastaja</span>
+                        <span class="testimonial__company">Helsinki</span>
                     </div>
                 </article>
                 <article class="testimonial">
-                    <p>“Saimme räätälöidyn ratkaisun varastoinnin automatisointiin. Asiantuntijoiden tuki jatkui vielä käyttöönoton jälkeenkin.”</p>
+                    <p>“Koulutus auttoi henkilöstöä ottamaan sähköpyörät käyttöön. Huolto tulee paikan päälle ja pitää kalustomme kunnossa.”</p>
                     <div class="testimonial__meta">
-                        <span class="testimonial__name">Timo, tuotantopäällikkö</span>
-                        <span class="testimonial__company">TeräsPlus Oy</span>
+                        <span class="testimonial__name">Laura, HR-päällikkö</span>
+                        <span class="testimonial__company">EcoOffice Solutions</span>
                     </div>
                 </article>
             </div>
         </section>
 
-        <section class="section section--accent" aria-label="Nopeat faktat Harjun Raskaskone Oy:stä">
+        <section class="section section--accent" aria-label="Nopeat faktat Helsinki eBike-Service Oy:stä">
             <div class="facts">
                 <div>
+                    <h3>Virallinen nimi</h3>
+                    <p>Helsinki eBike-Service Oy</p>
+                </div>
+                <div>
                     <h3>Perustettu</h3>
-                    <p>2019 &mdash; kokemusta yli 6 vuotta</p>
-                </div>
-                <div>
-                    <h3>Toimipaikka</h3>
-                    <p>c/o Teboil Ruskeasuo, Koroistentie 10, 00280 Helsinki</p>
-                </div>
-                <div>
-                    <h3>Toimiala</h3>
-                    <p>Moottoriajoneuvojen huolto ja korjaus (pl. renkaat)</p>
-                </div>
-                <div>
-                    <h3>Puhelin</h3>
-                    <p><a href="tel:+3584578366680">045 783 666 80</a></p>
+                    <p>15.12.2024</p>
                 </div>
                 <div>
                     <h3>Y-tunnus</h3>
-                    <p>2578643-3</p>
+                    <p>3496925-8</p>
+                </div>
+                <div>
+                    <h3>Toimiala</h3>
+                    <p>Pyöräkorjaamo ja pyörähuolto &mdash; TOL 95290</p>
+                </div>
+                <div>
+                    <h3>Muut toimialat</h3>
+                    <p>Polkupyöräpalvelut, sähköpyörien myynti ja vuokraus</p>
+                </div>
+                <div>
+                    <h3>Sähköposti</h3>
+                    <p><a href="mailto:info@helsinkiebikeservice.fi">info@helsinkiebikeservice.fi</a></p>
+                </div>
+                <div>
+                    <h3>Puhelin</h3>
+                    <p><a href="tel:+358403255131">040 325 5131</a></p>
+                </div>
+                <div>
+                    <h3>Toimipaikka</h3>
+                    <p>Aarteenetsijäntie 4 E, 00970 Helsinki</p>
+                </div>
+                <div>
+                    <h3>Postiosoite</h3>
+                    <p>Aarteenetsijäntie 4, 00970 Helsinki</p>
+                </div>
+                <div>
+                    <h3>Nettisivut</h3>
+                    <p><a href="https://helsinkiebikeservice.fi" target="_blank" rel="noopener">helsinkiebikeservice.fi</a></p>
+                </div>
+                <div>
+                    <h3>Aputoiminimet</h3>
+                    <p>Helsinki eBike-Service Oy</p>
                 </div>
             </div>
         </section>
@@ -242,16 +333,17 @@
             <div class="contact">
                 <div class="contact__info">
                     <span class="kicker">Ota yhteyttä</span>
-                    <h2>Rakennetaan yhdessä sinulle sopiva ratkaisu</h2>
-                    <p>Jätä yhteystietosi tai soita suoraan. Asiakasvastaavamme palaa asiaan nopeasti ja käy läpi projektisi tarpeet.</p>
+                    <h2>Rakennetaan sähköpyörillesi täydellinen palvelukokonaisuus</h2>
+                    <p>Jätä yhteystietosi tai soita. Asiantuntijamme kartoittaa tarpeesi, suosittelee oikeat palvelut ja viimeistelee verkkokaupan ostoskorisi.</p>
                     <ul class="contact__details">
-                        <li><strong>Puhelin:</strong> <a href="tel:+3584578366680">045 783 666 80</a></li>
-                        <li><strong>Sähköposti:</strong> <a href="mailto:info@harjunraskaskone.fi">info@harjunraskaskone.fi</a></li>
-                        <li><strong>Toimisto:</strong> Koroistentie 10, 00280 Helsinki</li>
+                        <li><strong>Puhelin:</strong> <a href="tel:+358403255131">040 325 5131</a></li>
+                        <li><strong>Sähköposti:</strong> <a href="mailto:info@helsinkiebikeservice.fi">info@helsinkiebikeservice.fi</a></li>
+                        <li><strong>Toimipaikka:</strong> Aarteenetsijäntie 4 E, 00970 Helsinki</li>
+                        <li><strong>Postiosoite:</strong> Aarteenetsijäntie 4, 00970 Helsinki</li>
                     </ul>
                     <div class="contact__cta">
-                        <a class="btn btn--primary" href="mailto:info@harjunraskaskone.fi">Lähetä tarjouspyyntö</a>
-                        <a class="btn btn--ghost" href="tel:+3584578366680">Soita meille</a>
+                        <a class="btn btn--primary" href="mailto:info@helsinkiebikeservice.fi">Lähetä tarjouspyyntö</a>
+                        <a class="btn btn--ghost" href="tel:+358403255131">Soita meille</a>
                     </div>
                 </div>
                 <form class="contact__form">
@@ -266,11 +358,11 @@
                     </label>
                     <label>
                         Puhelin
-                        <input type="tel" name="puhelin" placeholder="045 123 4567">
+                        <input type="tel" name="puhelin" placeholder="040 123 4567">
                     </label>
                     <label>
                         Viesti
-                        <textarea name="viesti" rows="4" placeholder="Kerro projektista ja aikataulusta" required></textarea>
+                        <textarea name="viesti" rows="4" placeholder="Kerro sähköpyöristäsi, yrityksestäsi ja aikataulusta" required></textarea>
                     </label>
                     <button type="submit" class="btn btn--primary">Lähetä viesti</button>
                     <p class="contact__disclaimer">Lähettämällä viestin hyväksyt, että tietosi tallennetaan yhteydenottoa varten.</p>
@@ -281,38 +373,38 @@
 
     <footer class="footer">
         <div class="footer__branding">
-            <span class="footer__logo">Harjun Raskaskone Oy</span>
-            <p>Raskaan kaluston huolto-, vuokraus- ja myyntipalvelut luotettavasti koko Suomessa.</p>
+            <span class="footer__logo">Helsinki eBike-Service Oy</span>
+            <p>Sähköpyörien huolto, varaosat ja verkkokauppa saman katon alta. Palvelemme koko pääkaupunkiseutua.</p>
         </div>
         <div class="footer__links">
             <div>
                 <h4>Yhteystiedot</h4>
                 <ul>
-                    <li><a href="tel:+3584578366680">045 783 666 80</a></li>
-                    <li><a href="mailto:info@harjunraskaskone.fi">info@harjunraskaskone.fi</a></li>
-                    <li>Koroistentie 10, 00280 Helsinki</li>
+                    <li><a href="tel:+358403255131">040 325 5131</a></li>
+                    <li><a href="mailto:info@helsinkiebikeservice.fi">info@helsinkiebikeservice.fi</a></li>
+                    <li>Aarteenetsijäntie 4 E, 00970 Helsinki</li>
                 </ul>
             </div>
             <div>
                 <h4>Palvelut</h4>
                 <ul>
-                    <li><a href="#palvelut">Huolto &amp; korjaus</a></li>
-                    <li><a href="#vuokraus">Vuokrauskalusto</a></li>
-                    <li><a href="#myynti">Myyntikalusto</a></li>
+                    <li><a href="#palvelut">Sähköpyörähuolto</a></li>
+                    <li><a href="#paketit">Huoltopaketit</a></li>
+                    <li><a href="#verkkokauppa">Verkkokauppa</a></li>
                 </ul>
             </div>
             <div>
                 <h4>Yritys</h4>
                 <ul>
-                    <li><a href="#referenssit">Referenssit</a></li>
-                    <li><a href="#yhteys">Yhteydenotto</a></li>
+                    <li><a href="#referenssit">Asiakastarinat</a></li>
+                    <li><a href="#yhteys">Ota yhteyttä</a></li>
                     <li><a href="#etusivu">Etusivu</a></li>
                 </ul>
             </div>
         </div>
         <div class="footer__meta">
-            <span>Y-tunnus 2578643-3</span>
-            <span>© <span id="year"></span> Harjun Raskaskone Oy. Kaikki oikeudet pidätetään.</span>
+            <span>Y-tunnus 3496925-8</span>
+            <span>© <span id="year"></span> Helsinki eBike-Service Oy. Kaikki oikeudet pidätetään.</span>
         </div>
     </footer>
 
