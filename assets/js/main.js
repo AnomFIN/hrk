@@ -2,17 +2,32 @@ const nav = document.querySelector('.nav');
 const navToggle = document.querySelector('.nav__toggle');
 const navLinks = document.querySelector('.nav__links');
 
+const isNavOpen = () => navLinks?.classList.contains('nav__links--open') ?? false;
+
+const setNavState = (isOpen) => {
+    if (!navLinks || !navToggle) {
+        return;
+    }
+
+    navLinks.classList.toggle('nav__links--open', isOpen);
+    navToggle.classList.toggle('nav__toggle--active', isOpen);
+    navToggle.setAttribute('aria-expanded', String(isOpen));
+};
+
 const toggleNav = () => {
-    navLinks.classList.toggle('nav__links--open');
-    navToggle.classList.toggle('nav__toggle--active');
+    setNavState(!isNavOpen());
+};
+
+const closeNav = () => {
+    setNavState(false);
 };
 
 navToggle?.addEventListener('click', toggleNav);
 
 navLinks?.addEventListener('click', (event) => {
     if (event.target.matches('a')) {
-        navLinks.classList.remove('nav__links--open');
-        navToggle.classList.remove('nav__toggle--active');
+        closeNav();
+        navToggle?.focus();
     }
 });
 
@@ -33,11 +48,18 @@ if (yearEl) {
 }
 
 const trapFocus = (event) => {
-    if (!navLinks?.classList.contains('nav__links--open')) {
+    if (!isNavOpen()) {
+        return;
+    }
+
+    if (!navLinks) {
         return;
     }
 
     const focusableElements = navLinks.querySelectorAll('a');
+    if (!focusableElements.length) {
+        return;
+    }
     const first = focusableElements[0];
     const last = focusableElements[focusableElements.length - 1];
 
@@ -53,20 +75,25 @@ const trapFocus = (event) => {
 navLinks?.addEventListener('keydown', trapFocus);
 
 document.addEventListener('click', (event) => {
-    if (!navLinks?.classList.contains('nav__links--open')) {
+    if (!isNavOpen() || !navLinks || !navToggle) {
         return;
     }
 
     if (!navLinks.contains(event.target) && !navToggle.contains(event.target)) {
-        navLinks.classList.remove('nav__links--open');
-        navToggle.classList.remove('nav__toggle--active');
+        closeNav();
     }
 });
 
 window.addEventListener('resize', () => {
     if (window.innerWidth > 960) {
-        navLinks?.classList.remove('nav__links--open');
-        navToggle?.classList.remove('nav__toggle--active');
+        closeNav();
+    }
+});
+
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && isNavOpen()) {
+        closeNav();
+        navToggle?.focus();
     }
 });
 
