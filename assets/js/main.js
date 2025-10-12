@@ -1,30 +1,33 @@
 const nav = document.querySelector('.nav');
 const navToggle = document.querySelector('.nav__toggle');
-const navLinks = document.getElementById('site-navigation');
+const navLinks = document.querySelector('.nav__links');
+
+const isNavOpen = () => navLinks?.classList.contains('nav__links--open') ?? false;
 
 const setNavState = (isOpen) => {
-    if (navLinks) {
-        navLinks.classList.toggle('nav__links--open', isOpen);
-    }
-
-    if (navToggle) {
-        navToggle.classList.toggle('nav__toggle--active', isOpen);
-        navToggle.setAttribute('aria-expanded', String(isOpen));
-    }
-};
-
-navToggle?.addEventListener('click', () => {
-    if (!navLinks) {
+    if (!navLinks || !navToggle) {
         return;
     }
 
-    const isOpen = !navLinks.classList.contains('nav__links--open');
-    setNavState(isOpen);
-});
+    navLinks.classList.toggle('nav__links--open', isOpen);
+    navToggle.classList.toggle('nav__toggle--active', isOpen);
+    navToggle.setAttribute('aria-expanded', String(isOpen));
+};
+
+const toggleNav = () => {
+    setNavState(!isNavOpen());
+};
+
+const closeNav = () => {
+    setNavState(false);
+};
+
+navToggle?.addEventListener('click', toggleNav);
 
 navLinks?.addEventListener('click', (event) => {
     if (event.target.matches('a')) {
-        setNavState(false);
+        closeNav();
+        navToggle?.focus();
     }
 });
 
@@ -44,67 +47,12 @@ if (yearEl) {
     yearEl.textContent = new Date().getFullYear();
 }
 
-const storeFilters = document.querySelectorAll('.store__filter');
-const storeCards = document.querySelectorAll('.store-card');
-const storeSearchInput = document.getElementById('store-search');
-const storeCount = document.querySelector('[data-store-count]');
-
-const getActiveFilter = () => {
-    return document.querySelector('.store__filter.is-active')?.dataset.filter ?? 'all';
-};
-
-const updateStoreVisibility = () => {
-    const filter = getActiveFilter();
-    const query = storeSearchInput?.value.trim().toLowerCase() ?? '';
-    let visibleCount = 0;
-
-    storeCards.forEach((card) => {
-        const categories = (card.dataset.categories ?? '').split(/\s+/);
-        const matchesFilter = filter === 'all' || categories.includes(filter);
-        const textContent = card.textContent.toLowerCase();
-        const matchesQuery = !query || textContent.includes(query);
-        const isVisible = matchesFilter && matchesQuery;
-
-        card.classList.toggle('is-hidden', !isVisible);
-        card.setAttribute('aria-hidden', String(!isVisible));
-
-        if (isVisible) {
-            visibleCount += 1;
-        }
-    });
-
-    if (storeCount) {
-        storeCount.textContent = visibleCount;
-    }
-};
-
-storeFilters.forEach((button) => {
-    button.addEventListener('click', () => {
-        if (button.classList.contains('is-active')) {
-            return;
-        }
-
-        storeFilters.forEach((item) => {
-            item.classList.remove('is-active');
-            item.setAttribute('aria-pressed', 'false');
-        });
-
-        button.classList.add('is-active');
-        button.setAttribute('aria-pressed', 'true');
-        updateStoreVisibility();
-    });
-});
-
-storeSearchInput?.addEventListener('input', () => {
-    updateStoreVisibility();
-});
-
-if (storeCards.length) {
-    updateStoreVisibility();
-}
-
 const trapFocus = (event) => {
-    if (!navLinks || !navLinks.classList.contains('nav__links--open')) {
+    if (!isNavOpen()) {
+        return;
+    }
+
+    if (!navLinks) {
         return;
     }
 
@@ -112,7 +60,6 @@ const trapFocus = (event) => {
     if (!focusableElements.length) {
         return;
     }
-
     const first = focusableElements[0];
     const last = focusableElements[focusableElements.length - 1];
 
@@ -128,50 +75,76 @@ const trapFocus = (event) => {
 navLinks?.addEventListener('keydown', trapFocus);
 
 document.addEventListener('click', (event) => {
-    if (!navLinks || !navLinks.classList.contains('nav__links--open')) {
+    if (!isNavOpen() || !navLinks || !navToggle) {
         return;
     }
 
-    if (!navLinks.contains(event.target) && (!navToggle || !navToggle.contains(event.target))) {
-        setNavState(false);
+    if (!navLinks.contains(event.target) && !navToggle.contains(event.target)) {
+        closeNav();
     }
 });
 
 window.addEventListener('resize', () => {
     if (window.innerWidth > 960) {
-        setNavState(false);
+        closeNav();
     }
 });
 
-setNavState(false);
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && isNavOpen()) {
+        closeNav();
+        navToggle?.focus();
+    }
+});
 
-const faqQuestions = document.querySelectorAll('.faq__question');
+const calculatorForm = document.getElementById('savings-calculator');
+const calculatorResult = document.getElementById('savings-result');
 
-faqQuestions.forEach((question) => {
-    question.addEventListener('click', () => {
-        const expanded = question.getAttribute('aria-expanded') === 'true';
-        const answer = question.nextElementSibling;
+const formatCurrency = (value) =>
+    new Intl.NumberFormat('fi-FI', {
+        style: 'currency',
+        currency: 'EUR',
+        maximumFractionDigits: 0,
+    }).format(Math.round(value));
 
-        question.setAttribute('aria-expanded', String(!expanded));
+const formatHours = (value) =>
+    new Intl.NumberFormat('fi-FI', {
+        maximumFractionDigits: value < 10 ? 1 : 0,
+    }).format(value);
 
-        if (answer instanceof HTMLElement) {
-            if (expanded) {
-                answer.setAttribute('hidden', '');
-            } else {
-                answer.removeAttribute('hidden');
-            }
-        }
+calculatorForm?.addEventListener('submit', (event) => {
+    event.preventDefault();
 
-        faqQuestions.forEach((other) => {
-            if (other === question) {
-                return;
-            }
+    const formData = new FormData(calculatorForm);
+    const machines = Number(formData.get('machines'));
+    const downtime = Number(formData.get('downtime'));
+    const hourlyCost = Number(formData.get('hourlyCost'));
+    const prevented = Number(formData.get('prevented'));
 
-            other.setAttribute('aria-expanded', 'false');
-            const otherAnswer = other.nextElementSibling;
-            if (otherAnswer instanceof HTMLElement) {
-                otherAnswer.setAttribute('hidden', '');
-            }
-        });
-    });
+    if ([machines, downtime, hourlyCost, prevented].some((value) => Number.isNaN(value) || value < 0)) {
+        calculatorResult.innerHTML =
+            '<p class="calculator__placeholder">Tarkista syötetyt arvot. Kaikkien lukujen tulee olla positiivisia.</p>';
+        return;
+    }
+
+    const effectiveness = Math.min(Math.max(prevented, 0), 100) / 100;
+    const regainedHours = machines * downtime * effectiveness;
+    const monthlySavings = regainedHours * hourlyCost;
+    const annualSavings = monthlySavings * 12;
+
+    if (monthlySavings <= 0) {
+        calculatorResult.innerHTML =
+            '<p class="calculator__placeholder">Lisää ennakoivan kunnossapidon vaikutusta nähdäksesi säästöt. AnomFIN • AnomTools auttaa mitoittamaan tavoitteet.</p>';
+        return;
+    }
+
+    calculatorResult.innerHTML = `
+        <h3>Arvio säästöistä</h3>
+        <p>Ennakoiva kunnossapito voi palauttaa <strong>${formatHours(regainedHours)}</strong> tuotantotuntia kuukausittain.</p>
+        <ul>
+            <li><span>Kuukausittainen hyöty</span><strong>${formatCurrency(monthlySavings)}</strong></li>
+            <li><span>Vuosittainen hyöty</span><strong>${formatCurrency(annualSavings)}</strong></li>
+        </ul>
+        <p class="calculator__hint">Arvio perustuu AnomFIN • AnomTools tilannehuollon datamalliin. Räätälöidyt laskelmat saat kattavan kuntokartoituksen yhteydessä.</p>
+    `;
 });
