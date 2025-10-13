@@ -5,21 +5,22 @@ const navAnchorLinks = document.querySelectorAll('.nav__link[data-scroll]');
 const revealElements = document.querySelectorAll('[data-reveal]');
 const floatingCta = document.querySelector('[data-floating-cta]');
 const floatingOrigin = document.querySelector('[data-floating-origin]');
-const storeElements = document.querySelectorAll('[data-store]');
-const addToCartButtons = document.querySelectorAll('[data-add-to-cart]');
-const navCartCounters = document.querySelectorAll('[data-cart-counter]');
-const counterElements = document.querySelectorAll('[data-counter]');
-const calculatorForm = document.getElementById('savings-calculator');
-const calculatorResult = document.getElementById('savings-result');
-const yearEl = document.getElementById('year');
-
-const CART_STORAGE_KEY = 'helsinki-ebike-cart-v1';
 
 const prefersReducedMotion = window.matchMedia
     ? window.matchMedia('(prefers-reduced-motion: reduce)')
     : { matches: false };
 
 const isNavOpen = () => navLinks?.classList.contains('nav__links--open') ?? false;
+
+const setNavState = (isOpen) => {
+    if (!navLinks || !navToggle) {
+        return;
+    }
+
+    navLinks.classList.toggle('nav__links--open', isOpen);
+    navToggle.classList.toggle('nav__toggle--active', isOpen);
+    navToggle.setAttribute('aria-expanded', String(isOpen));
+};
 
 const setNavState = (isOpen) => {
     if (!navLinks || !navToggle) {
@@ -38,6 +39,10 @@ const toggleNav = () => {
 const closeNav = () => {
     setNavState(false);
 };
+
+const closeNav = () => setNavState(false);
+
+setNavState(false);
 
 navToggle?.addEventListener('click', toggleNav);
 
@@ -537,5 +542,3 @@ document.addEventListener('DOMContentLoaded', () => {
 
     updateFloatingDynamics();
 });
-
-updateCartDisplays();

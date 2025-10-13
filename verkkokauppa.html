@@ -25,12 +25,11 @@
                 <li><a class="nav__link" href="#paketit" data-scroll="paketit">Huoltopaketit</a></li>
                 <li><a class="nav__link" href="#yhteys" data-scroll="yhteys">Yhteys</a></li>
                 <li class="nav__cart">
-                    <a class="nav__link nav__link--cart" href="#ostoskori" data-scroll="ostoskori">
-                        <span>Ostoskori</span>
-                        <span class="nav__cart-count" data-cart-counter aria-hidden="true">0</span>
+                    <a class="nav__link nav__link--cart" href="index.html" aria-label="Palaa pääsivulle">
+                        <span>Takaisin</span>
+                        <span class="nav__cart-count" aria-hidden="true">⇠</span>
                     </a>
                 </li>
-                <li><a class="nav__link" href="index.html">Takaisin</a></li>
             </ul>
         </nav>
         <div class="hero__content">
@@ -68,130 +67,60 @@
     </a>
 
     <main>
-        <section class="section section--catalog" id="ostoskori" data-reveal>
-            <div class="section__intro">
-                <span class="kicker">Verkkokauppa</span>
-                <h2>Kokoa ostoskori, joka yhdistää sähköpyörät, varusteet ja huoltosopimukset</h2>
-                <p>Valitse tuotteet yhdestä kuratoidusta näkymästä. Suodata valikoimaa ja seuraa ostoskorin päivittymistä reaaliajassa – concierge-tiimi viimeistelee toimituksen kanssasi.</p>
-            </div>
-            <div class="store store--catalog" data-store>
-                <div class="store__toolbar" role="toolbar" aria-label="Suodata tuotteita">
-                    <button class="store__filter is-active" type="button" data-filter="all">Kaikki</button>
-                    <button class="store__filter" type="button" data-filter="urban">Urban</button>
-                    <button class="store__filter" type="button" data-filter="cargo">Cargo</button>
-                    <button class="store__filter" type="button" data-filter="design">Design</button>
-                    <button class="store__filter" type="button" data-filter="varusteet">Varusteet</button>
-                    <button class="store__filter" type="button" data-filter="huolto">Huoltopaketit</button>
-                </div>
-                <div class="store__cart" aria-live="polite">
-                    <h3>Ostoskori</h3>
-                    <p class="store__cart-empty" data-cart-empty>Ei tuotteita vielä. Lisää valikoimasta ja saat concierge-tiimiltämme vahvistuksen minuuteissa.</p>
-                    <ul class="store__cart-items" data-cart-items></ul>
-                    <div class="store__cart-summary">
-                        <span>Välisumma</span>
-                        <strong data-cart-total>0,00 €</strong>
-                    </div>
-                    <p class="store__cart-note">Lähetä ostoskori painamalla <em>Pyydä asiantuntijaa</em> ja liitä yritys- tai yhteystietosi.</p>
-                    <a class="btn btn--primary" href="#yhteys">Pyydä asiantuntijaa</a>
-                </div>
-                <div class="store__grid">
-                    <article class="store-card" data-product="Tenways CGO One" data-price="2899" data-category="urban">
-                        <img src="https://images.unsplash.com/photo-1529429617124-aee711a0fb7c?auto=format&fit=crop&w=1200&q=80" alt="Tyylikäs sähköpyörä showroomissa" loading="lazy">
-                        <div class="store-card__body">
-                            <span class="store-card__tag">Urban</span>
-                            <h3>Tenways CGO One</h3>
-                            <p>Kevyt hiilikuiturunko, hihnaveto ja 90 km kantama. Sisältää AnomFIN Launch Care 299 -palvelun.</p>
-                            <div class="store-card__footer">
-                                <span class="store-card__price">2 899 €</span>
-                                <button class="btn btn--secondary" type="button" data-add-to-cart>Lisää koriin</button>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="store-card" data-product="Tern GSD Performance" data-price="5490" data-category="cargo">
-                        <img src="https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=1200&q=80" alt="Tavarasähköpyörä ulkona" loading="lazy">
-                        <div class="store-card__body">
-                            <span class="store-card__tag">Cargo</span>
-                            <h3>Tern GSD Performance</h3>
-                            <p>Yritystason jakelupyörä kaksoisakkujärjestelmällä. Mukana Fleet Signature 1499 -sopimus.</p>
-                            <div class="store-card__footer">
-                                <span class="store-card__price">5 490 €</span>
-                                <button class="btn btn--secondary" type="button" data-add-to-cart>Lisää koriin</button>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="store-card" data-product="Specialized Turbo Como" data-price="3990" data-category="design">
-                        <img src="https://images.unsplash.com/photo-1523419409543-0c1df022bdd9?auto=format&fit=crop&w=1200&q=80" alt="Design-sähköpyörä kaupunkimaisemassa" loading="lazy">
-                        <div class="store-card__body">
-                            <span class="store-card__tag">Comfort</span>
-                            <h3>Specialized Turbo Como</h3>
-                            <p>Älykäs näytöllinen ajotuki, sisäinen johdotus ja integroidut valot. Premium Pro Active 699 -huoltotaso.</p>
-                            <div class="store-card__footer">
-                                <span class="store-card__price">3 990 €</span>
-                                <button class="btn btn--secondary" type="button" data-add-to-cart>Lisää koriin</button>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="store-card" data-product="VanMoof S5" data-price="3690" data-category="design">
-                        <img src="https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?auto=format&fit=crop&w=1200&q=80" alt="VanMoof sähköpyörä" loading="lazy">
-                        <div class="store-card__body">
-                            <span class="store-card__tag">Design</span>
-                            <h3>VanMoof S5</h3>
-                            <p>Integroitu varashälytin ja automaattinen vaihteisto. Sisältää kaksi vuoden AnomFIN-takuun.</p>
-                            <div class="store-card__footer">
-                                <span class="store-card__price">3 690 €</span>
-                                <button class="btn btn--secondary" type="button" data-add-to-cart>Lisää koriin</button>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="store-card" data-product="Giro Manifest Spherical" data-price="289" data-category="varusteet">
-                        <img src="https://images.unsplash.com/photo-1505678261036-a3fcc5e884ee?auto=format&fit=crop&w=1200&q=80" alt="Giro Manifest sähköpyöräkypärä" loading="lazy">
-                        <div class="store-card__body">
-                            <span class="store-card__tag">Varusteet</span>
-                            <h3>Giro Manifest Spherical</h3>
-                            <p>MIPS-suojaus, säädettävä ilmanvaihto ja AnomFIN-sovitus takaa täydellisen istuvuuden.</p>
-                            <div class="store-card__footer">
-                                <span class="store-card__price">289 €</span>
-                                <button class="btn btn--secondary" type="button" data-add-to-cart>Lisää koriin</button>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="store-card" data-product="Launch Care 299" data-price="299" data-category="huolto">
-                        <img src="assets/ebike_web.png" alt="Huoltopaketti Launch Care 299 sähköpyörälle" loading="lazy">
-                        <div class="store-card__body">
-                            <span class="store-card__tag">Huolto</span>
-                            <h3>Launch Care 299</h3>
-                            <p>Ensihuolto ja ohjelmistopäivitykset uuden sähköpyörän luovutukseen – concierge hoitaa aikataulun.</p>
-                            <div class="store-card__footer">
-                                <span class="store-card__price">299 €</span>
-                                <button class="btn btn--secondary" type="button" data-add-to-cart>Lisää koriin</button>
-                            </div>
-                        </div>
-                    </article>
-                </div>
-                
-        </section>
-
         <section class="section section--light" id="pyorat" data-reveal>
             <div class="section__intro">
-                <span class="kicker">Sähköpyöräkokemukset</span>
-                <h2>Valitse sinulle sopiva käyttötapaus ja anna concierge-tiimin huolehtia lopusta</h2>
-                <p>Kuvaamme jokaisen toimituksen, koeajon ja huoltotyön datalla. Näet raportit verkkokaupassa sekä sähköpostissa, kun tilauksesi etenee.</p>
+                <span class="kicker">Sähköpyörät</span>
+                <h2>Kuratoitu mallisto kaupunkien ja logistiikan tarpeisiin</h2>
+                <p>Kaikki mallimme ovat saatavilla nopealla toimituksella sekä leasing- että yritysostoihin. Jokainen toimitus sisältää AnomFIN-käyttöönoton ja elinkaariseurannan.</p>
             </div>
-            <div class="experience-panels">
-                <article class="experience-panel">
-                    <h3>Urban Flow</h3>
-                    <p>Ketterä työmatkakokemus Tenways- ja VanMoof-malleilla. Sisältää Launch Care 299 -paketin.</p>
-                    <a class="btn btn--secondary" href="#ostoskori">Lisää mallit koriin</a>
+            <div class="store__grid">
+                <article class="store-card" data-product="Tenways CGO One" data-price="2899">
+                    <img src="https://images.unsplash.com/photo-1529429617124-aee711a0fb7c?auto=format&fit=crop&w=1200&q=80" alt="Tyylikäs sähköpyörä showroomissa" loading="lazy">
+                    <div class="store-card__body">
+                        <span class="store-card__tag">Urban</span>
+                        <h3>Tenways CGO One</h3>
+                        <p>Kevyt hiilikuiturunko, hihnaveto ja 90 km kantama. Sisältää AnomFIN Launch Care 299 -palvelun.</p>
+                        <div class="store-card__footer">
+                            <span class="store-card__price">2 899 €</span>
+                            <button class="btn btn--secondary" type="button" data-add-to-cart>Lisää koriin</button>
+                        </div>
+                    </div>
                 </article>
-                <article class="experience-panel">
-                    <h3>Cargo Logistics</h3>
-                    <p>Tern GSD Performance plus Fleet Signature 1499 luovat operatiivisen tehokkuuden ilman seisokkeja.</p>
-                    <a class="btn btn--secondary" href="#ostoskori">Tutustu kokonaisuuteen</a>
+                <article class="store-card" data-product="Tern GSD Performance" data-price="5490">
+                    <img src="https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=1200&q=80" alt="Tavarasähköpyörä ulkona" loading="lazy">
+                    <div class="store-card__body">
+                        <span class="store-card__tag">Cargo</span>
+                        <h3>Tern GSD Performance</h3>
+                        <p>Yritystason jakelupyörä kaksoisakkujärjestelmällä. Mukana Fleet Signature 1499 -sopimus.</p>
+                        <div class="store-card__footer">
+                            <span class="store-card__price">5 490 €</span>
+                            <button class="btn btn--secondary" type="button" data-add-to-cart>Lisää koriin</button>
+                        </div>
+                    </div>
                 </article>
-                <article class="experience-panel">
-                    <h3>Design Lounge</h3>
-                    <p>Specialized Turbo Como ja premium-varusteet tuovat lounge-tyylisen premium-elämyksen showroomiin.</p>
-                    <a class="btn btn--secondary" href="#ostoskori">Kuratoi oma setti</a>
+                <article class="store-card" data-product="Specialized Turbo Como" data-price="3990">
+                    <img src="https://images.unsplash.com/photo-1523419409543-0c1df022bdd9?auto=format&fit=crop&w=1200&q=80" alt="Design-sähköpyörä kaupunkimaisemassa" loading="lazy">
+                    <div class="store-card__body">
+                        <span class="store-card__tag">Comfort</span>
+                        <h3>Specialized Turbo Como</h3>
+                        <p>Älykäs näytöllinen ajotuki, sisäinen johdotus ja integroidut valot. Premium Pro Active 699 -huoltotaso.</p>
+                        <div class="store-card__footer">
+                            <span class="store-card__price">3 990 €</span>
+                            <button class="btn btn--secondary" type="button" data-add-to-cart>Lisää koriin</button>
+                        </div>
+                    </div>
+                </article>
+                <article class="store-card" data-product="VanMoof S5" data-price="3690">
+                    <img src="https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?auto=format&fit=crop&w=1200&q=80" alt="VanMoof sähköpyörä" loading="lazy">
+                    <div class="store-card__body">
+                        <span class="store-card__tag">Design</span>
+                        <h3>VanMoof S5</h3>
+                        <p>Integroitu varashälytin ja automaattinen vaihteisto. Sisältää kaksi vuoden AnomFIN-takuun.</p>
+                        <div class="store-card__footer">
+                            <span class="store-card__price">3 690 €</span>
+                            <button class="btn btn--secondary" type="button" data-add-to-cart>Lisää koriin</button>
+                        </div>
+                    </div>
                 </article>
             </div>
         </section>
@@ -203,7 +132,7 @@
                 <p>Kypärät, valaisimet ja latausratkaisut, jotka täydentävät sähköpyöräkokonaisuuden. Kaikki varusteet ovat yhteensopivia yllä mainittujen mallien kanssa.</p>
             </div>
             <div class="store__grid">
-                <article class="store-card" data-product="Giro Manifest" data-price="289" data-category="varusteet">
+                <article class="store-card" data-product="Giro Manifest" data-price="289">
                     <img src="https://images.unsplash.com/photo-1505678261036-a3fcc5e884ee?auto=format&fit=crop&w=1200&q=80" alt="Giro Manifest kypärä" loading="lazy">
                     <div class="store-card__body">
                         <span class="store-card__tag">Turvallisuus</span>
@@ -215,7 +144,7 @@
                         </div>
                     </div>
                 </article>
-                <article class="store-card" data-product="Bosch PowerTube" data-price="799" data-category="varusteet">
+                <article class="store-card" data-product="Bosch PowerTube" data-price="799">
                     <img src="https://images.unsplash.com/photo-1509395176047-4a66953fd231?auto=format&fit=crop&w=1200&q=80" alt="Bosch PowerTube akku" loading="lazy">
                     <div class="store-card__body">
                         <span class="store-card__tag">Varaosat</span>
@@ -227,7 +156,7 @@
                         </div>
                     </div>
                 </article>
-                <article class="store-card" data-product="Supernova E3 Pro" data-price="349" data-category="varusteet">
+                <article class="store-card" data-product="Supernova E3 Pro" data-price="349">
                     <img src="https://images.unsplash.com/photo-1604272011436-1d760c6fc1d8?auto=format&fit=crop&w=1200&q=80" alt="Supernova valosarja" loading="lazy">
                     <div class="store-card__body">
                         <span class="store-card__tag">Valot</span>
@@ -249,7 +178,7 @@
                 <p>Valitse huoltopaketti verkkokaupan tilauksen yhteydessä. Paketit voidaan yhdistää kaikkiin malleihin ja varusteisiin.</p>
             </div>
             <div class="grid grid--3">
-                <article class="product" data-product="Launch Care 299" data-price="299" data-category="huolto">
+                <article class="product">
                     <img src="assets/ebike_web.png" alt="Huoltoasiantuntija säätää sähköpyörää" loading="lazy">
                     <div class="product__body">
                         <h3>Launch Care 299</h3>
@@ -259,10 +188,9 @@
                             <li>Täydellinen turvatarkastus</li>
                             <li>Akun kapasiteettiraportti</li>
                         </ul>
-                        <button class="btn btn--secondary" type="button" data-add-to-cart>Lisää koriin</button>
                     </div>
                 </article>
-                <article class="product" data-product="Pro Active 699" data-price="699" data-category="huolto">
+                <article class="product">
                     <img src="assets/ebike_web2.png" alt="Premium sähköpyörä huollossa" loading="lazy">
                     <div class="product__body">
                         <h3>Pro Active 699</h3>
@@ -272,10 +200,9 @@
                             <li>Varaosat -15 %</li>
                             <li>24h vasteaika</li>
                         </ul>
-                        <button class="btn btn--secondary" type="button" data-add-to-cart>Lisää koriin</button>
                     </div>
                 </article>
-                <article class="product" data-product="Fleet Signature 1499" data-price="1499" data-category="huolto">
+                <article class="product">
                     <img src="assets/ebikewp.webp" alt="Fleet-huolto työpajassa" loading="lazy">
                     <div class="product__body">
                         <h3>Fleet Signature 1499</h3>
@@ -285,30 +212,7 @@
                             <li>Varapyöräpooli</li>
                             <li>CO₂-seurantadata</li>
                         </ul>
-                        <button class="btn btn--secondary" type="button" data-add-to-cart>Lisää koriin</button>
                     </div>
-                </article>
-            </div>
-        </section>
-
-        <section class="section section--accent" data-reveal>
-            <div class="section__intro">
-                <span class="kicker kicker--light">Luottamus</span>
-                <h2>Premium-verkkokauppa, jossa kaikki yksityiskohdat on viimeistelty</h2>
-                <p>Moderni teknologia yhdistyy concierge-palveluun. Jokainen animaatio, varjostus ja CTA on suunniteltu ohjaamaan käyttäjä kohti ostoa ja jättämään muistijäljen.</p>
-            </div>
-            <div class="promise-grid">
-                <article class="promise">
-                    <h3>Live-inventaario</h3>
-                    <p>Varastot päivittyvät taustalla ja näkyvät heti ostoskorissa. Valitse toimitusikkuna ja seuraa logistiikkaa reaaliajassa.</p>
-                </article>
-                <article class="promise">
-                    <h3>AnomFIN concierge</h3>
-                    <p>Jugi@AnomFIN-tiimi varmistaa, että jokainen tilaus on täydellisesti konfiguroitu – huoltopaketit ja varusteet synkataan puolestasi.</p>
-                </article>
-                <article class="promise">
-                    <h3>Signature-animaatiot</h3>
-                    <p>Sisääntulon fade, kelluva CTA ja hissi-efekti kertovat, että kyseessä on iso brändi. Käyttökokemus on hillityn näyttävä.</p>
                 </article>
             </div>
         </section>

@@ -930,65 +930,6 @@ header,
     gap: 0.65rem;
 }
 
-.experience-panels {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 2rem;
-    max-width: var(--max-width);
-    margin: 0 auto;
-}
-
-.experience-panel {
-    padding: 2rem;
-    border-radius: var(--radius-lg);
-    background: linear-gradient(135deg, rgba(14, 165, 233, 0.16), rgba(45, 212, 191, 0.18));
-    box-shadow: 0 32px 60px rgba(4, 19, 31, 0.12);
-    display: grid;
-    gap: 1rem;
-}
-
-.experience-panel h3 {
-    font-size: 1.4rem;
-}
-
-.experience-panel p {
-    color: var(--color-muted);
-}
-
-.experience-panel .btn {
-    justify-self: start;
-}
-
-.promise-grid {
-    max-width: var(--max-width);
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 2rem;
-}
-
-.promise {
-    padding: 2.2rem;
-    border-radius: var(--radius-lg);
-    background: rgba(4, 19, 31, 0.18);
-    color: var(--color-white);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
-}
-
-.promise h3 {
-    font-size: 1.3rem;
-    margin-bottom: 1rem;
-}
-
-.promise p {
-    color: rgba(226, 232, 240, 0.85);
-}
-
-.product__body .btn {
-    margin-top: 0.5rem;
-    align-self: start;
-}
-
 .sales-grid {
     display: grid;
     gap: 2.5rem;
@@ -1510,17 +1451,6 @@ header,
     margin-top: 1.5rem;
 }
 
-@media (max-width: 1080px) {
-    .store {
-        grid-template-columns: 1fr;
-    }
-
-    .store__cart {
-        position: sticky;
-        top: 100px;
-    }
-}
-
 @media (max-width: 960px) {
     .nav {
         padding: 1rem 1.5rem;
@@ -1597,22 +1527,6 @@ header,
         top: auto;
         margin-top: 1.5rem;
     }
-
-    .experience__grid,
-    .experience__timeline,
-    .experience-panels,
-    .promise-grid,
-    .gallery__grid {
-        grid-template-columns: 1fr;
-    }
-
-    .gallery__item--large {
-        grid-row: auto;
-    }
-
-    .store__toolbar {
-        justify-content: flex-start;
-    }
 }
 
 @media (max-width: 640px) {
@@ -1623,23 +1537,6 @@ header,
     .hero__actions {
         flex-direction: column;
         align-items: stretch;
-    }
-
-    .store__toolbar {
-        gap: 0.5rem;
-    }
-
-    .store__filter {
-        flex: 1 1 45%;
-        text-align: center;
-    }
-
-    .gallery__cta {
-        text-align: center;
-    }
-
-    .gallery__cta .btn {
-        align-self: center;
     }
 
     .floating-cta {

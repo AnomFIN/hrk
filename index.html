@@ -20,7 +20,6 @@
                 <span></span>
             </button>
             <ul class="nav__links" id="nav-menu">
-                <li><a class="nav__link" href="#kokemus" data-scroll="kokemus">Elämys</a></li>
                 <li><a class="nav__link" href="#palvelut" data-scroll="palvelut">Palvelut</a></li>
                 <li><a class="nav__link" href="#vuokraus" data-scroll="vuokraus">Vuokraus</a></li>
                 <li><a class="nav__link" href="#myynti" data-scroll="myynti">Myynti</a></li>
@@ -30,7 +29,7 @@
                 <li class="nav__cart">
                     <a class="nav__link nav__link--cart" href="verkkokauppa.html" aria-label="Siirry verkkokauppaan">
                         <span>Verkkokauppa</span>
-                        <span class="nav__cart-count" data-cart-counter aria-hidden="true">0</span>
+                        <span class="nav__cart-count" aria-hidden="true">⇢</span>
                     </a>
                 </li>
             </ul>
@@ -84,72 +83,6 @@
     </a>
 
     <main>
-        <section class="section section--experience" id="kokemus" data-reveal>
-            <div class="experience">
-                <div class="experience__intro">
-                    <span class="kicker">Signature-elämys</span>
-                    <h2>AnomFIN Experience varmistaa, että jokainen kohtaaminen tuntuu premiumilta</h2>
-                    <p>Rakensimme kokonaisuuden, jossa sisääntulon pehmeä fade, concierge-palvelu ja verkkokaupan elävyys muodostavat yhden saumattoman polun. Elegantit mikroanimaatiot johdattavat käyttäjän kohti ostoa tinkimättä viimeistellystä ulkoasusta.</p>
-                    <div class="experience__tags">
-                        <span>Apple-henkinen viimeistely</span>
-                        <span>Jugi@AnomFIN curated</span>
-                        <span>Huolto • Myynti • Verkkokauppa</span>
-                    </div>
-                </div>
-                <div class="experience__grid">
-                    <article class="experience-card">
-                        <img src="assets/ebike_web.png" alt="Sähköpyörä odottaa huoltoa AnomFIN-studiossa" loading="lazy">
-                        <div class="experience-card__body">
-                            <h3>Saapumishetki</h3>
-                            <p>Pehmeä sisääntulo-fade ja navin fluidit liikkeet tekevät ensikohtaamisesta rauhallisen. Concierge-tiimi aktivoi datavetoisen huoltosuunnitelman heti ajanvarauksesta.</p>
-                            <ul>
-                                <li><strong data-counter data-target="4" data-suffix=" kpl">0</strong> reaaliaikaista statuskorttia</li>
-                                <li>Personoitu tervetulotoiminto &amp; CTA</li>
-                                <li>Synkronoitu verkkokauppa ja huolto</li>
-                            </ul>
-                        </div>
-                    </article>
-                    <article class="experience-card">
-                        <img src="assets/ebike_web2.png" alt="Showroom johdattaa asiakkaan premium-sähköpyöriin" loading="lazy">
-                        <div class="experience-card__body">
-                            <h3>Showroom &amp; demo</h3>
-                            <p>Virtuaalinen showroom hyödyntää smooth scroll -efektejä ja kohdistettuja CTA-elementtejä, jotka seuraavat käyttäjää. Jokainen kuva on sähköpyöräportfoliosta ja noudattaa minimalistista väripalettia.</p>
-                            <ul>
-                                <li>Sticky "Tervetuloa verkkokauppaan" -hissi</li>
-                                <li>Scrollaava galleriakerros</li>
-                                <li>Concierge-kalenteri ja live-availability</li>
-                            </ul>
-                        </div>
-                    </article>
-                    <article class="experience-card">
-                        <img src="assets/ebikewp.webp" alt="Huoltoteknikko viimeistelee sähköpyörää" loading="lazy">
-                        <div class="experience-card__body">
-                            <h3>Huolto ja jälkihoito</h3>
-                            <p>Huoltoprosessin jokainen vaihe visualisoidaan aikajanalla. Automatisoidut ilmoitukset ja verkkokaupan ostoskorisynkka pitävät asiakkaan ajan tasalla ilman turhaa klikkailua.</p>
-                            <ul>
-                                <li>Automaattinen tilannepäivitys asiakkaalle</li>
-                                <li>Integroitu huoltopakettisuositus</li>
-                                <li>AnomFIN Aftercare &amp; analytiikka</li>
-                            </ul>
-                        </div>
-                    </article>
-                </div>
-                <div class="experience__timeline" aria-label="Asiakaspolun vaiheet">
-                    <div class="experience__stage">
-                        <span class="experience__stage-time">0–24 h</span>
-                        <p>Virtuaalinen onboarding, jossa concierge varmistaa pyörien sopivuuden ja aktivoi huoltosopimuksen.</p>
-                    </div>
-                    <div class="experience__stage">
-                        <span class="experience__stage-time">24–72 h</span>
-                        <p>Verkkokaupan kuratoitu toimituslista ja ensimmäinen huoltotapaaminen järjestetään automaattisesti.</p>
-                    </div>
-                    <div class="experience__stage">
-                        <span class="experience__stage-time">72 h →</span>
-                        <p>Jatkuva AnomFIN Insight -raportointi ja elinkaaren optimointi pitävät kaluston liikkeessä.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
         <section class="section section--light" id="palvelut" data-reveal>
             <div class="section__intro">
                 <span class="kicker">Palvelumme</span>
@@ -414,35 +347,6 @@
                             </div>
                         </div>
                     </article>
-                </div>
-            </div>
-        </section>
-
-        <section class="section section--gallery" data-reveal>
-            <div class="gallery">
-                <div class="gallery__intro">
-                    <span class="kicker">Inspiraatio</span>
-                    <h2>Visuaalinen lookbook näyttää miksi Helsinki eBike-Service Oy erottuu</h2>
-                    <p>Valitsimme jokaisen kuvan kertomaan eri tarinaa: huoltotekniikka, showroom ja ajonautinto. Mosaiikki on rakennettu AnomFIN-tyylillä – valoa, syvyyttä ja selkeät call to actionit.</p>
-                </div>
-                <div class="gallery__grid">
-                    <figure class="gallery__item gallery__item--large">
-                        <img src="assets/ebikewp.webp" alt="Huoltoteknikko säätää sähköpyörää studioympäristössä" loading="lazy">
-                        <figcaption>Precision workshop • AnomFIN Studio</figcaption>
-                    </figure>
-                    <figure class="gallery__item">
-                        <img src="assets/ebike_web.png" alt="Sähköpyörät rivissä showroomissa" loading="lazy">
-                        <figcaption>Showroom lineup</figcaption>
-                    </figure>
-                    <figure class="gallery__item">
-                        <img src="assets/ebike_web2.png" alt="Asiakas koeajamassa sähköpyörää" loading="lazy">
-                        <figcaption>Experience ride</figcaption>
-                    </figure>
-                    <div class="gallery__cta">
-                        <h3>Live-demo &amp; concierge</h3>
-                        <p>Varaa virtuaalinen showroom-kierros, jossa esittelemme valikoiman ja räätälöidyt huoltopaketit. Kaikki sisällöt allekirjoitettu Jugi@AnomFIN.</p>
-                        <a class="btn btn--primary" href="verkkokauppa.html">Avaa verkkokauppa</a>
-                    </div>
                 </div>
             </div>
         </section>
