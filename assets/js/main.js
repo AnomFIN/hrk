@@ -1,6 +1,14 @@
 const nav = document.querySelector('.nav');
 const navToggle = document.querySelector('.nav__toggle');
 const navLinks = document.querySelector('.nav__links');
+const navAnchorLinks = document.querySelectorAll('.nav__link[data-scroll]');
+const revealElements = document.querySelectorAll('[data-reveal]');
+const floatingCta = document.querySelector('[data-floating-cta]');
+const floatingOrigin = document.querySelector('[data-floating-origin]');
+
+const prefersReducedMotion = window.matchMedia
+    ? window.matchMedia('(prefers-reduced-motion: reduce)')
+    : { matches: false };
 
 const isNavOpen = () => navLinks?.classList.contains('nav__links--open') ?? false;
 
@@ -39,8 +47,51 @@ const updateNavOnScroll = () => {
     }
 };
 
-window.addEventListener('scroll', updateNavOnScroll);
-updateNavOnScroll();
+const trackedSections = Array.from(navAnchorLinks)
+    .map((link) => {
+        const id = link.getAttribute('data-scroll');
+        const section = id ? document.getElementById(id) : null;
+        return section ? { link, section } : null;
+    })
+    .filter(Boolean);
+
+const updateActiveNavLink = () => {
+    if (!trackedSections.length) {
+        return;
+    }
+
+    const scrollPos = window.scrollY + 160;
+    let activeId = null;
+
+    for (const { section } of trackedSections) {
+        if (section.offsetTop <= scrollPos && section.offsetTop + section.offsetHeight > scrollPos) {
+            activeId = section.id;
+            break;
+        }
+    }
+
+    trackedSections.forEach(({ link, section }) => {
+        link.classList.toggle('nav__link--active', section.id === activeId);
+    });
+};
+
+const updateFloatingDynamics = () => {
+    const scrollY = window.scrollY;
+    const ctaOffset = Math.max(-18, -scrollY * 0.08);
+    const elevatorOffset = Math.min(scrollY * 0.05, 36);
+
+    floatingCta?.style.setProperty('--cta-scroll-offset', `${ctaOffset}px`);
+    floatingOrigin?.style.setProperty('--elevator-scroll-offset', `${elevatorOffset}px`);
+};
+
+const handleScroll = () => {
+    updateNavOnScroll();
+    updateActiveNavLink();
+    updateFloatingDynamics();
+};
+
+window.addEventListener('scroll', handleScroll);
+handleScroll();
 
 const yearEl = document.getElementById('year');
 if (yearEl) {
@@ -88,6 +139,7 @@ window.addEventListener('resize', () => {
     if (window.innerWidth > 960) {
         closeNav();
     }
+    updateActiveNavLink();
 });
 
 document.addEventListener('keydown', (event) => {
@@ -147,4 +199,57 @@ calculatorForm?.addEventListener('submit', (event) => {
         </ul>
         <p class="calculator__hint">Arvio perustuu AnomFIN • AnomTools tilannehuollon datamalliin. Räätälöidyt laskelmat saat kattavan kuntokartoituksen yhteydessä.</p>
     `;
+});
+
+const revealObserver =
+    'IntersectionObserver' in window
+        ? new IntersectionObserver(
+              (entries, observerInstance) => {
+                  entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                          entry.target.classList.add('is-visible');
+                          observerInstance.unobserve(entry.target);
+                      }
+                  });
+              },
+              {
+                  threshold: 0.22,
+                  rootMargin: '0px 0px -120px 0px',
+              },
+          )
+        : null;
+
+const revealImmediately = (element) => {
+    element.classList.add('is-visible');
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+    const { body } = document;
+    if (!body) {
+        return;
+    }
+
+    body.classList.remove('is-preload');
+
+    window.requestAnimationFrame(() => {
+        body.classList.add('is-ready');
+    });
+
+    revealElements.forEach((element) => {
+        if (prefersReducedMotion.matches) {
+            revealImmediately(element);
+            return;
+        }
+
+        const rect = element.getBoundingClientRect();
+        if (rect.top <= window.innerHeight * 0.85) {
+            revealImmediately(element);
+        } else if (revealObserver) {
+            revealObserver.observe(element);
+        } else {
+            revealImmediately(element);
+        }
+    });
+
+    updateFloatingDynamics();
 });
