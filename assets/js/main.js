@@ -1,6 +1,23 @@
 const nav = document.querySelector('.nav');
 const navToggle = document.querySelector('.nav__toggle');
 const navLinks = document.querySelector('.nav__links');
+const navAnchorLinks = document.querySelectorAll('.nav__link[data-scroll]');
+const revealElements = document.querySelectorAll('[data-reveal]');
+const floatingCta = document.querySelector('[data-floating-cta]');
+const floatingOrigin = document.querySelector('[data-floating-origin]');
+const storeElements = document.querySelectorAll('[data-store]');
+const addToCartButtons = document.querySelectorAll('[data-add-to-cart]');
+const navCartCounters = document.querySelectorAll('[data-cart-counter]');
+const counterElements = document.querySelectorAll('[data-counter]');
+const calculatorForm = document.getElementById('savings-calculator');
+const calculatorResult = document.getElementById('savings-result');
+const yearEl = document.getElementById('year');
+
+const CART_STORAGE_KEY = 'helsinki-ebike-cart-v1';
+
+const prefersReducedMotion = window.matchMedia
+    ? window.matchMedia('(prefers-reduced-motion: reduce)')
+    : { matches: false };
 
 const isNavOpen = () => navLinks?.classList.contains('nav__links--open') ?? false;
 
@@ -39,20 +56,58 @@ const updateNavOnScroll = () => {
     }
 };
 
-window.addEventListener('scroll', updateNavOnScroll);
-updateNavOnScroll();
+const trackedSections = Array.from(navAnchorLinks)
+    .map((link) => {
+        const id = link.getAttribute('data-scroll');
+        const section = id ? document.getElementById(id) : null;
+        return section ? { link, section } : null;
+    })
+    .filter(Boolean);
 
-const yearEl = document.getElementById('year');
+const updateActiveNavLink = () => {
+    if (!trackedSections.length) {
+        return;
+    }
+
+    const scrollPos = window.scrollY + 160;
+    let activeId = null;
+
+    for (const { section } of trackedSections) {
+        if (section.offsetTop <= scrollPos && section.offsetTop + section.offsetHeight > scrollPos) {
+            activeId = section.id;
+            break;
+        }
+    }
+
+    trackedSections.forEach(({ link, section }) => {
+        link.classList.toggle('nav__link--active', section.id === activeId);
+    });
+};
+
+const updateFloatingDynamics = () => {
+    const scrollY = window.scrollY;
+    const ctaOffset = Math.max(-18, -scrollY * 0.08);
+    const elevatorOffset = Math.min(scrollY * 0.05, 36);
+
+    floatingCta?.style.setProperty('--cta-scroll-offset', `${ctaOffset}px`);
+    floatingOrigin?.style.setProperty('--elevator-scroll-offset', `${elevatorOffset}px`);
+};
+
+const handleScroll = () => {
+    updateNavOnScroll();
+    updateActiveNavLink();
+    updateFloatingDynamics();
+};
+
+window.addEventListener('scroll', handleScroll);
+handleScroll();
+
 if (yearEl) {
     yearEl.textContent = new Date().getFullYear();
 }
 
 const trapFocus = (event) => {
-    if (!isNavOpen()) {
-        return;
-    }
-
-    if (!navLinks) {
+    if (!isNavOpen() || !navLinks) {
         return;
     }
 
@@ -60,6 +115,7 @@ const trapFocus = (event) => {
     if (!focusableElements.length) {
         return;
     }
+
     const first = focusableElements[0];
     const last = focusableElements[focusableElements.length - 1];
 
@@ -88,6 +144,7 @@ window.addEventListener('resize', () => {
     if (window.innerWidth > 960) {
         closeNav();
     }
+    updateActiveNavLink();
 });
 
 document.addEventListener('keydown', (event) => {
@@ -97,8 +154,287 @@ document.addEventListener('keydown', (event) => {
     }
 });
 
-const calculatorForm = document.getElementById('savings-calculator');
-const calculatorResult = document.getElementById('savings-result');
+const formatEuro = (value) =>
+    new Intl.NumberFormat('fi-FI', {
+        style: 'currency',
+        currency: 'EUR',
+        maximumFractionDigits: 0,
+    }).format(Math.round(value));
+
+const parseCartState = () => {
+    if (!('localStorage' in window)) {
+        return [];
+    }
+
+    try {
+        const storedValue = window.localStorage.getItem(CART_STORAGE_KEY);
+        if (!storedValue) {
+            return [];
+        }
+
+        const parsed = JSON.parse(storedValue);
+        if (!Array.isArray(parsed)) {
+            return [];
+        }
+
+        return parsed
+            .map((item) => ({
+                name: typeof item.name === 'string' ? item.name : '',
+                price: Number(item.price),
+                quantity: Number(item.quantity ?? 1),
+            }))
+            .filter(
+                (item) =>
+                    Boolean(item.name) &&
+                    Number.isFinite(item.price) &&
+                    item.price >= 0 &&
+                    Number.isFinite(item.quantity) &&
+                    item.quantity > 0,
+            );
+    } catch (error) {
+        return [];
+    }
+};
+
+let cartState = parseCartState();
+
+const saveCartState = () => {
+    if (!('localStorage' in window)) {
+        return;
+    }
+
+    try {
+        window.localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cartState));
+    } catch (error) {
+        // ignore storage errors silently
+    }
+};
+
+const getCartItemCount = () => cartState.reduce((total, item) => total + item.quantity, 0);
+
+const updateNavCartCounters = () => {
+    const count = getCartItemCount();
+    navCartCounters.forEach((counter) => {
+        counter.textContent = String(count);
+    });
+};
+
+const removeCartItem = (name) => {
+    const index = cartState.findIndex((item) => item.name === name);
+    if (index === -1) {
+        return;
+    }
+
+    const item = cartState[index];
+    if (item.quantity > 1) {
+        item.quantity -= 1;
+    } else {
+        cartState.splice(index, 1);
+    }
+
+    saveCartState();
+    updateCartDisplays();
+};
+
+const renderCartItems = (store) => {
+    const itemsList = store.querySelector('[data-cart-items]');
+    const emptyState = store.querySelector('[data-cart-empty]');
+    const totalEl = store.querySelector('[data-cart-total]');
+
+    if (!itemsList || !totalEl) {
+        return;
+    }
+
+    itemsList.innerHTML = '';
+
+    if (!cartState.length) {
+        if (emptyState) {
+            emptyState.style.display = '';
+        }
+        totalEl.textContent = formatEuro(0);
+        return;
+    }
+
+    if (emptyState) {
+        emptyState.style.display = 'none';
+    }
+
+    let subtotal = 0;
+
+    cartState.forEach((item) => {
+        subtotal += item.price * item.quantity;
+
+        const listItem = document.createElement('li');
+        listItem.className = 'store__cart-item';
+
+        const titleWrapper = document.createElement('div');
+        titleWrapper.className = 'store__cart-item-title';
+
+        const nameSpan = document.createElement('span');
+        nameSpan.textContent = item.name;
+
+        const quantitySpan = document.createElement('span');
+        quantitySpan.textContent = `${item.quantity} × ${formatEuro(item.price)}`;
+
+        titleWrapper.append(nameSpan, quantitySpan);
+
+        const removeButton = document.createElement('button');
+        removeButton.type = 'button';
+        removeButton.className = 'store__cart-remove';
+        removeButton.textContent = 'Poista';
+        removeButton.addEventListener('click', () => removeCartItem(item.name));
+
+        listItem.append(titleWrapper, removeButton);
+        itemsList.appendChild(listItem);
+    });
+
+    totalEl.textContent = formatEuro(subtotal);
+};
+
+const updateCartDisplays = () => {
+    storeElements.forEach((store) => {
+        renderCartItems(store);
+    });
+
+    updateNavCartCounters();
+};
+
+const addCartItem = (name, price) => {
+    if (!name || Number.isNaN(price)) {
+        return;
+    }
+
+    const existing = cartState.find((item) => item.name === name);
+    if (existing) {
+        existing.quantity += 1;
+    } else {
+        cartState.push({ name, price, quantity: 1 });
+    }
+
+    saveCartState();
+    updateCartDisplays();
+};
+
+const initializeStoreFilters = (store) => {
+    const filterButtons = store.querySelectorAll('[data-filter]');
+    const productCards = store.querySelectorAll('.store-card');
+
+    if (!filterButtons.length || !productCards.length) {
+        return;
+    }
+
+    const applyFilter = (filterValue) => {
+        productCards.forEach((card) => {
+            const categories = (card.dataset.category ?? '')
+                .split(',')
+                .map((category) => category.trim());
+            const matches = filterValue === 'all' || categories.includes(filterValue);
+            card.classList.toggle('is-hidden', !matches);
+        });
+    };
+
+    filterButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+            filterButtons.forEach((btn) => btn.classList.remove('is-active'));
+            button.classList.add('is-active');
+            applyFilter(button.dataset.filter ?? 'all');
+        });
+    });
+
+    const activeFilter = store.querySelector('.store__filter.is-active');
+    applyFilter(activeFilter?.dataset.filter ?? 'all');
+};
+
+const markButtonAdded = (button) => {
+    const originalLabel = button.dataset.originalLabel ?? button.textContent ?? '';
+    if (!button.dataset.originalLabel) {
+        button.dataset.originalLabel = originalLabel;
+    }
+
+    button.classList.add('is-added');
+    button.textContent = 'Lisätty';
+
+    window.setTimeout(() => {
+        button.classList.remove('is-added');
+        button.textContent = button.dataset.originalLabel ?? originalLabel;
+    }, 1800);
+};
+
+const handleAddToCartClick = (button) => {
+    const productElement = button.closest('[data-product]');
+    if (!productElement) {
+        return;
+    }
+
+    const productName = productElement.dataset.product;
+    const price = Number(productElement.dataset.price);
+
+    addCartItem(productName ?? '', price);
+    markButtonAdded(button);
+};
+
+storeElements.forEach((store) => {
+    initializeStoreFilters(store);
+});
+
+addToCartButtons.forEach((button) => {
+    button.addEventListener('click', () => handleAddToCartClick(button));
+});
+
+const startCounterAnimation = (element) => {
+    const target = Number(element.dataset.target ?? element.textContent ?? '0');
+    if (!Number.isFinite(target)) {
+        element.textContent = `${element.dataset.target ?? element.textContent ?? ''}${element.dataset.suffix ?? ''}`;
+        return;
+    }
+
+    const suffix = element.dataset.suffix ?? '';
+    const duration = Number(element.dataset.duration ?? 1800);
+    const startTime = performance.now();
+
+    const step = (currentTime) => {
+        const progress = Math.min((currentTime - startTime) / duration, 1);
+        const eased = progress ** 0.75;
+        const currentValue = Math.round(target * eased);
+        element.textContent = `${currentValue}${suffix}`;
+
+        if (progress < 1) {
+            window.requestAnimationFrame(step);
+        }
+    };
+
+    window.requestAnimationFrame(step);
+};
+
+const counterObserver =
+    'IntersectionObserver' in window
+        ? new IntersectionObserver(
+              (entries, observerInstance) => {
+                  entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                          startCounterAnimation(entry.target);
+                          observerInstance.unobserve(entry.target);
+                      }
+                  });
+              },
+              {
+                  threshold: 0.4,
+              },
+          )
+        : null;
+
+counterElements.forEach((counter) => {
+    if (prefersReducedMotion.matches) {
+        counter.textContent = `${counter.dataset.target ?? counter.textContent ?? ''}${counter.dataset.suffix ?? ''}`;
+        return;
+    }
+
+    if (counterObserver) {
+        counterObserver.observe(counter);
+    } else {
+        startCounterAnimation(counter);
+    }
+});
 
 const formatCurrency = (value) =>
     new Intl.NumberFormat('fi-FI', {
@@ -148,3 +484,58 @@ calculatorForm?.addEventListener('submit', (event) => {
         <p class="calculator__hint">Arvio perustuu AnomFIN • AnomTools tilannehuollon datamalliin. Räätälöidyt laskelmat saat kattavan kuntokartoituksen yhteydessä.</p>
     `;
 });
+
+const revealObserver =
+    'IntersectionObserver' in window
+        ? new IntersectionObserver(
+              (entries, observerInstance) => {
+                  entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                          entry.target.classList.add('is-visible');
+                          observerInstance.unobserve(entry.target);
+                      }
+                  });
+              },
+              {
+                  threshold: 0.22,
+                  rootMargin: '0px 0px -120px 0px',
+              },
+          )
+        : null;
+
+const revealImmediately = (element) => {
+    element.classList.add('is-visible');
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+    const { body } = document;
+    if (!body) {
+        return;
+    }
+
+    body.classList.remove('is-preload');
+
+    window.requestAnimationFrame(() => {
+        body.classList.add('is-ready');
+    });
+
+    revealElements.forEach((element) => {
+        if (prefersReducedMotion.matches) {
+            revealImmediately(element);
+            return;
+        }
+
+        const rect = element.getBoundingClientRect();
+        if (rect.top <= window.innerHeight * 0.85) {
+            revealImmediately(element);
+        } else if (revealObserver) {
+            revealObserver.observe(element);
+        } else {
+            revealImmediately(element);
+        }
+    });
+
+    updateFloatingDynamics();
+});
+
+updateCartDisplays();

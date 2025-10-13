@@ -10,8 +10,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/styles.css">
 </head>
-<body>
-    <header class="hero" id="etusivu">
+<body class="is-preload">
+    <header class="hero" id="etusivu" data-reveal>
         <nav class="nav">
             <div class="nav__logo">Helsinki eBike-Service Oy</div>
             <button class="nav__toggle" type="button" aria-label="Avaa valikko" aria-controls="nav-menu" aria-expanded="false">
@@ -20,16 +20,17 @@
                 <span></span>
             </button>
             <ul class="nav__links" id="nav-menu">
-                <li><a class="nav__link" href="#palvelut">Palvelut</a></li>
-                <li><a class="nav__link" href="#vuokraus">Vuokraus</a></li>
-                <li><a class="nav__link" href="#myynti">Myynti</a></li>
-                <li><a class="nav__link" href="#referenssit">Referenssit</a></li>
-                <li><a class="nav__link" href="#laskuri">Laskuri</a></li>
-                <li><a class="nav__link" href="#yhteys">Yhteys</a></li>
+                <li><a class="nav__link" href="#kokemus" data-scroll="kokemus">Elämys</a></li>
+                <li><a class="nav__link" href="#palvelut" data-scroll="palvelut">Palvelut</a></li>
+                <li><a class="nav__link" href="#vuokraus" data-scroll="vuokraus">Vuokraus</a></li>
+                <li><a class="nav__link" href="#myynti" data-scroll="myynti">Myynti</a></li>
+                <li><a class="nav__link" href="#referenssit" data-scroll="referenssit">Referenssit</a></li>
+                <li><a class="nav__link" href="#laskuri" data-scroll="laskuri">Laskuri</a></li>
+                <li><a class="nav__link" href="#yhteys" data-scroll="yhteys">Yhteys</a></li>
                 <li class="nav__cart">
-                    <a class="nav__link nav__link--cart" href="#verkkokauppa" aria-label="Siirry ostoskoriin">
-                        <span>Ostoskori</span>
-                        <span class="nav__cart-count" data-cart-count aria-live="polite">0</span>
+                    <a class="nav__link nav__link--cart" href="verkkokauppa.html" aria-label="Siirry verkkokauppaan">
+                        <span>Verkkokauppa</span>
+                        <span class="nav__cart-count" data-cart-counter aria-hidden="true">0</span>
                     </a>
                 </li>
             </ul>
@@ -40,8 +41,8 @@
             <h1>Helsinki eBike-Service Oy pitää sähköpyöräsi liikkeessä vuodenaikaan katsomatta</h1>
             <p class="hero__lead">Tarjoamme täyden palvelun sähköpyörähuollon, ammattimaiset yritysratkaisut sekä inspiroivan verkkokaupan, josta löydät laadukkaat pyörät, varaosat ja varusteet. Fiksu yhdistelmä huoltoa, palvelusopimuksia ja joustavaa verkkokauppaa tekee meistä sähköpyöräyritysten ja -harrastajien luotetun kumppanin.</p>
             <div class="hero__actions">
-                <a class="btn btn--primary" href="#yhteys">Varaa huolto</a>
-                <a class="btn btn--ghost" href="#verkkokauppa">Tutustu verkkokauppaan</a>
+                <a class="btn btn--primary btn--xl" href="#yhteys">Varaa huolto</a>
+                <a class="btn btn--store" href="verkkokauppa.html">Tutustu verkkokauppaan</a>
             </div>
             <p class="hero__signature">Jugi@AnomFIN curated • Premium EV cycling studio</p>
             <dl class="hero__stats">
@@ -50,26 +51,106 @@
                     <dd>Perustettu Helsingissä</dd>
                 </div>
                 <div>
-                    <dt>3 500+</dt>
+                    <dt><span data-counter data-target="3500" data-suffix="+">0</span></dt>
                     <dd>Huollettua sähköpyörää vuodessa</dd>
                 </div>
                 <div>
-                    <dt>98 %</dt>
+                    <dt><span data-counter data-target="98" data-suffix=" %">0</span></dt>
                     <dd>Asiakastyytyväisyys (NPS)</dd>
                 </div>
             </dl>
         </div>
-        <div class="hero__image">
-            <img src="assets/ebikewp.webp" alt="Sähköpyörä huollossa modernissa pyöräpajassa" loading="lazy">
-            <div class="hero__image-chip" aria-hidden="true">
-                <span>Precision tuning</span>
-                <span>Jugi@AnomFIN</span>
+        <div class="hero__image" data-reveal>
+            <div class="hero__panel">
+                <img src="assets/ebikewp.webp" alt="Sähköpyörä huollossa modernissa pyöräpajassa" loading="lazy">
+                <div class="hero__panel-caption">
+                    <span>Precision tuning</span>
+                    <span>Jugi@AnomFIN</span>
+                </div>
             </div>
+            <a class="hero__elevator" href="verkkokauppa.html" aria-label="Tervetuloa verkkokauppaan" data-floating-origin>
+                <span class="hero__elevator-glow"></span>
+                <span class="hero__elevator-text">TERVETULOA<br><strong>VERKKOKAUPPAAN!</strong></span>
+                <span class="hero__elevator-tag">AnomFIN Selection</span>
+            </a>
         </div>
     </header>
 
+    <a class="floating-cta" href="verkkokauppa.html" data-floating-cta>
+        <span class="floating-cta__pulse" aria-hidden="true"></span>
+        <span class="floating-cta__label">Eksklusiivinen sähköpyörävalikoima</span>
+        <span class="floating-cta__title">Siirry verkkokauppaan</span>
+        <span class="floating-cta__signature">Jugi@AnomFIN curated drop</span>
+    </a>
+
     <main>
-        <section class="section section--light" id="palvelut">
+        <section class="section section--experience" id="kokemus" data-reveal>
+            <div class="experience">
+                <div class="experience__intro">
+                    <span class="kicker">Signature-elämys</span>
+                    <h2>AnomFIN Experience varmistaa, että jokainen kohtaaminen tuntuu premiumilta</h2>
+                    <p>Rakensimme kokonaisuuden, jossa sisääntulon pehmeä fade, concierge-palvelu ja verkkokaupan elävyys muodostavat yhden saumattoman polun. Elegantit mikroanimaatiot johdattavat käyttäjän kohti ostoa tinkimättä viimeistellystä ulkoasusta.</p>
+                    <div class="experience__tags">
+                        <span>Apple-henkinen viimeistely</span>
+                        <span>Jugi@AnomFIN curated</span>
+                        <span>Huolto • Myynti • Verkkokauppa</span>
+                    </div>
+                </div>
+                <div class="experience__grid">
+                    <article class="experience-card">
+                        <img src="assets/ebike_web.png" alt="Sähköpyörä odottaa huoltoa AnomFIN-studiossa" loading="lazy">
+                        <div class="experience-card__body">
+                            <h3>Saapumishetki</h3>
+                            <p>Pehmeä sisääntulo-fade ja navin fluidit liikkeet tekevät ensikohtaamisesta rauhallisen. Concierge-tiimi aktivoi datavetoisen huoltosuunnitelman heti ajanvarauksesta.</p>
+                            <ul>
+                                <li><strong data-counter data-target="4" data-suffix=" kpl">0</strong> reaaliaikaista statuskorttia</li>
+                                <li>Personoitu tervetulotoiminto &amp; CTA</li>
+                                <li>Synkronoitu verkkokauppa ja huolto</li>
+                            </ul>
+                        </div>
+                    </article>
+                    <article class="experience-card">
+                        <img src="assets/ebike_web2.png" alt="Showroom johdattaa asiakkaan premium-sähköpyöriin" loading="lazy">
+                        <div class="experience-card__body">
+                            <h3>Showroom &amp; demo</h3>
+                            <p>Virtuaalinen showroom hyödyntää smooth scroll -efektejä ja kohdistettuja CTA-elementtejä, jotka seuraavat käyttäjää. Jokainen kuva on sähköpyöräportfoliosta ja noudattaa minimalistista väripalettia.</p>
+                            <ul>
+                                <li>Sticky "Tervetuloa verkkokauppaan" -hissi</li>
+                                <li>Scrollaava galleriakerros</li>
+                                <li>Concierge-kalenteri ja live-availability</li>
+                            </ul>
+                        </div>
+                    </article>
+                    <article class="experience-card">
+                        <img src="assets/ebikewp.webp" alt="Huoltoteknikko viimeistelee sähköpyörää" loading="lazy">
+                        <div class="experience-card__body">
+                            <h3>Huolto ja jälkihoito</h3>
+                            <p>Huoltoprosessin jokainen vaihe visualisoidaan aikajanalla. Automatisoidut ilmoitukset ja verkkokaupan ostoskorisynkka pitävät asiakkaan ajan tasalla ilman turhaa klikkailua.</p>
+                            <ul>
+                                <li>Automaattinen tilannepäivitys asiakkaalle</li>
+                                <li>Integroitu huoltopakettisuositus</li>
+                                <li>AnomFIN Aftercare &amp; analytiikka</li>
+                            </ul>
+                        </div>
+                    </article>
+                </div>
+                <div class="experience__timeline" aria-label="Asiakaspolun vaiheet">
+                    <div class="experience__stage">
+                        <span class="experience__stage-time">0–24 h</span>
+                        <p>Virtuaalinen onboarding, jossa concierge varmistaa pyörien sopivuuden ja aktivoi huoltosopimuksen.</p>
+                    </div>
+                    <div class="experience__stage">
+                        <span class="experience__stage-time">24–72 h</span>
+                        <p>Verkkokaupan kuratoitu toimituslista ja ensimmäinen huoltotapaaminen järjestetään automaattisesti.</p>
+                    </div>
+                    <div class="experience__stage">
+                        <span class="experience__stage-time">72 h →</span>
+                        <p>Jatkuva AnomFIN Insight -raportointi ja elinkaaren optimointi pitävät kaluston liikkeessä.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section section--light" id="palvelut" data-reveal>
             <div class="section__intro">
                 <span class="kicker">Palvelumme</span>
                 <h2>Huippuluokan sähköpyörähuolto yhdellä käynnillä</h2>
@@ -89,7 +170,7 @@
                     </div>
                 </article>
                 <article class="card">
-                    <img src="https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?auto=format&fit=crop&w=1200&q=80" alt="Sähköpyörien vuokrauskalusto rivissä" loading="lazy">
+                    <img src="assets/ebike_web.png" alt="Sähköpyöriä rivissä vuokrauspisteellä" loading="lazy">
                     <div class="card__content">
                         <h3>Vuokraus ja testiajot</h3>
                         <p>Moderni valikoima sähköpyöriä yritystapahtumiin, koeajoihin ja kausivuokraukseen. Räätälöimme paketit tarpeesi mukaan.</p>
@@ -101,21 +182,96 @@
                     </div>
                 </article>
                 <article class="card">
-                    <img src="https://images.unsplash.com/photo-1529429617124-aee711a0fb7c?auto=format&fit=crop&w=1200&q=80" alt="Asiantuntija konsultoi yritystä sähköpyöräohjelmassa" loading="lazy">
+                    <img src="assets/ebike_web2.png" alt="Asiantuntijat suunnittelevat sähköpyörien ostoja" loading="lazy">
                     <div class="card__content">
-                        <h3>Konsultointi &amp; koulutus</h3>
-                        <p>Autamme yrityksiä käynnistämään sähköpyöräpalvelut. Tarjoamme henkilöstön koulutukset ja jatkuvan kunnossapitomallin.</p>
+                        <h3>Huolto, myynti &amp; vaihto</h3>
+                        <p>Rakennamme elinkaarimallit, joissa sähköpyörien osto, vaihto ja jälleenmyynti hoituvat yhdellä kumppanilla. Saat kattavan palveluhistorian digitaalisesti.</p>
                         <ul>
-                            <li>Fleet management -suunnittelu</li>
-                            <li>Työsuhdepyöräohjelmat</li>
-                            <li>Käyttökoulutukset ja webinaarit</li>
+                            <li>Sertifioidut kuntoarviot ennen kauppoja</li>
+                            <li>Nopea jälleenostopalvelu</li>
+                            <li>Premium- ja custom-rungot</li>
                         </ul>
                     </div>
                 </article>
             </div>
         </section>
 
-        <section class="section" id="paketit">
+        <section class="section" id="vuokraus" data-reveal>
+            <div class="section__intro">
+                <span class="kicker">Vuokraus &amp; testit</span>
+                <h2>Liikkuvuuspalvelut, jotka seuraavat yrityksesi sykettä</h2>
+                <p>Helsinki eBike-Service Oy:n vuokrauskonsepti tuo toimituksiin ja tapahtumiin helposti skaalautuvan sähköpyörälaivaston. Räätälöity onboarding, vakuutukset ja huoltosopimukset pitävät kaluston ajokunnossa ympäri vuoden.</p>
+            </div>
+            <div class="feature-rows">
+                <article class="feature">
+                    <div class="feature__media">
+                        <img src="assets/ebike_web.png" alt="Vuokrasähköpyörät valmiina toimitukseen" loading="lazy">
+                    </div>
+                    <div class="feature__body">
+                        <h3>Premium-vuokraus 48h toimituksella</h3>
+                        <p>Tarjoamme koeajokaluston ja pitkäaikaisvuokraukset 48 tunnin toimitusikkunalla. Kaikki pyörät tarkastetaan AnomFIN Pro -checklistillä ennen jokaista luovutusta.</p>
+                        <ul>
+                            <li>Logistiikkatiimille omistettu yhteyshenkilö</li>
+                            <li>GPS-seuranta ja akkuvalvonta sisältyvät</li>
+                            <li>Sesonkibundle kampanjat kaupunkitapahtumiin</li>
+                        </ul>
+                    </div>
+                </article>
+                <article class="feature feature--reverse">
+                    <div class="feature__media">
+                        <img src="assets/ebikewp.webp" alt="Huoltoasiantuntija suorittaa vuokrafleetin tarkistusta" loading="lazy">
+                    </div>
+                    <div class="feature__body">
+                        <h3>AnomFIN FleetCare</h3>
+                        <p>FleetCare-ylläpito seuraa pyöriä etänä ja reagoi ennen kuin seisokit syntyvät. Sovi kuukausittaiset huoltokierrot ja vapauta tiimisi keskittymään toimituksiin.</p>
+                        <ul>
+                            <li>Ennakoivat huoltoraportit ja datanäkyvyys</li>
+                            <li>Varapyörät toimitetaan samalla reitillä</li>
+                            <li>Skaalaa helposti 10–500 pyörän kokonaisuuksiin</li>
+                        </ul>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="section section--light" id="myynti" data-reveal>
+            <div class="section__intro">
+                <span class="kicker">Myynti &amp; hankinnat</span>
+                <h2>Kuratoitu sähköpyörävalikoima yrityksille ja harrastajille</h2>
+                <p>Autamme rakentamaan juuri oikean sähköpyöräkokoonpanon tiimillesi. Saat käyttöösi testirungot, konsultoinnin ja AnomFINin premium-hankintakanavat.</p>
+            </div>
+            <div class="sales-grid">
+                <article class="sales-card">
+                    <h3>Projektimyynti</h3>
+                    <p>Laadimme koko toimitusketjun rungon valinnasta varusteisiin. Henkilökohtainen asiantuntija varmistaa yhteensopivuuden ja toimitusaikataulut.</p>
+                    <ul>
+                        <li>Curated selection by AnomFIN</li>
+                        <li>Custom branding &amp; wrap-palvelut</li>
+                        <li>Dataohjattu sopimusmalli</li>
+                    </ul>
+                </article>
+                <article class="sales-card">
+                    <h3>Työsuhdepyörä-ohjelmat</h3>
+                    <p>Suunnittelemme yrityksesi työsuhdepyöräpolitiikan ja yhdistämme siihen huoltosopimuksen sekä vakuutukset.</p>
+                    <ul>
+                        <li>Automatisoidut työntekijäportaalit</li>
+                        <li>Yhden luukun huoltopalvelu</li>
+                        <li>Raportointi taloushallinnolle</li>
+                    </ul>
+                </article>
+                <article class="sales-card">
+                    <h3>Showroom by appointment</h3>
+                    <p>Eksklusiivinen showroom Herttoniemessä esittelee uusimmat mallit ja sovellukset. Varaa yksityinen demo AnomFIN-tiimin kanssa.</p>
+                    <ul>
+                        <li>Testiradat sisä- ja ulkotiloissa</li>
+                        <li>Runko- ja akkukustomoinnit</li>
+                        <li>Sähköinen tilausprosessi</li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+
+        <section class="section" id="paketit" data-reveal>
             <div class="section__intro">
                 <span class="kicker">Huoltopaketit</span>
                 <h2>Suunnitellut kokonaisuudet sähköpyörien ylläpitoon</h2>
@@ -123,51 +279,57 @@
             </div>
             <div class="grid grid--3">
                 <article class="product">
-                    <img src="https://images.unsplash.com/photo-1485965120420-1ea49c4905c7?auto=format&fit=crop&w=1200&q=80" alt="Huoltopisteessä nosturilla oleva sähköpyörä" loading="lazy">
+                    <img src="assets/ebike_web.png" alt="Huolellisesti huollettu sähköpyörä nosturilla" loading="lazy">
                     <div class="product__body">
-                        <h3>Perushuolto</h3>
-                        <p>Kauden aloitukseen tai lopetukseen. Sisältää täyshuollon ja akutestin.</p>
+                        <h3>Launch Care 299</h3>
+                        <p>Kauden starttipaketti, jossa tarkastetaan rungon, voimansiirron ja akun kunto. Sisältää täydellisen ohjelmistopäivityksen.</p>
                         <ul>
-                            <li>Hinta: 129 €</li>
-                            <li>Ohjelmistopäivitykset</li>
-                            <li>Jarru- ja vaihdesäädöt</li>
+                            <li>Hinta: 299 €</li>
+                            <li>AnomFIN diagnostiikka</li>
+                            <li>Jarru- ja vaihdesynkkaus</li>
                         </ul>
                     </div>
                 </article>
                 <article class="product">
-                    <img src="https://images.unsplash.com/photo-1496200186974-4293800e2c20?auto=format&fit=crop&w=1200&q=80" alt="Yrityksen sähköpyöräflotta sisätiloissa" loading="lazy">
+                    <img src="assets/ebike_web2.png" alt="Premium sähköpyörä yrityksen showroomissa" loading="lazy">
                     <div class="product__body">
-                        <h3>Premium-sopimus</h3>
-                        <p>Yrityksille ja aktiiviharrastajille, jotka tarvitsevat priorisoidun palvelun ja kuljetukset.</p>
+                        <h3>Pro Active 699</h3>
+                        <p>Suosituin pakettimme aktiivisille kuskeille ja yrityksille. Sisältää kausihuollot, nouto- ja palautuspalvelun sekä varaosapäivitykset.</p>
                         <ul>
-                            <li>Hinta: alkaen 189 €/kk</li>
-                            <li>Varaosat -10 %</li>
-                            <li>Nouto &amp; palautus Helsingin alueella</li>
+                            <li>Hinta: 699 €</li>
+                            <li>Varaosat -15 %</li>
+                            <li>Nouto &amp; palautus pääkaupunkiseudulla</li>
                         </ul>
                     </div>
                 </article>
                 <article class="product">
-                    <img src="https://images.unsplash.com/photo-1505678261036-a3fcc5e884ee?auto=format&fit=crop&w=1200&q=80" alt="Huoltoasiantuntija kiristää sähköpyörän pinnat" loading="lazy">
+                    <img src="assets/ebikewp.webp" alt="Fleet-huollon asiantuntija tarkastaa premium-sähköpyörää" loading="lazy">
                     <div class="product__body">
-                        <h3>Fleet Care 360</h3>
-                        <p>Laaja sopimus logistiikkayrityksille ja jakeluflotteille. Sisältää proaktiivisen kunnossapidon.</p>
+                        <h3>Fleet Signature 1499</h3>
+                        <p>Laajin palvelumme logistiikkaoperaattoreille ja luksuspyöriä käyttävälle kalustolle. Valvomme akkuja 24/7 ja toimitamme varapyörät tunneissa.</p>
                         <ul>
-                            <li>Hinta: räätälöidään</li>
-                            <li>24/7 tukilinja</li>
-                            <li>Kuukausittaiset raportit</li>
+                            <li>Hinta: 1 499 €</li>
+                            <li>24/7 ensivastehuolto</li>
+                            <li>Kokonaisraportointi ja CO₂-seuranta</li>
                         </ul>
                     </div>
                 </article>
             </div>
         </section>
 
-        <section class="section section--store" id="verkkokauppa">
+        <section class="section section--store" id="verkkokauppa" data-reveal>
             <div class="section__intro">
                 <span class="kicker">Verkkokauppa</span>
                 <h2>Upea ja sulava ostokokemus sähköpyörille ja varusteille</h2>
                 <p>Tilaa huolella kuratoidut tuotteet kotiinkuljetuksella tai nouda ne huollon yhteydessä. Lisää tuotteet ostoskoriin ja viimeistele tilaus yhteydenotolla – tiimimme varmistaa oikeat koot ja yhteensopivuuden ennen toimitusta.</p>
             </div>
             <div class="store" data-store>
+                <div class="store__toolbar" role="toolbar" aria-label="Suodata tuotteita">
+                    <button class="store__filter is-active" type="button" data-filter="all">Kaikki</button>
+                    <button class="store__filter" type="button" data-filter="pyorat">Sähköpyörät</button>
+                    <button class="store__filter" type="button" data-filter="varusteet">Varusteet</button>
+                    <button class="store__filter" type="button" data-filter="palvelut">Palvelut</button>
+                </div>
                 <div class="store__cart" aria-live="polite">
                     <h3>Ostoskori</h3>
                     <p class="store__cart-empty" data-cart-empty>Ostoskorisi on vielä tyhjä. Lisää tuotteita ja hyödynnä asiantuntijoidemme tuki.</p>
@@ -177,10 +339,10 @@
                         <strong data-cart-total>0,00 €</strong>
                     </div>
                     <p class="store__cart-note">Viimeistele tilauksesi lähettämällä ostoskori ja yhteystietosi asiantuntijallemme.</p>
-                    <a class="btn btn--primary" href="#yhteys">Ota yhteyttä myyntiin</a>
+                    <a class="btn btn--primary" href="verkkokauppa.html">Avaa koko verkkokauppa</a>
                 </div>
                 <div class="store__grid">
-                    <article class="store-card" data-product="Tenways CGO009" data-price="2599">
+                    <article class="store-card" data-product="Tenways CGO009" data-price="2599" data-category="pyorat">
                         <img src="https://images.unsplash.com/photo-1529429617124-aee711a0fb7c?auto=format&fit=crop&w=1200&q=80" alt="Tyylikäs kaupunkisähköpyörä harmaalla taustalla" loading="lazy">
                         <div class="store-card__body">
                             <span class="store-card__tag">Uutuus</span>
@@ -192,7 +354,7 @@
                             </div>
                         </div>
                     </article>
-                    <article class="store-card" data-product="Giro Manifest Spherical" data-price="289">
+                    <article class="store-card" data-product="Giro Manifest Spherical" data-price="289" data-category="varusteet">
                         <img src="https://images.unsplash.com/photo-1505678261036-a3fcc5e884ee?auto=format&fit=crop&w=1200&q=80" alt="Sähköpyöräkypärä työpöydällä" loading="lazy">
                         <div class="store-card__body">
                             <span class="store-card__tag">Turvallisuus</span>
@@ -204,7 +366,7 @@
                             </div>
                         </div>
                     </article>
-                    <article class="store-card" data-product="Bosch PowerTube 625" data-price="799">
+                    <article class="store-card" data-product="Bosch PowerTube 625" data-price="799" data-category="varusteet">
                         <img src="https://images.unsplash.com/photo-1509395176047-4a66953fd231?auto=format&fit=crop&w=1200&q=80" alt="Sähköpyörän vara-akku pöydällä" loading="lazy">
                         <div class="store-card__body">
                             <span class="store-card__tag">Varaosat</span>
@@ -216,7 +378,7 @@
                             </div>
                         </div>
                     </article>
-                    <article class="store-card" data-product="WinterCare Kit" data-price="119">
+                    <article class="store-card" data-product="WinterCare Kit" data-price="119" data-category="palvelut">
                         <img src="https://images.unsplash.com/photo-1604272011436-1d760c6fc1d8?auto=format&fit=crop&w=1200&q=80" alt="Talvihuoltosarja sähköpyörälle" loading="lazy">
                         <div class="store-card__body">
                             <span class="store-card__tag">Huoltosarja</span>
@@ -228,7 +390,7 @@
                             </div>
                         </div>
                     </article>
-                    <article class="store-card" data-product="Cargo eBike Lease" data-price="249">
+                    <article class="store-card" data-product="Cargo eBike Lease" data-price="249" data-category="palvelut">
                         <img src="https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=1200&q=80" alt="Tavarapyörä kaupunkimiljöössä" loading="lazy">
                         <div class="store-card__body">
                             <span class="store-card__tag">Yrityksille</span>
@@ -240,7 +402,7 @@
                             </div>
                         </div>
                     </article>
-                    <article class="store-card" data-product="Fast Charge Service" data-price="59">
+                    <article class="store-card" data-product="Fast Charge Service" data-price="59" data-category="palvelut">
                         <img src="https://images.unsplash.com/photo-1523419409543-0c1df022bdd9?auto=format&fit=crop&w=1200&q=80" alt="Sähköpyörän akku latauksessa" loading="lazy">
                         <div class="store-card__body">
                             <span class="store-card__tag">Palvelu</span>
@@ -256,7 +418,36 @@
             </div>
         </section>
 
-        <section class="section" id="referenssit">
+        <section class="section section--gallery" data-reveal>
+            <div class="gallery">
+                <div class="gallery__intro">
+                    <span class="kicker">Inspiraatio</span>
+                    <h2>Visuaalinen lookbook näyttää miksi Helsinki eBike-Service Oy erottuu</h2>
+                    <p>Valitsimme jokaisen kuvan kertomaan eri tarinaa: huoltotekniikka, showroom ja ajonautinto. Mosaiikki on rakennettu AnomFIN-tyylillä – valoa, syvyyttä ja selkeät call to actionit.</p>
+                </div>
+                <div class="gallery__grid">
+                    <figure class="gallery__item gallery__item--large">
+                        <img src="assets/ebikewp.webp" alt="Huoltoteknikko säätää sähköpyörää studioympäristössä" loading="lazy">
+                        <figcaption>Precision workshop • AnomFIN Studio</figcaption>
+                    </figure>
+                    <figure class="gallery__item">
+                        <img src="assets/ebike_web.png" alt="Sähköpyörät rivissä showroomissa" loading="lazy">
+                        <figcaption>Showroom lineup</figcaption>
+                    </figure>
+                    <figure class="gallery__item">
+                        <img src="assets/ebike_web2.png" alt="Asiakas koeajamassa sähköpyörää" loading="lazy">
+                        <figcaption>Experience ride</figcaption>
+                    </figure>
+                    <div class="gallery__cta">
+                        <h3>Live-demo &amp; concierge</h3>
+                        <p>Varaa virtuaalinen showroom-kierros, jossa esittelemme valikoiman ja räätälöidyt huoltopaketit. Kaikki sisällöt allekirjoitettu Jugi@AnomFIN.</p>
+                        <a class="btn btn--primary" href="verkkokauppa.html">Avaa verkkokauppa</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="referenssit" data-reveal>
             <div class="section__intro">
                 <span class="kicker">Asiakastarinat</span>
                 <h2>Palvelemme yrityksiä, yhteisöjä ja intohimoisia sähköpyöräilijöitä</h2>
@@ -287,7 +478,7 @@
             </div>
         </section>
 
-        <section class="section section--accent" id="laskuri">
+        <section class="section section--accent" id="laskuri" data-reveal>
             <div class="section__intro">
                 <span class="kicker kicker--light">Työkalut</span>
                 <h2>AnomFIN Huoltosäästölaskuri</h2>
@@ -323,7 +514,7 @@
             <p class="calculator__signature" aria-label="Laskelman tuottaja">AnomFIN • AnomTools</p>
         </section>
 
-        <section class="section section--accent" aria-label="Nopeat faktat Harjun Raskaskone Oy:stä">
+        <section class="section section--accent" aria-label="Nopeat faktat Harjun Raskaskone Oy:stä" data-reveal>
             <div class="facts">
                 <div>
                     <h3>Virallinen nimi</h3>
@@ -372,7 +563,7 @@
             </div>
         </section>
 
-        <section class="section section--light" id="yhteys">
+        <section class="section section--light" id="yhteys" data-reveal>
             <div class="contact">
                 <div class="contact__info">
                     <span class="kicker">Ota yhteyttä</span>
@@ -433,7 +624,7 @@
                 <ul>
                     <li><a href="#palvelut">Sähköpyörähuolto</a></li>
                     <li><a href="#paketit">Huoltopaketit</a></li>
-                    <li><a href="#verkkokauppa">Verkkokauppa</a></li>
+                    <li><a href="verkkokauppa.html">Verkkokauppa</a></li>
                 </ul>
             </div>
             <div>
