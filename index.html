@@ -4,710 +4,478 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Harjun Raskaskone Oy</title>
+    <title>Helsinki eBike-Service Oy</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/styles.css">
 </head>
-<body>
-    <header class="hero" id="etusivu">
+<body class="is-preload">
+    <header class="hero" id="etusivu" data-reveal>
         <nav class="nav">
-            <div class="nav__logo">Harjun Raskaskone Oy</div>
-            <button class="nav__toggle" aria-label="Avaa valikko" aria-expanded="false" aria-controls="nav-links">
+            <div class="nav__logo">Helsinki eBike-Service Oy</div>
+            <button class="nav__toggle" type="button" aria-label="Avaa valikko" aria-controls="nav-menu" aria-expanded="false">
                 <span></span>
                 <span></span>
                 <span></span>
             </button>
-            <ul class="nav__links" id="nav-links">
-                <li><a href="#yritys">Yritys</a></li>
-                <li><a href="#palvelut">Palvelut</a></li>
-                <li><a href="#vuokraus">Vuokraus</a></li>
-                <li><a href="#myynti">Myynti</a></li>
-                <li><a href="#verkkokauppa">Verkkokauppa</a></li>
-                <li><a href="#referenssit">Referenssit</a></li>
-                <li><a href="#useinkysytyt">Usein kysytyt</a></li>
-                <li><a href="#yhteys">Yhteys</a></li>
+            <ul class="nav__links" id="nav-menu">
+                <li><a class="nav__link" href="#palvelut" data-scroll="palvelut">Palvelut</a></li>
+                <li><a class="nav__link" href="#vuokraus" data-scroll="vuokraus">Vuokraus</a></li>
+                <li><a class="nav__link" href="#myynti" data-scroll="myynti">Myynti</a></li>
+                <li><a class="nav__link" href="#referenssit" data-scroll="referenssit">Referenssit</a></li>
+                <li><a class="nav__link" href="#laskuri" data-scroll="laskuri">Laskuri</a></li>
+                <li><a class="nav__link" href="#yhteys" data-scroll="yhteys">Yhteys</a></li>
+                <li class="nav__cart">
+                    <a class="nav__link nav__link--cart" href="verkkokauppa.html" aria-label="Siirry verkkokauppaan">
+                        <span>Verkkokauppa</span>
+                        <span class="nav__cart-count" aria-hidden="true">⇢</span>
+                    </a>
+                </li>
             </ul>
         </nav>
         <div class="hero__content">
-            <p class="hero__eyebrow">Raskaan kaluston asiantuntija vuodesta 2019</p>
-            <h1>Luotettavat huolto-, vuokraus- ja myyntipalvelut työmaillesi</h1>
-            <p>Harjun Raskaskone Oy tarjoaa raskaan kaluston kunnossapitoa, kalustovuokrausta ja räätälöityjä ratkaisuja yrityksesi tarpeisiin. Olemme erikoistuneet pitämään koneesi liikkeessä ja projektisi aikataulussa.</p>
+            <span class="hero__badge">Signature Experience • AnomFIN</span>
+            <p class="hero__eyebrow">Sähköpyörien huolto-, myynti- ja vuokrauspalvelut Helsingissä</p>
+            <h1>Helsinki eBike-Service Oy pitää sähköpyöräsi liikkeessä vuodenaikaan katsomatta</h1>
+            <p class="hero__lead">Tarjoamme täyden palvelun sähköpyörähuollon, ammattimaiset yritysratkaisut sekä inspiroivan verkkokaupan, josta löydät laadukkaat pyörät, varaosat ja varusteet. Fiksu yhdistelmä huoltoa, palvelusopimuksia ja joustavaa verkkokauppaa tekee meistä sähköpyöräyritysten ja -harrastajien luotetun kumppanin.</p>
             <div class="hero__actions">
-                <a class="btn btn--primary" href="#yhteys">Pyydä tarjous</a>
-                <a class="btn btn--outline" href="#palvelut">Tutustu palveluihin</a>
-                <a class="btn btn--ghost" href="#verkkokauppa">Siirry verkkokauppaan</a>
+                <a class="btn btn--primary btn--xl" href="#yhteys">Varaa huolto</a>
+                <a class="btn btn--store" href="verkkokauppa.html">Tutustu verkkokauppaan</a>
             </div>
+            <p class="hero__signature">Jugi@AnomFIN curated • Premium EV cycling studio</p>
             <dl class="hero__stats">
                 <div>
-                    <dt>911 000 €</dt>
-                    <dd>Liikevaihto 2024</dd>
+                    <dt>15.12.2024</dt>
+                    <dd>Perustettu Helsingissä</dd>
                 </div>
                 <div>
-                    <dt>+59 %</dt>
-                    <dd>Kasvu edellisvuodesta</dd>
+                    <dt>3 500+</dt>
+                    <dd>Huollettua sähköpyörää vuodessa</dd>
                 </div>
                 <div>
-                    <dt>40 %</dt>
-                    <dd>Omavaraisuusaste</dd>
+                    <dt>98 %</dt>
+                    <dd>Asiakastyytyväisyys (NPS)</dd>
                 </div>
             </dl>
         </div>
-        <div class="hero__image">
-            <img src="https://images.unsplash.com/photo-1519638399535-1b036603ac77?auto=format&fit=crop&w=1200&q=80" alt="Työmaalla toimiva kaivinkone" loading="lazy">
+        <div class="hero__image" data-reveal>
+            <div class="hero__panel">
+                <img src="assets/ebikewp.webp" alt="Sähköpyörä huollossa modernissa pyöräpajassa" loading="lazy">
+                <div class="hero__panel-caption">
+                    <span>Precision tuning</span>
+                    <span>Jugi@AnomFIN</span>
+                </div>
+            </div>
+            <a class="hero__elevator" href="verkkokauppa.html" aria-label="Tervetuloa verkkokauppaan" data-floating-origin>
+                <span class="hero__elevator-glow"></span>
+                <span class="hero__elevator-text">TERVETULOA<br><strong>VERKKOKAUPPAAN!</strong></span>
+                <span class="hero__elevator-tag">AnomFIN Selection</span>
+            </a>
         </div>
     </header>
 
-    <main>
-        <section class="section section--light company" id="yritys">
-            <div class="section__intro">
-                <span class="kicker">Yritys</span>
-                <h2>Harjun Raskaskone Oy lyhyesti</h2>
-                <p>Harjun Raskaskone Oy yhdistää raskaan kaluston huollon, vuokrauksen ja varaosalogistiikan saman katon alle.
-                    Toimimme koko Suomessa ja huolehdimme, että työmaat etenevät aikataulussa ja kalusto on käyttövarmaa.</p>
-            </div>
-            <div class="company__grid">
-                <div class="company__about">
-                    <h3>Luotettava kumppani infra- ja teollisuusasiakkaille</h3>
-                    <p>Omavarainen korjaamo Helsingissä, liikkuvat huoltoautot sekä kumppaniverkostomme takaavat nopean reagoinnin
-                        kriittisissä tilanteissa. Huollamme ja modernisoimme ajoneuvot ja työkoneet asiakkaan liiketoiminnan
-                        ehdoilla &mdash; ympärivuorokautisesti sopimusasiakkaille.</p>
-                    <ul class="company__bullets">
-                        <li>Valtuutetut huoltokumppanit Volvo, Scania, MAN, Mercedes-Benz ja Iveco -kalustolle</li>
-                        <li>Rahoitus- ja leasingratkaisut yhteistyössä pankki- ja rahoitusyhtiöiden kanssa</li>
-                        <li>Telematiikan ja AnomTools-etävalvonnan avulla seuraamme kaluston kuntoa reaaliajassa</li>
-                    </ul>
-                </div>
-                <div class="company__meta" aria-label="Yrityksen avaintiedot">
-                    <div class="company__card">
-                        <span class="company__label">Y-tunnus</span>
-                        <span class="company__value">2578643-3</span>
-                    </div>
-                    <div class="company__card">
-                        <span class="company__label">Perustettu</span>
-                        <span class="company__value">2019</span>
-                    </div>
-                    <div class="company__card">
-                        <span class="company__label">Liikevaihto 2024</span>
-                        <span class="company__value">911 000 €</span>
-                    </div>
-                    <div class="company__card">
-                        <span class="company__label">Kasvu 2024</span>
-                        <span class="company__value">+59 %</span>
-                    </div>
-                    <div class="company__card">
-                        <span class="company__label">Liikevoitto</span>
-                        <span class="company__value">21 000 €</span>
-                    </div>
-                    <div class="company__card">
-                        <span class="company__label">Omavaraisuusaste</span>
-                        <span class="company__value">40 %</span>
-                    </div>
-                </div>
-            </div>
-            <div class="company__timeline" aria-label="Toimintamme kulmakivet">
-                <div class="company__phase">
-                    <span class="company__phase-year">1.</span>
-                    <div>
-                        <h4>Kunnossapidon kartoitus</h4>
-                        <p>Tekninen analyysi kalustosta, kustannuksista ja käyttöasteesta. Tuotamme toimenpide-ehdotukset sekä
-                            aikataulutuksen.</p>
-                    </div>
-                </div>
-                <div class="company__phase">
-                    <span class="company__phase-year">2.</span>
-                    <div>
-                        <h4>Huolto &amp; modernisointi</h4>
-                        <p>Oma korjaamo ja liikkuvat huoltoyksiköt toteuttavat sovitut työt. Vaihtokalusto ja AnomFIN-raportointi
-                            pitävät projektin käynnissä.</p>
-                    </div>
-                </div>
-                <div class="company__phase">
-                    <span class="company__phase-year">3.</span>
-                    <div>
-                        <h4>Elinkaaren hallinta</h4>
-                        <p>Jatkuva kunnonvalvonta, varaosalogistiikka ja jälleenmyynti varmistavat kaluston arvon. AnomTools-
-                            järjestelmä antaa reaaliaikaisen näkyvyyden.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+    <a class="floating-cta" href="verkkokauppa.html" data-floating-cta>
+        <span class="floating-cta__pulse" aria-hidden="true"></span>
+        <span class="floating-cta__label">Eksklusiivinen sähköpyörävalikoima</span>
+        <span class="floating-cta__title">Siirry verkkokauppaan</span>
+        <span class="floating-cta__signature">Jugi@AnomFIN curated drop</span>
+    </a>
 
-        <section class="section section--light" id="palvelut">
+    <main>
+        <section class="section section--light" id="palvelut" data-reveal>
             <div class="section__intro">
                 <span class="kicker">Palvelumme</span>
-                <h2>Kaikki raskaan kaluston tarpeet yhdestä paikasta</h2>
-                <p>Huollamme, korjaamme ja modernisoimme raskaita työkoneita kaikilla toimialoilla. Tarjoamme lisäksi joustavan vuokraus- ja myyntikaluston projektisi tueksi.</p>
+                <h2>Huippuluokan sähköpyörähuolto yhdellä käynnillä</h2>
+                <p>Huollamme ja modernisoimme sähköpyörät, kuljetuspyörät ja yritysflotit nopeasti ja takuulla. Asiakaslähtöinen palveluprosessi pitää pyöräsi turvallisena ja ajokunnossa vuoden ympäri.</p>
             </div>
             <div class="grid grid--3">
                 <article class="card">
-                    <img src="https://images.unsplash.com/photo-1516387938699-a93567ec168e?auto=format&fit=crop&w=1200&q=80" alt="Huoltoa saava kuorma-auto" loading="lazy">
+                    <img src="assets/editablew.webp" alt="AnomFINin mekaanikko säätää sähköpyörän voimansiirtoa" loading="lazy">
                     <div class="card__content">
-                        <h3>Huolto &amp; korjaus</h3>
-                        <p>Laaja huolto- ja korjauspalvelu raskaalle kalustolle: ennakoiva kunnossapito, vikadiagnostiikka ja hätäkorjaukset ympäri Suomea.</p>
+                        <h3>Sähköpyörähuolto</h3>
+                        <p>Diagnosointi, ohjelmistopäivitykset ja mekaaniset säädöt yhdellä käynnillä. Käytämme valmistajien hyväksymiä testereitä ja huoltosarjoja.</p>
                         <ul>
-                            <li>24/7 päivystys sopimusasiakkaille</li>
-                            <li>Liikkuvat huoltoautot</li>
-                            <li>OEM- ja tarvikeosat</li>
+                            <li>OEM-sertifioidut varaosat</li>
+                            <li>Huollot myös yritysfloteille</li>
+                            <li>Nopea huoltoraportti sähköisesti</li>
                         </ul>
                     </div>
                 </article>
                 <article class="card">
-                    <img src="https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=1200&q=80" alt="Vuokrattava pyöräkuormaaja" loading="lazy">
+                    <img src="assets/ebike_web.png" alt="Sähköpyöriä rivissä vuokrauspisteellä" loading="lazy">
                     <div class="card__content">
-                        <h3>Kalustovuokraus</h3>
-                        <p>Vuokraa modernit koneet lyhyt- tai pitkäaikaisiin projekteihin. Autamme valitsemaan juuri sinun työmaallesi sopivan kokonaisuuden.</p>
+                        <h3>Vuokraus ja testiajot</h3>
+                        <p>Moderni valikoima sähköpyöriä yritystapahtumiin, koeajoihin ja kausivuokraukseen. Räätälöimme paketit tarpeesi mukaan.</p>
                         <ul>
-                            <li>Koneet toimitettuna työmaalle</li>
-                            <li>Huolto sisältyy vuokraan</li>
-                            <li>Joustavat sopimukset</li>
+                            <li>Yritys- ja yhteisövuokraukset</li>
+                            <li>Huolto sisältyy sopimuksiin</li>
+                            <li>Kuljetus pääkaupunkiseudulla</li>
                         </ul>
                     </div>
                 </article>
                 <article class="card">
-                    <img src="https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=1200&q=80" alt="Raskaita koneita varastolla" loading="lazy">
+                    <img src="assets/ebike_web2.png" alt="Asiantuntijat suunnittelevat sähköpyörien ostoja" loading="lazy">
                     <div class="card__content">
-                        <h3>Konsultointi &amp; projektituki</h3>
-                        <p>Tarjoamme käyttöön asiantuntijamme auttamaan kaluston hankinnassa, työmaasuunnittelussa ja kustannustehokkuuden optimoinnissa.</p>
+                        <h3>Huolto, myynti &amp; vaihto</h3>
+                        <p>Rakennamme elinkaarimallit, joissa sähköpyörien osto, vaihto ja jälleenmyynti hoituvat yhdellä kumppanilla. Saat kattavan palveluhistorian digitaalisesti.</p>
                         <ul>
-                            <li>Kalustoanalyysit ja kunnonvalvonta</li>
-                            <li>Projektikohtainen budjetointi</li>
-                            <li>Käyttökoulutukset</li>
+                            <li>Sertifioidut kuntoarviot ennen kauppoja</li>
+                            <li>Nopea jälleenostopalvelu</li>
+                            <li>Premium- ja custom-rungot</li>
                         </ul>
                     </div>
                 </article>
             </div>
         </section>
 
-        <section class="section metrics">
-            <div class="metrics__grid">
-                <div class="metrics__item">
-                    <span class="metrics__value">48</span>
-                    <span class="metrics__label">huoltotapausta kuukaudessa</span>
-                    <p>Reagoimme keskimäärin 4 tunnin vasteajalla Etelä-Suomen alueella.</p>
-                </div>
-                <div class="metrics__item">
-                    <span class="metrics__value">97 %</span>
-                    <span class="metrics__label">toimitusvarmuus</span>
-                    <p>Varaosat toimitetaan asiakkaan luo sovitussa ajassa Motointegrator-yhteistyöllä.</p>
-                </div>
-                <div class="metrics__item">
-                    <span class="metrics__value">24/7</span>
-                    <span class="metrics__label">päivystys sopimusasiakkaille</span>
-                    <p>Valvomme kriittisen kaluston tilaa ympäri vuorokauden AnomTools-etävalvonnalla.</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="section" id="vuokraus">
+        <section class="section" id="vuokraus" data-reveal>
             <div class="section__intro">
-                <span class="kicker">Vuokrattavat koneet</span>
-                <h2>Moderni ja huollettu vuokrakalusto</h2>
-                <p>Valikoimamme kattaa maanrakennuksen, logistiikan ja teollisuuden tarpeet. Kaikki vuokrakoneemme toimitetaan huollettuina, vakuutettuina ja käyttövalmiina.</p>
+                <span class="kicker">Vuokraus &amp; testit</span>
+                <h2>Liikkuvuuspalvelut, jotka seuraavat yrityksesi sykettä</h2>
+                <p>Helsinki eBike-Service Oy:n vuokrauskonsepti tuo toimituksiin ja tapahtumiin helposti skaalautuvan sähköpyörälaivaston. Räätälöity onboarding, vakuutukset ja huoltosopimukset pitävät kaluston ajokunnossa ympäri vuoden.</p>
             </div>
-            <div class="rental__facts" aria-label="Vuokrauksen hyödyt">
-                <div>
-                    <strong>32+</strong>
-                    <span>työmaavalmiin koneen kalusto AnomFIN-seurannalla</span>
-                </div>
-                <div>
-                    <strong>0,2%</strong>
-                    <span>keskeytyksiä – huolto tiukasti AnomTools-ohjattu</span>
-                </div>
-                <div>
-                    <strong>24/7</strong>
-                    <span>päivystys ja kuljetus sopimusasiakkaille</span>
-                </div>
-            </div>
-            <div class="grid grid--3 rental__grid">
-                <article class="product">
-                    <img src="https://images.unsplash.com/photo-1512428559087-560fa5ceab42?auto=format&fit=crop&w=1200&q=80" alt="Volvo EC220 kaivinkone" loading="lazy">
-                    <div class="product__body">
-                        <div class="product__badge">Tier IV Final</div>
-                        <h3>Volvo EC220EL kaivinkone</h3>
-                        <p>23 tonnin kaivinkone GPS-koneohjauksella ja tiltrotatorilla. Soveltuu vaativiin maanrakennustöihin.</p>
+            <div class="feature-rows">
+                <article class="feature">
+                    <div class="feature__media">
+                        <img src="assets/ebike_web.png" alt="Vuokrasähköpyörät valmiina toimitukseen" loading="lazy">
+                    </div>
+                    <div class="feature__body">
+                        <h3>Premium-vuokraus 48h toimituksella</h3>
+                        <p>Tarjoamme koeajokaluston ja pitkäaikaisvuokraukset 48 tunnin toimitusikkunalla. Kaikki pyörät tarkastetaan AnomFIN Pro -checklistillä ennen jokaista luovutusta.</p>
                         <ul>
-                            <li>Vuokra: 1 590 €/viikko</li>
-                            <li>Lisävarusteet: iskuvasara, kauhat</li>
-                            <li>Kuljetus ja huolto sisältyvät</li>
+                            <li>Logistiikkatiimille omistettu yhteyshenkilö</li>
+                            <li>GPS-seuranta ja akkuvalvonta sisältyvät</li>
+                            <li>Sesonkibundle kampanjat kaupunkitapahtumiin</li>
                         </ul>
                     </div>
                 </article>
-                <article class="product">
-                    <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1200&q=80" alt="JCB pyöräkuormaaja" loading="lazy">
-                    <div class="product__body">
-                        <div class="product__badge">Vaaka + telematiikka</div>
-                        <h3>JCB 457 pyöräkuormaaja</h3>
-                        <p>Monipuolinen kuormaaja materiaalin käsittelyyn satamissa, terminaaleissa ja työmailla.</p>
+                <article class="feature feature--reverse">
+                    <div class="feature__media">
+                        <img src="assets/ebikewp.webp" alt="Huoltoasiantuntija suorittaa vuokrafleetin tarkistusta" loading="lazy">
+                    </div>
+                    <div class="feature__body">
+                        <h3>AnomFIN FleetCare</h3>
+                        <p>FleetCare-ylläpito seuraa pyöriä etänä ja reagoi ennen kuin seisokit syntyvät. Sovi kuukausittaiset huoltokierrot ja vapauta tiimisi keskittymään toimituksiin.</p>
                         <ul>
-                            <li>Vuokra: 1 250 €/viikko</li>
-                            <li>Varusteet: vilkku, vaaka, eri kauhat</li>
-                            <li>Voimansiirron täystakuu</li>
+                            <li>Ennakoivat huoltoraportit ja datanäkyvyys</li>
+                            <li>Varapyörät toimitetaan samalla reitillä</li>
+                            <li>Skaalaa helposti 10–500 pyörän kokonaisuuksiin</li>
                         </ul>
                     </div>
                 </article>
-                <article class="product">
-                    <img src="https://images.unsplash.com/photo-1517971071642-34a2d3ecc9cd?auto=format&fit=crop&w=1200&q=80" alt="Manitou kurottaja" loading="lazy">
-                    <div class="product__body">
-                        <div class="product__badge">Sääsuojattu</div>
-                        <h3>Manitou MT 1840 kurottaja</h3>
-                        <p>18 metrin nostokorkeus ja 4 tonnin nostokapasiteetti. Erinomainen työmaiden monitoimilaite.</p>
-                        <ul>
-                            <li>Vuokra: 980 €/viikko</li>
-                            <li>Sis. haarukat, henkilönostokori</li>
-                            <li>Etävalvonta ja käyttökoulutus</li>
-                        </ul>
-                    </div>
-                </article>
-            </div>
-            <div class="rental__cta">
-                <div>
-                    <h3>Tarvitsetko välittömästi korvaavan koneen?</h3>
-                    <p>Soita AnomFIN-vuokrauspäivystykseen &ndash; varmistamme kuljetuksen ja käyttöönottokoulutuksen seuraavalle aamulle.</p>
-                </div>
-                <a class="btn btn--primary" href="tel:+3584578366680">045 783 666 80</a>
             </div>
         </section>
 
-        <section class="section process" aria-label="Huoltoprosessi">
+        <section class="section section--light" id="myynti" data-reveal>
             <div class="section__intro">
-                <span class="kicker">Työskentelytapamme</span>
-                <h2>Selkeä prosessi takaa kaluston käyttövarmuuden</h2>
-                <p>Yhdistämme työnjohdon, dokumentoinnin ja kalustonhallinnan digitaaliseen AnomFIN-ohjaukseen. Näin huoltotyöt,
-                    raportointi ja laskutus pysyvät hallittuna kokonaisuutena.</p>
+                <span class="kicker">Myynti &amp; hankinnat</span>
+                <h2>Kuratoitu sähköpyörävalikoima yrityksille ja harrastajille</h2>
+                <p>Autamme rakentamaan juuri oikean sähköpyöräkokoonpanon tiimillesi. Saat käyttöösi testirungot, konsultoinnin ja AnomFINin premium-hankintakanavat.</p>
             </div>
-            <div class="process__timeline">
-                <div class="process__step">
-                    <span class="process__badge">01</span>
-                    <div>
-                        <h3>Tilaus ja tilannekuva</h3>
-                        <p>Työnjohto vastaanottaa tilauksen, tarkistaa kaluston historiatiedot ja varaa tarvittavat varaosat sekä
-                            resurssit.</p>
-                    </div>
-                </div>
-                <div class="process__step">
-                    <span class="process__badge">02</span>
-                    <div>
-                        <h3>Suoritus ja laadunvarmistus</h3>
-                        <p>Huoltomiehemme dokumentoivat työn vaiheittain. Käytämme valmistajien diagnostiikkaohjelmistoja ja
-                            toimitamme raportit asiakkaalle.</p>
-                    </div>
-                </div>
-                <div class="process__step">
-                    <span class="process__badge">03</span>
-                    <div>
-                        <h3>Jälkiseuranta</h3>
-                        <p>Seuraamme telematiikkaa, ajotietoja ja analysoimme kulutusta. Tarjoamme suositukset seuraaville
-                            huolloille ja investoinneille.</p>
-                    </div>
-                </div>
+            <div class="sales-grid">
+                <article class="sales-card">
+                    <h3>Projektimyynti</h3>
+                    <p>Laadimme koko toimitusketjun rungon valinnasta varusteisiin. Henkilökohtainen asiantuntija varmistaa yhteensopivuuden ja toimitusaikataulut.</p>
+                    <ul>
+                        <li>Curated selection by AnomFIN</li>
+                        <li>Custom branding &amp; wrap-palvelut</li>
+                        <li>Dataohjattu sopimusmalli</li>
+                    </ul>
+                </article>
+                <article class="sales-card">
+                    <h3>Työsuhdepyörä-ohjelmat</h3>
+                    <p>Suunnittelemme yrityksesi työsuhdepyöräpolitiikan ja yhdistämme siihen huoltosopimuksen sekä vakuutukset.</p>
+                    <ul>
+                        <li>Automatisoidut työntekijäportaalit</li>
+                        <li>Yhden luukun huoltopalvelu</li>
+                        <li>Raportointi taloushallinnolle</li>
+                    </ul>
+                </article>
+                <article class="sales-card">
+                    <h3>Showroom by appointment</h3>
+                    <p>Eksklusiivinen showroom Herttoniemessä esittelee uusimmat mallit ja sovellukset. Varaa yksityinen demo AnomFIN-tiimin kanssa.</p>
+                    <ul>
+                        <li>Testiradat sisä- ja ulkotiloissa</li>
+                        <li>Runko- ja akkukustomoinnit</li>
+                        <li>Sähköinen tilausprosessi</li>
+                    </ul>
+                </article>
             </div>
         </section>
 
-        <section class="section section--dark" id="myynti">
+        <section class="section" id="paketit" data-reveal>
             <div class="section__intro">
-                <span class="kicker kicker--light">Myynnissä</span>
-                <h2>Käytetyt ja uudet koneet nopeaan toimitukseen</h2>
-                <p>Kaikki myynnissä oleva kalusto on huollettu, tarkastettu ja valmiina töihin. Järjestämme myös rahoituksen ja käyttöönoton.</p>
+                <span class="kicker">Huoltopaketit</span>
+                <h2>Suunnitellut kokonaisuudet sähköpyörien ylläpitoon</h2>
+                <p>Valitse tarpeeseesi sopiva huoltopaketti. Jokainen paketti sisältää huolellisen tarkastuksen, koeajon ja raportoinnin. Yrityspaketteihin sisällytetään lisäksi kuukausittainen kalustokatsaus.</p>
             </div>
             <div class="grid grid--3">
-                <article class="product product--overlay">
-                    <img src="https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=1200&q=80" alt="Doosan telakaivinkone" loading="lazy">
+                <article class="product">
+                    <img src="assets/ebike_web.png" alt="Huolellisesti huollettu sähköpyörä nosturilla" loading="lazy">
                     <div class="product__body">
-                        <h3>Doosan DX300LC-7</h3>
-                        <p>2022, 2 150 h, puomi- ja aisavaihteella. Täydellinen huoltohistoria.</p>
-                        <span class="product__price">Myyntihinta: 245 000 € (alv 0 %)</span>
+                        <h3>Launch Care 299</h3>
+                        <p>Kauden starttipaketti, jossa tarkastetaan rungon, voimansiirron ja akun kunto. Sisältää täydellisen ohjelmistopäivityksen.</p>
+                        <ul>
+                            <li>Hinta: 299 €</li>
+                            <li>AnomFIN diagnostiikka</li>
+                            <li>Jarru- ja vaihdesynkkaus</li>
+                        </ul>
                     </div>
                 </article>
-                <article class="product product--overlay">
-                    <img src="https://images.unsplash.com/photo-1516387938699-a93567ec168e?auto=format&fit=crop&w=1200&q=80" alt="Scania huoltoauto" loading="lazy">
+                <article class="product">
+                    <img src="assets/ebike_web2.png" alt="Premium sähköpyörä yrityksen showroomissa" loading="lazy">
                     <div class="product__body">
-                        <h3>Scania R580 huoltoauto</h3>
-                        <p>2019, täydellinen varustelu liikkuvaan huoltoon, kompressori ja hydrauliikka.</p>
-                        <span class="product__price">Myyntihinta: 129 000 € (alv 0 %)</span>
+                        <h3>Pro Active 699</h3>
+                        <p>Suosituin pakettimme aktiivisille kuskeille ja yrityksille. Sisältää kausihuollot, nouto- ja palautuspalvelun sekä varaosapäivitykset.</p>
+                        <ul>
+                            <li>Hinta: 699 €</li>
+                            <li>Varaosat -15 %</li>
+                            <li>Nouto &amp; palautus pääkaupunkiseudulla</li>
+                        </ul>
                     </div>
                 </article>
-                <article class="product product--overlay">
-                    <img src="https://images.unsplash.com/photo-1521206183636-7a950bafdcc2?auto=format&fit=crop&w=1200&q=80" alt="Liebherr torninosturi" loading="lazy">
+                <article class="product">
+                    <img src="assets/ebikewp.webp" alt="Fleet-huollon asiantuntija tarkastaa premium-sähköpyörää" loading="lazy">
                     <div class="product__body">
-                        <h3>Liebherr 280 EC-H torninosturi</h3>
-                        <p>Vuosi 2020, nostokyky 12 t, vapaa korkeudenosto 84 m. Toimitus ja asennus koko Suomeen.</p>
-                        <span class="product__price">Myyntihinta: 465 000 € (alv 0 %)</span>
+                        <h3>Fleet Signature 1499</h3>
+                        <p>Laajin palvelumme logistiikkaoperaattoreille ja luksuspyöriä käyttävälle kalustolle. Valvomme akkuja 24/7 ja toimitamme varapyörät tunneissa.</p>
+                        <ul>
+                            <li>Hinta: 1 499 €</li>
+                            <li>24/7 ensivastehuolto</li>
+                            <li>Kokonaisraportointi ja CO₂-seuranta</li>
+                        </ul>
                     </div>
                 </article>
             </div>
         </section>
 
-        <section class="section store" id="verkkokauppa">
-            <div class="section__intro store__intro">
+        <section class="section section--store" id="verkkokauppa" data-reveal>
+            <div class="section__intro">
                 <span class="kicker">Verkkokauppa</span>
-                <h2>AnomFIN HardParts – hardcore-varaosat rekkakalustoon</h2>
-                <p>AnomFIN HardParts -verkkokauppa on rakennettu ammattikuljetuksen tarpeisiin. Ei liukuhihna-algoritmeja, vaan raskaan sarjan asentajien kuratoimaa valikoimaa, joka kestää kovaa ajoa ja ympärivuorokautista käyttöä.</p>
-                <div class="store__badges" aria-label="Verkkokaupan luottamustekijät">
-                    <span>Vantaan yövarasto 24/7</span>
-                    <span>ISO 9001 hyväksytyt toimittajat</span>
-                    <span>AnomTools VIN-match</span>
+                <h2>Upea ja sulava ostokokemus sähköpyörille ja varusteille</h2>
+                <p>Tilaa huolella kuratoidut tuotteet kotiinkuljetuksella tai nouda ne huollon yhteydessä. Lisää tuotteet ostoskoriin ja viimeistele tilaus yhteydenotolla – tiimimme varmistaa oikeat koot ja yhteensopivuuden ennen toimitusta.</p>
+            </div>
+            <div class="store" data-store>
+                <div class="store__cart" aria-live="polite">
+                    <h3>Ostoskori</h3>
+                    <p class="store__cart-empty" data-cart-empty>Ostoskorisi on vielä tyhjä. Lisää tuotteita ja hyödynnä asiantuntijoidemme tuki.</p>
+                    <ul class="store__cart-items" data-cart-items></ul>
+                    <div class="store__cart-summary">
+                        <span>Välisumma</span>
+                        <strong data-cart-total>0,00 €</strong>
+                    </div>
+                    <p class="store__cart-note">Viimeistele tilauksesi lähettämällä ostoskori ja yhteystietosi asiantuntijallemme.</p>
+                    <a class="btn btn--primary" href="verkkokauppa.html">Avaa koko verkkokauppa</a>
                 </div>
-                <div class="store__highlights" aria-label="Verkkokaupan vahvuudet">
-                    <div class="store__highlight">
-                        <span class="store__highlight-value">118 940</span>
-                        <span class="store__highlight-label">kuorma-auton varaosaa</span>
-                    </div>
-                    <div class="store__highlight">
-                        <span class="store__highlight-value">0-24 h</span>
-                        <span class="store__highlight-label">nouto AnomFIN-varastolta</span>
-                    </div>
-                    <div class="store__highlight">
-                        <span class="store__highlight-value">OEM + HD</span>
-                        <span class="store__highlight-label">testatut laatulinjat</span>
-                    </div>
-                </div>
-            </div>
-            <div class="store__controls" aria-label="Verkkokaupan haku ja suodattimet">
-                <label class="store__search" for="store-search">
-                    <span>Hae tuotetta</span>
-                    <input type="search" id="store-search" name="store-search" placeholder="Esim. jarrusatula, TraXon tai Webasto">
-                </label>
-                <div class="store__filters" role="tablist" aria-label="Tuotekategoriat">
-                    <button type="button" class="store__filter is-active" data-filter="all" role="tab" aria-selected="true">Kaikki</button>
-                    <button type="button" class="store__filter" data-filter="voimansiirto" role="tab" aria-selected="false">Voimansiirto</button>
-                    <button type="button" class="store__filter" data-filter="jarrut" role="tab" aria-selected="false">Jarrut</button>
-                    <button type="button" class="store__filter" data-filter="ilmanhuolto" role="tab" aria-selected="false">Ilmanhuolto</button>
-                    <button type="button" class="store__filter" data-filter="hydrauliikka" role="tab" aria-selected="false">Hydrauliikka</button>
-                    <button type="button" class="store__filter" data-filter="sahko" role="tab" aria-selected="false">Sähkö &amp; varusteet</button>
-                </div>
-            </div>
-            <div class="store__status">
-                <p class="store__status-count" aria-live="polite"><span data-store-count>8</span> tuotetta esillä &mdash; koko HardParts-varasto kirjautuneille yritysasiakkaille.</p>
-                <a class="store__status-link" href="#yhteys">Tarvitsetko apua valintaan?</a>
-            </div>
-            <p class="store__empty" data-store-empty hidden aria-live="polite">Ei osumia hakuehdoilla. Poista suodattimia tai ota yhteys AnomFIN × AnomTools -tiimiin, niin etsimme oikean ratkaisun.</p>
-            <div class="store__grid">
-                <article class="store-card" data-categories="jarrut">
-                    <span class="store-card__badge">Raskas sarja</span>
-                    <img src="https://images.unsplash.com/photo-1584714268709-c98d7d44134a?auto=format&fit=crop&w=1200&q=80" alt="Knorr-Bremse jarrusatula raskaaseen ajoneuvoon" loading="lazy">
-                    <div class="store-card__content">
-                        <h3>Knorr-Bremse NX9 jarrusatula</h3>
-                        <p class="store-card__desc">Erittäin kestävä paineilmasatula Volvo FH5 ja Scania Super -akselistoihin. Mukana asennussarja ja momenttitaulukko.</p>
-                        <ul class="store-card__specs">
-                            <li>Sopivuus: 22,5" etuakselit, levy 410x45</li>
-                            <li>SKU: KBX9-HD-410</li>
-                            <li>Varasto: Vantaa HardParts</li>
-                        </ul>
-                        <div class="store-card__footer">
-                            <div>
-                                <span class="store-card__price">1 420 €</span>
-                                <span class="store-card__availability">Pikatoimitus 0-24 h</span>
+                <div class="store__grid">
+                    <article class="store-card" data-product="Tenways CGO009" data-price="2599">
+                        <img src="https://images.unsplash.com/photo-1529429617124-aee711a0fb7c?auto=format&fit=crop&w=1200&q=80" alt="Tyylikäs kaupunkisähköpyörä harmaalla taustalla" loading="lazy">
+                        <div class="store-card__body">
+                            <span class="store-card__tag">Uutuus</span>
+                            <h3>Tenways CGO009 Urban</h3>
+                            <p>Kevyt hiilikuiturunko, hihnaveto ja 80 km kantama. Täydellinen kaupunkipyörään tottuneelle.</p>
+                            <div class="store-card__footer">
+                                <span class="store-card__price">2 599 €</span>
+                                <button class="btn btn--secondary" type="button" data-add-to-cart>Lisää koriin</button>
                             </div>
-                            <button type="button" class="btn btn--outline">Lisää ostoskoriin</button>
                         </div>
-                    </div>
-                </article>
-                <article class="store-card" data-categories="voimansiirto">
-                    <span class="store-card__badge store-card__badge--new">TraXon HD</span>
-                    <img src="https://images.unsplash.com/photo-1533237264985-ee63c0cd80bf?auto=format&fit=crop&w=1200&q=80" alt="ZF TraXon vaihteistopaketti työpöydällä" loading="lazy">
-                    <div class="store-card__content">
-                        <h3>ZF TraXon HD vaihteistopaketti</h3>
-                        <p class="store-card__desc">Täysi tehdaskunnostettu vaihteisto Mercedes-Benz Actros ja MAN TGX -kalustoon. Mukana ohjelmoitu ohjainlaite.</p>
-                        <ul class="store-card__specs">
-                            <li>Sopivuus: Euro 6 OM471 / D38</li>
-                            <li>Takuulaatikko: 2 vuotta ilman km-rajaa</li>
-                            <li>Toimitus: lavakuljetus 48 h</li>
-                        </ul>
-                        <div class="store-card__footer">
-                            <div>
-                                <span class="store-card__price">8 950 €</span>
-                                <span class="store-card__availability">Rakennettu tilauksesta</span>
+                    </article>
+                    <article class="store-card" data-product="Giro Manifest Spherical" data-price="289">
+                        <img src="https://images.unsplash.com/photo-1505678261036-a3fcc5e884ee?auto=format&fit=crop&w=1200&q=80" alt="Sähköpyöräkypärä työpöydällä" loading="lazy">
+                        <div class="store-card__body">
+                            <span class="store-card__tag">Turvallisuus</span>
+                            <h3>Giro Manifest Spherical</h3>
+                            <p>Huipputason kypärä MIPS-suojauksella ja erinomaisella ilmanvaihdolla ympärivuotiseen ajoon.</p>
+                            <div class="store-card__footer">
+                                <span class="store-card__price">289 €</span>
+                                <button class="btn btn--secondary" type="button" data-add-to-cart>Lisää koriin</button>
                             </div>
-                            <button type="button" class="btn btn--outline">Lisää ostoskoriin</button>
                         </div>
-                    </div>
-                </article>
-                <article class="store-card" data-categories="ilmanhuolto jarrut">
-                    <span class="store-card__badge">Fleet suosikki</span>
-                    <img src="https://images.unsplash.com/photo-1580894906509-1eee2f936338?auto=format&fit=crop&w=1200&q=80" alt="WABCO air dryer -yksikkö pöydällä" loading="lazy">
-                    <div class="store-card__content">
-                        <h3>WABCO Air System Protector</h3>
-                        <p class="store-card__desc">Kuivausyksikkö raskaalle paineilmalle. Sisältää sulkuventtiilin ja lämmityksen pohjoisiin olosuhteisiin.</p>
-                        <ul class="store-card__specs">
-                            <li>Sopivuus: kaikki EBS/EBS-E järjestelmät</li>
-                            <li>VIN-match: AnomTools raportti</li>
-                            <li>Huoltosykli: 12 kk / 150 000 km</li>
-                        </ul>
-                        <div class="store-card__footer">
-                            <div>
-                                <span class="store-card__price">580 €</span>
-                                <span class="store-card__availability">Varastossa 37 kpl</span>
+                    </article>
+                    <article class="store-card" data-product="Bosch PowerTube 625" data-price="799">
+                        <img src="https://images.unsplash.com/photo-1509395176047-4a66953fd231?auto=format&fit=crop&w=1200&q=80" alt="Sähköpyörän vara-akku pöydällä" loading="lazy">
+                        <div class="store-card__body">
+                            <span class="store-card__tag">Varaosat</span>
+                            <h3>Bosch PowerTube 625</h3>
+                            <p>Alkuperäinen 625 Wh akku Bosch Performance Line -järjestelmiin. Asennus ja diagnostiikka sisältyvät.</p>
+                            <div class="store-card__footer">
+                                <span class="store-card__price">799 €</span>
+                                <button class="btn btn--secondary" type="button" data-add-to-cart>Lisää koriin</button>
                             </div>
-                            <button type="button" class="btn btn--outline">Lisää ostoskoriin</button>
                         </div>
-                    </div>
-                </article>
-                <article class="store-card" data-categories="jarrut sahko">
-                    <img src="https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=1200&q=80" alt="Haldex EBS modulaattori johdotuksineen" loading="lazy">
-                    <div class="store-card__content">
-                        <h3>Haldex ModulT EBS modulaattori</h3>
-                        <p class="store-card__desc">Plug&play-modulaattori vetäville akseleille. Toimitukseen sisältyy paineanturit, johtosarja ja asennusohje.</p>
-                        <ul class="store-card__specs">
-                            <li>Sopivuus: DAF XF, Iveco S-Way, Renault T High</li>
-                            <li>Ohjelmistoversio: Q4/2024</li>
-                            <li>Laite testattu dynopenkissä</li>
-                        </ul>
-                        <div class="store-card__footer">
-                            <div>
-                                <span class="store-card__price">1 280 €</span>
-                                <span class="store-card__availability store-card__availability--fast">Kalustossa 6 kpl</span>
+                    </article>
+                    <article class="store-card" data-product="WinterCare Kit" data-price="119">
+                        <img src="https://images.unsplash.com/photo-1604272011436-1d760c6fc1d8?auto=format&fit=crop&w=1200&q=80" alt="Talvihuoltosarja sähköpyörälle" loading="lazy">
+                        <div class="store-card__body">
+                            <span class="store-card__tag">Huoltosarja</span>
+                            <h3>WinterCare Kit</h3>
+                            <p>Talvihuoltoon suunniteltu kit, sisältää nastarenkaiden vaihdon ja täyshuollon ennen pakkasia.</p>
+                            <div class="store-card__footer">
+                                <span class="store-card__price">119 €</span>
+                                <button class="btn btn--secondary" type="button" data-add-to-cart>Lisää koriin</button>
                             </div>
-                            <button type="button" class="btn btn--outline">Lisää ostoskoriin</button>
                         </div>
-                    </div>
-                </article>
-                <article class="store-card" data-categories="sahko">
-                    <span class="store-card__badge">Polar Pack</span>
-                    <img src="https://images.unsplash.com/photo-1612810806695-30ba0a2891b0?auto=format&fit=crop&w=1200&q=80" alt="HELLA LED työvalosarja" loading="lazy">
-                    <div class="store-card__content">
-                        <h3>HELLA RokLUME 280N LED -työvalosarja</h3>
-                        <p class="store-card__desc">Neljä IP69K-työvaloa lämmityksellä ja 5 000 lumenin valoteholla. Sisältää Deutsch-liittimet ja johtosarjan.</p>
-                        <ul class="store-card__specs">
-                            <li>Jännitealue 9-33 V</li>
-                            <li>Kotelo: painevalettu alumiini</li>
-                            <li>Varusteena rajoittamaton takuu</li>
-                        </ul>
-                        <div class="store-card__footer">
-                            <div>
-                                <span class="store-card__price">690 €</span>
-                                <span class="store-card__availability">Saatavilla 22 sarjaa</span>
+                    </article>
+                    <article class="store-card" data-product="Cargo eBike Lease" data-price="249">
+                        <img src="https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=1200&q=80" alt="Tavarapyörä kaupunkimiljöössä" loading="lazy">
+                        <div class="store-card__body">
+                            <span class="store-card__tag">Yrityksille</span>
+                            <h3>Cargo eBike Lease</h3>
+                            <p>Kuukausivuokraus sisältäen huollot, vakuutukset ja varapyörät urbaaniin logistiikkaan.</p>
+                            <div class="store-card__footer">
+                                <span class="store-card__price">249 €/kk</span>
+                                <button class="btn btn--secondary" type="button" data-add-to-cart>Lisää koriin</button>
                             </div>
-                            <button type="button" class="btn btn--outline">Lisää ostoskoriin</button>
                         </div>
-                    </div>
-                </article>
-                <article class="store-card" data-categories="sahko varusteet">
-                    <img src="https://images.unsplash.com/photo-1523413651479-597eb2da0ad6?auto=format&fit=crop&w=1200&q=80" alt="Webasto Thermo Pro lämmitysjärjestelmä" loading="lazy">
-                    <div class="store-card__content">
-                        <h3>Webasto Thermo Pro 90 kit</h3>
-                        <p class="store-card__desc">9 kW neste- ja ohjaamonlämmitin raskaaseen käyttöön. Pakettiin kuuluu CAN-ohjain, johdotus ja polttoainehaaroitus.</p>
-                        <ul class="store-card__specs">
-                            <li>Sertifioitu ADR-ajoneuvoihin</li>
-                            <li>Valmiit asennusraudat Actros/FH</li>
-                            <li>Kaukosäädin + ajastus</li>
-                        </ul>
-                        <div class="store-card__footer">
-                            <div>
-                                <span class="store-card__price">1 190 €</span>
-                                <span class="store-card__availability">Varastossa 11 kpl</span>
+                    </article>
+                    <article class="store-card" data-product="Fast Charge Service" data-price="59">
+                        <img src="https://images.unsplash.com/photo-1523419409543-0c1df022bdd9?auto=format&fit=crop&w=1200&q=80" alt="Sähköpyörän akku latauksessa" loading="lazy">
+                        <div class="store-card__body">
+                            <span class="store-card__tag">Palvelu</span>
+                            <h3>Fast Charge Service</h3>
+                            <p>Akkujen tasapainotus, kapasiteettimittaus ja latausstrategian optimointi talvikaudelle.</p>
+                            <div class="store-card__footer">
+                                <span class="store-card__price">59 €</span>
+                                <button class="btn btn--secondary" type="button" data-add-to-cart>Lisää koriin</button>
                             </div>
-                            <button type="button" class="btn btn--outline">Lisää ostoskoriin</button>
                         </div>
-                    </div>
-                </article>
-                <article class="store-card" data-categories="hydrauliikka voimansiirto">
-                    <span class="store-card__badge">Power take-off</span>
-                    <img src="https://images.unsplash.com/photo-1580894732194-6c4b0911d8c5?auto=format&fit=crop&w=1200&q=80" alt="Parker hydrauliikkapumppu" loading="lazy">
-                    <div class="store-card__content">
-                        <h3>Parker VP1-130 hydrauliikkapumppu</h3>
-                        <p class="store-card__desc">Muuttuvatilavuuksinen PTO-pumppu kippilaitteisiin ja nostureihin. Hiljainen käynti ja korkea hyötysuhde.</p>
-                        <ul class="store-card__specs">
-                            <li>Tilavuus 130 cm³ / kierros</li>
-                            <li>Maksimipaine 420 bar</li>
-                            <li>Testipenkki raportti mukana</li>
-                        </ul>
-                        <div class="store-card__footer">
-                            <div>
-                                <span class="store-card__price">2 450 €</span>
-                                <span class="store-card__availability">Saatavilla 5 kpl</span>
-                            </div>
-                            <button type="button" class="btn btn--outline">Lisää ostoskoriin</button>
-                        </div>
-                    </div>
-                </article>
-                <article class="store-card" data-categories="voimansiirto">
-                    <img src="https://images.unsplash.com/photo-1580894732444-8ecdedc06a52?auto=format&fit=crop&w=1200&q=80" alt="Meritor vetopyörästön hammaspyörät" loading="lazy">
-                    <div class="store-card__content">
-                        <h3>Meritor MX-610 vetopyörästö</h3>
-                        <p class="store-card__desc">Tehdasuusi vetopyörästö 3.08 välityksellä raskaaseen maantiekalustoon. Sisältää asennuslaakerit ja tiivisteet.</p>
-                        <ul class="store-card__specs">
-                            <li>Sopivuus: DAF XF, Volvo FH, MAN TGX</li>
-                            <li>Käyttövarmuus testattu 500 h dynossa</li>
-                            <li>Takuu 3 vuotta / 450 000 km</li>
-                        </ul>
-                        <div class="store-card__footer">
-                            <div>
-                                <span class="store-card__price">4 780 €</span>
-                                <span class="store-card__availability">Toimitus 72 h</span>
-                            </div>
-                            <button type="button" class="btn btn--outline">Lisää ostoskoriin</button>
-                        </div>
-                    </div>
-                </article>
-            </div>
-            <div class="store__cta">
-                <div class="store__banner">
-                    <div class="store__banner-text">
-                        <h3>HardParts-tiimi valitsee osat puolestasi</h3>
-                        <p>Kun kerrot alustanumeron, HardParts-asiantuntijamme tekevät VIN-tarkistuksen, vertaavat vaihtoehdot ja vahvistavat toimitusaikataulun ennen laskutusta.</p>
-                    </div>
-                    <div class="store__banner-actions">
-                        <a class="btn btn--primary" href="#yhteys">Ota yhteyttä asiantuntijaan</a>
-                        <a class="store__banner-phone" href="tel:+3584578366680">045 783 666 80</a>
-                    </div>
+                    </article>
                 </div>
             </div>
         </section>
 
-        <section class="section partners">
+        <section class="section" id="referenssit" data-reveal>
             <div class="section__intro">
-                <span class="kicker">Yhteistyöverkosto</span>
-                <h2>AnomFIN × AnomTools verkosto takaa toimitusvarmuuden</h2>
-                <p>Teemme yhteistyötä valmistajien, varaosatoimittajien ja rahoituskumppaneiden kanssa. Näin pystymme tarjoamaan
-                    laadukkaita koneita ja varaosia sekä kattavan huoltopalvelun.</p>
-            </div>
-            <div class="partners__grid">
-                <span class="partners__logo">Volvo Trucks Partner</span>
-                <span class="partners__logo">Scania Authorized Services</span>
-                <span class="partners__logo">Mercedes-Benz Industrial Solutions</span>
-                <span class="partners__logo">MAN Service Network</span>
-                <span class="partners__logo">DAF Genuine Parts</span>
-                <span class="partners__logo">IVECO Capital Finance</span>
-            </div>
-        </section>
-
-        <section class="section" id="referenssit">
-            <div class="section__intro">
-                <span class="kicker">Referenssit</span>
-                <h2>Luotettu kumppani infrarakentajille ja logistiikalle</h2>
-                <p>Autamme asiakkaitamme pitämään kriittiset projektit aikataulussa ja kaluston toimintavarmana. Tässä muutamia onnistuneita toimituksia.</p>
+                <span class="kicker">Asiakastarinat</span>
+                <h2>Palvelemme yrityksiä, yhteisöjä ja intohimoisia sähköpyöräilijöitä</h2>
+                <p>Jokainen projekti alkaa tarpeen ymmärtämisestä. Näin asiakkaamme kuvaavat yhteistyötä Helsinki eBike-Service Oy:n kanssa.</p>
             </div>
             <div class="grid grid--3 testimonials">
                 <article class="testimonial">
-                    <p>“Harjun Raskaskoneen huoltotiimi pelasti työmaamme kriittisessä vaiheessa. Nopeus ja asiantuntemus tekivät vaikutuksen.”</p>
+                    <p>“Huoltosopimus on vapauttanut meidät keskittymään jakeluun. Pyörät ovat aina toimintavarmoja ja raportointi on selkeää.”</p>
                     <div class="testimonial__meta">
-                        <span class="testimonial__name">Mikko, työmaapäällikkö</span>
-                        <span class="testimonial__company">Länsirakentajat Oy</span>
+                        <span class="testimonial__name">Jenna, operatiivinen johtaja</span>
+                        <span class="testimonial__company">CityCourier Oy</span>
                     </div>
                 </article>
                 <article class="testimonial">
-                    <p>“Vuokrakaluston toimitus oli täsmällinen ja koneiden kunto erinomainen. Kommunikointi oli sujuvaa koko projektin ajan.”</p>
+                    <p>“Verkkokauppa on huippu. Löydän nopeasti varaosat ja tiimi varmistaa sopivuuden ennen toimitusta.”</p>
                     <div class="testimonial__meta">
-                        <span class="testimonial__name">Sari, logistiikkapäällikkö</span>
-                        <span class="testimonial__company">Nordic Terminals</span>
+                        <span class="testimonial__name">Tero, sähköpyöräharrastaja</span>
+                        <span class="testimonial__company">Helsinki</span>
                     </div>
                 </article>
                 <article class="testimonial">
-                    <p>“Saimme räätälöidyn ratkaisun varastoinnin automatisointiin. Asiantuntijoiden tuki jatkui vielä käyttöönoton jälkeenkin.”</p>
+                    <p>“Koulutus auttoi henkilöstöä ottamaan sähköpyörät käyttöön. Huolto tulee paikan päälle ja pitää kalustomme kunnossa.”</p>
                     <div class="testimonial__meta">
-                        <span class="testimonial__name">Timo, tuotantopäällikkö</span>
-                        <span class="testimonial__company">TeräsPlus Oy</span>
+                        <span class="testimonial__name">Laura, HR-päällikkö</span>
+                        <span class="testimonial__company">EcoOffice Solutions</span>
                     </div>
                 </article>
             </div>
         </section>
 
-        <section class="section section--light faq" id="useinkysytyt">
+        <section class="section section--accent" id="laskuri" data-reveal>
             <div class="section__intro">
-                <span class="kicker">Usein kysyttyä</span>
-                <h2>Vastauksia asiakkaidemme suosituimpiin kysymyksiin</h2>
-                <p>Jos et löytänyt vastausta, ota yhteyttä &mdash; AnomFIN-tiimimme auttaa mielellään seuraavan projektisi
-                    suunnittelussa.</p>
+                <span class="kicker kicker--light">Työkalut</span>
+                <h2>AnomFIN Huoltosäästölaskuri</h2>
+                <p>Arvioi ennakoivan kunnossapidon vaikutus käyttökustannuksiin. AnomTools-analytiikkamme yhdistää kalustosi vikahistorian ja käyttöasteen, jotta tiedät kuinka paljon seisokkiaikaa voidaan poistaa.</p>
             </div>
-            <div class="faq__list">
-                <article class="faq__item">
-                    <button class="faq__question" aria-expanded="false">
-                        <span>Kuinka nopeasti huolto voidaan aloittaa?</span>
-                        <span class="faq__icon" aria-hidden="true"></span>
-                    </button>
-                    <div class="faq__answer" hidden>
-                        <p>Kiireelliset keikat käynnistyvät tyypillisesti 4 tunnin sisällä pääkaupunkiseudulla. Sopimusasiakkaille
-                            päivystää 24/7-tiimi, joka koordinoi varaosat ja huoltoautot paikalle.</p>
+            <div class="calculator">
+                <form class="calculator__form" id="savings-calculator" aria-describedby="savings-helper">
+                    <div class="calculator__fields">
+                        <label class="field">
+                            <span>Koneiden määrä</span>
+                            <input type="number" name="machines" id="machines" min="1" step="1" required placeholder="Esim. 12">
+                        </label>
+                        <label class="field">
+                            <span>Nykyinen seisokkiaika / kone / kk (h)</span>
+                            <input type="number" name="downtime" id="downtime" min="0" step="0.5" required placeholder="Esim. 6">
+                        </label>
+                        <label class="field">
+                            <span>Seisokkikustannus tunnilta (€)</span>
+                            <input type="number" name="hourlyCost" id="hourlyCost" min="0" step="10" required placeholder="Esim. 180">
+                        </label>
+                        <label class="field">
+                            <span>Arvioitu seisokin vähennys (%)</span>
+                            <input type="number" name="prevented" id="prevented" min="0" max="100" step="5" required placeholder="Esim. 35">
+                        </label>
                     </div>
-                </article>
-                <article class="faq__item">
-                    <button class="faq__question" aria-expanded="false">
-                        <span>Mitä tietoja tarvitsette varaosatarjousta varten?</span>
-                        <span class="faq__icon" aria-hidden="true"></span>
-                    </button>
-                    <div class="faq__answer" hidden>
-                        <p>Ajoneuvon VIN-koodi, rekisterinumero sekä mahdolliset varaosanumerot nopeuttavat käsittelyä. Motointegrator-
-                            hakumme varmistaa sopivuuden ennen tilausta.</p>
-                    </div>
-                </article>
-                <article class="faq__item">
-                    <button class="faq__question" aria-expanded="false">
-                        <span>Onko kalustolle mahdollista saada sijaiskone?</span>
-                        <span class="faq__icon" aria-hidden="true"></span>
-                    </button>
-                    <div class="faq__answer" hidden>
-                        <p>Kyllä. Vuokrakalustomme ja kumppaniverkostomme avulla järjestämme sijaiskoneen niin kauan kuin oma kalustosi
-                            on huollossa.</p>
-                    </div>
-                </article>
-                <article class="faq__item">
-                    <button class="faq__question" aria-expanded="false">
-                        <span>Tarjoatteko rahoitusta tai leasingia myyntikoneisiin?</span>
-                        <span class="faq__icon" aria-hidden="true"></span>
-                    </button>
-                    <div class="faq__answer" hidden>
-                        <p>Kyllä. Teemme yhteistyötä rahoitusyhtiöiden kanssa ja räätälöimme leasing-, osamaksu- ja huoltosopimuspaketit
-                            yrityksesi kassavirran mukaan.</p>
-                    </div>
-                </article>
+                    <p class="calculator__helper" id="savings-helper">Tarkempi analyysi on saatavilla osana AnomFIN • AnomTools kunnonvalvontapalvelua.</p>
+                    <button type="submit" class="btn btn--primary calculator__submit">Laske säästöpotentiaali</button>
+                </form>
+                <div class="calculator__results" id="savings-result" aria-live="polite">
+                    <p class="calculator__placeholder">Syötä luvut ja näet välittömän arvion rahallisista ja ajallisista säästöistä.</p>
+                </div>
             </div>
+            <p class="calculator__signature" aria-label="Laskelman tuottaja">AnomFIN • AnomTools</p>
         </section>
 
-        <section class="section section--accent" aria-label="Nopeat faktat Harjun Raskaskone Oy:stä">
+        <section class="section section--accent" aria-label="Nopeat faktat Harjun Raskaskone Oy:stä" data-reveal>
             <div class="facts">
                 <div>
+                    <h3>Virallinen nimi</h3>
+                    <p>Helsinki eBike-Service Oy</p>
+                </div>
+                <div>
                     <h3>Perustettu</h3>
-                    <p>2019 &mdash; kokemusta yli 6 vuotta</p>
-                </div>
-                <div>
-                    <h3>Toimipaikka</h3>
-                    <p>c/o Teboil Ruskeasuo, Koroistentie 10, 00280 Helsinki</p>
-                </div>
-                <div>
-                    <h3>Toimiala</h3>
-                    <p>Moottoriajoneuvojen huolto ja korjaus (pl. renkaat)</p>
-                </div>
-                <div>
-                    <h3>Puhelin</h3>
-                    <p><a href="tel:+3584578366680">045 783 666 80</a></p>
+                    <p>15.12.2024</p>
                 </div>
                 <div>
                     <h3>Y-tunnus</h3>
-                    <p>2578643-3</p>
+                    <p>3496925-8</p>
+                </div>
+                <div>
+                    <h3>Toimiala</h3>
+                    <p>Pyöräkorjaamo ja pyörähuolto &mdash; TOL 95290</p>
+                </div>
+                <div>
+                    <h3>Muut toimialat</h3>
+                    <p>Polkupyöräpalvelut, sähköpyörien myynti ja vuokraus</p>
+                </div>
+                <div>
+                    <h3>Sähköposti</h3>
+                    <p><a href="mailto:info@helsinkiebikeservice.fi">info@helsinkiebikeservice.fi</a></p>
+                </div>
+                <div>
+                    <h3>Puhelin</h3>
+                    <p><a href="tel:+358403255131">040 325 5131</a></p>
+                </div>
+                <div>
+                    <h3>Toimipaikka</h3>
+                    <p>Aarteenetsijäntie 4 E, 00970 Helsinki</p>
+                </div>
+                <div>
+                    <h3>Postiosoite</h3>
+                    <p>Aarteenetsijäntie 4, 00970 Helsinki</p>
+                </div>
+                <div>
+                    <h3>Nettisivut</h3>
+                    <p><a href="https://helsinkiebikeservice.fi" target="_blank" rel="noopener">helsinkiebikeservice.fi</a></p>
+                </div>
+                <div>
+                    <h3>Aputoiminimet</h3>
+                    <p>Helsinki eBike-Service Oy</p>
                 </div>
             </div>
         </section>
 
-        <section class="section map" aria-label="Sijaintimme kartalla">
-            <div class="section__intro">
-                <span class="kicker">Toimipiste</span>
-                <h2>Löydät meidät Ruskeasuolta</h2>
-                <p>Huoltokeskuksemme sijaitsee Teboil Ruskeasuon kiinteistössä. Vieraile sopimuksesta, niin käydään läpi kalustosi
-                    tarpeet ja huoltosuunnitelma.</p>
-            </div>
-            <div class="map__frame">
-                <iframe title="Harjun Raskaskone Oy kartalla" loading="lazy" allowfullscreen
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1982.879147939588!2d24.903681377449918!3d60.2000684394083!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x468df6ba8e829cfb%3A0x7b626888beef3e9e!2sKoroistentie%2010%2C%2000280%20Helsinki!5e0!3m2!1sfi!2sfi!4v1700000000000">
-                </iframe>
-            </div>
-        </section>
-
-        <section class="section section--light" id="yhteys">
+        <section class="section section--light" id="yhteys" data-reveal>
             <div class="contact">
                 <div class="contact__info">
                     <span class="kicker">Ota yhteyttä</span>
-                    <h2>Rakennetaan yhdessä sinulle sopiva ratkaisu</h2>
-                    <p>Jätä yhteystietosi tai soita suoraan. Asiakasvastaavamme palaa asiaan nopeasti ja käy läpi projektisi tarpeet.</p>
+                    <h2>Rakennetaan sähköpyörillesi täydellinen palvelukokonaisuus</h2>
+                    <p>Jätä yhteystietosi tai soita. Asiantuntijamme kartoittaa tarpeesi, suosittelee oikeat palvelut ja viimeistelee verkkokaupan ostoskorisi.</p>
                     <ul class="contact__details">
-                        <li><strong>Puhelin:</strong> <a href="tel:+3584578366680">045 783 666 80</a></li>
-                        <li><strong>Sähköposti:</strong> <a href="mailto:info@harjunraskaskone.fi">info@harjunraskaskone.fi</a></li>
-                        <li><strong>Toimisto:</strong> Koroistentie 10, 00280 Helsinki</li>
+                        <li><strong>Puhelin:</strong> <a href="tel:+358403255131">040 325 5131</a></li>
+                        <li><strong>Sähköposti:</strong> <a href="mailto:info@helsinkiebikeservice.fi">info@helsinkiebikeservice.fi</a></li>
+                        <li><strong>Toimipaikka:</strong> Aarteenetsijäntie 4 E, 00970 Helsinki</li>
+                        <li><strong>Postiosoite:</strong> Aarteenetsijäntie 4, 00970 Helsinki</li>
                     </ul>
                     <div class="contact__cta">
-                        <a class="btn btn--primary" href="mailto:info@harjunraskaskone.fi">Lähetä tarjouspyyntö</a>
-                        <a class="btn btn--ghost" href="tel:+3584578366680">Soita meille</a>
+                        <a class="btn btn--primary" href="mailto:info@helsinkiebikeservice.fi">Lähetä tarjouspyyntö</a>
+                        <a class="btn btn--ghost" href="tel:+358403255131">Soita meille</a>
                     </div>
                 </div>
                 <form class="contact__form">
@@ -722,11 +490,11 @@
                     </label>
                     <label>
                         Puhelin
-                        <input type="tel" name="puhelin" placeholder="045 123 4567">
+                        <input type="tel" name="puhelin" placeholder="040 123 4567">
                     </label>
                     <label>
                         Viesti
-                        <textarea name="viesti" rows="4" placeholder="Kerro projektista ja aikataulusta" required></textarea>
+                        <textarea name="viesti" rows="4" placeholder="Kerro sähköpyöristäsi, yrityksestäsi ja aikataulusta" required></textarea>
                     </label>
                     <button type="submit" class="btn btn--primary">Lähetä viesti</button>
                     <p class="contact__disclaimer">Lähettämällä viestin hyväksyt, että tietosi tallennetaan yhteydenottoa varten.</p>
@@ -737,40 +505,39 @@
 
     <footer class="footer">
         <div class="footer__branding">
-            <span class="footer__logo">Harjun Raskaskone Oy</span>
-            <p>Raskaan kaluston huolto-, vuokraus- ja myyntipalvelut luotettavasti koko Suomessa.</p>
+            <span class="footer__logo">Helsinki eBike-Service Oy</span>
+            <p>Sähköpyörien huolto, varaosat ja verkkokauppa saman katon alta. Palvelemme koko pääkaupunkiseutua.</p>
         </div>
         <div class="footer__links">
             <div>
                 <h4>Yhteystiedot</h4>
                 <ul>
-                    <li><a href="tel:+3584578366680">045 783 666 80</a></li>
-                    <li><a href="mailto:info@harjunraskaskone.fi">info@harjunraskaskone.fi</a></li>
-                    <li>Koroistentie 10, 00280 Helsinki</li>
+                    <li><a href="tel:+358403255131">040 325 5131</a></li>
+                    <li><a href="mailto:info@helsinkiebikeservice.fi">info@helsinkiebikeservice.fi</a></li>
+                    <li>Aarteenetsijäntie 4 E, 00970 Helsinki</li>
                 </ul>
             </div>
             <div>
                 <h4>Palvelut</h4>
                 <ul>
-                    <li><a href="#palvelut">Huolto &amp; korjaus</a></li>
-                    <li><a href="#vuokraus">Vuokrauskalusto</a></li>
-                    <li><a href="#myynti">Myyntikalusto</a></li>
+                    <li><a href="#palvelut">Sähköpyörähuolto</a></li>
+                    <li><a href="#paketit">Huoltopaketit</a></li>
+                    <li><a href="verkkokauppa.html">Verkkokauppa</a></li>
                 </ul>
             </div>
             <div>
                 <h4>Yritys</h4>
                 <ul>
                     <li><a href="#referenssit">Referenssit</a></li>
-                    <li><a href="#useinkysytyt">Usein kysyttyä</a></li>
+                    <li><a href="#laskuri">Laskuri</a></li>
                     <li><a href="#yhteys">Yhteydenotto</a></li>
                     <li><a href="#etusivu">Etusivu</a></li>
                 </ul>
             </div>
         </div>
         <div class="footer__meta">
-            <span>Y-tunnus 2578643-3</span>
-            <span>© <span id="year"></span> Harjun Raskaskone Oy. Kaikki oikeudet pidätetään.</span>
-            <span>Suunnittelu &amp; toteutus: AnomFIN × AnomTools</span>
+            <span>Y-tunnus 3496925-8</span>
+            <span>© <span id="year"></span> Helsinki eBike-Service Oy. Kaikki oikeudet pidätetään.</span>
         </div>
     </footer>
 
