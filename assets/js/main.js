@@ -22,6 +22,16 @@ const setNavState = (isOpen) => {
     navToggle.setAttribute('aria-expanded', String(isOpen));
 };
 
+const setNavState = (isOpen) => {
+    if (!navLinks || !navToggle) {
+        return;
+    }
+
+    navLinks.classList.toggle('nav__links--open', isOpen);
+    navToggle.classList.toggle('nav__toggle--active', isOpen);
+    navToggle.setAttribute('aria-expanded', String(isOpen));
+};
+
 const toggleNav = () => {
     setNavState(!isNavOpen());
 };
@@ -29,6 +39,10 @@ const toggleNav = () => {
 const closeNav = () => {
     setNavState(false);
 };
+
+const closeNav = () => setNavState(false);
+
+setNavState(false);
 
 navToggle?.addEventListener('click', toggleNav);
 
