@@ -50,11 +50,11 @@
                     <dd>Perustettu Helsingissä</dd>
                 </div>
                 <div>
-                    <dt>3 500+</dt>
+                    <dt><span data-counter data-target="3500" data-suffix="+">0</span></dt>
                     <dd>Huollettua sähköpyörää vuodessa</dd>
                 </div>
                 <div>
-                    <dt>98 %</dt>
+                    <dt><span data-counter data-target="98" data-suffix=" %">0</span></dt>
                     <dd>Asiakastyytyväisyys (NPS)</dd>
                 </div>
             </dl>
@@ -257,6 +257,12 @@
                 <p>Tilaa huolella kuratoidut tuotteet kotiinkuljetuksella tai nouda ne huollon yhteydessä. Lisää tuotteet ostoskoriin ja viimeistele tilaus yhteydenotolla – tiimimme varmistaa oikeat koot ja yhteensopivuuden ennen toimitusta.</p>
             </div>
             <div class="store" data-store>
+                <div class="store__toolbar" role="toolbar" aria-label="Suodata tuotteita">
+                    <button class="store__filter is-active" type="button" data-filter="all">Kaikki</button>
+                    <button class="store__filter" type="button" data-filter="pyorat">Sähköpyörät</button>
+                    <button class="store__filter" type="button" data-filter="varusteet">Varusteet</button>
+                    <button class="store__filter" type="button" data-filter="palvelut">Palvelut</button>
+                </div>
                 <div class="store__cart" aria-live="polite">
                     <h3>Ostoskori</h3>
                     <p class="store__cart-empty" data-cart-empty>Ostoskorisi on vielä tyhjä. Lisää tuotteita ja hyödynnä asiantuntijoidemme tuki.</p>
@@ -269,7 +275,7 @@
                     <a class="btn btn--primary" href="verkkokauppa.html">Avaa koko verkkokauppa</a>
                 </div>
                 <div class="store__grid">
-                    <article class="store-card" data-product="Tenways CGO009" data-price="2599">
+                    <article class="store-card" data-product="Tenways CGO009" data-price="2599" data-category="pyorat">
                         <img src="https://images.unsplash.com/photo-1529429617124-aee711a0fb7c?auto=format&fit=crop&w=1200&q=80" alt="Tyylikäs kaupunkisähköpyörä harmaalla taustalla" loading="lazy">
                         <div class="store-card__body">
                             <span class="store-card__tag">Uutuus</span>
@@ -281,7 +287,7 @@
                             </div>
                         </div>
                     </article>
-                    <article class="store-card" data-product="Giro Manifest Spherical" data-price="289">
+                    <article class="store-card" data-product="Giro Manifest Spherical" data-price="289" data-category="varusteet">
                         <img src="https://images.unsplash.com/photo-1505678261036-a3fcc5e884ee?auto=format&fit=crop&w=1200&q=80" alt="Sähköpyöräkypärä työpöydällä" loading="lazy">
                         <div class="store-card__body">
                             <span class="store-card__tag">Turvallisuus</span>
@@ -293,7 +299,7 @@
                             </div>
                         </div>
                     </article>
-                    <article class="store-card" data-product="Bosch PowerTube 625" data-price="799">
+                    <article class="store-card" data-product="Bosch PowerTube 625" data-price="799" data-category="varusteet">
                         <img src="https://images.unsplash.com/photo-1509395176047-4a66953fd231?auto=format&fit=crop&w=1200&q=80" alt="Sähköpyörän vara-akku pöydällä" loading="lazy">
                         <div class="store-card__body">
                             <span class="store-card__tag">Varaosat</span>
@@ -305,7 +311,7 @@
                             </div>
                         </div>
                     </article>
-                    <article class="store-card" data-product="WinterCare Kit" data-price="119">
+                    <article class="store-card" data-product="WinterCare Kit" data-price="119" data-category="palvelut">
                         <img src="https://images.unsplash.com/photo-1604272011436-1d760c6fc1d8?auto=format&fit=crop&w=1200&q=80" alt="Talvihuoltosarja sähköpyörälle" loading="lazy">
                         <div class="store-card__body">
                             <span class="store-card__tag">Huoltosarja</span>
@@ -317,7 +323,7 @@
                             </div>
                         </div>
                     </article>
-                    <article class="store-card" data-product="Cargo eBike Lease" data-price="249">
+                    <article class="store-card" data-product="Cargo eBike Lease" data-price="249" data-category="palvelut">
                         <img src="https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=1200&q=80" alt="Tavarapyörä kaupunkimiljöössä" loading="lazy">
                         <div class="store-card__body">
                             <span class="store-card__tag">Yrityksille</span>
@@ -329,7 +335,7 @@
                             </div>
                         </div>
                     </article>
-                    <article class="store-card" data-product="Fast Charge Service" data-price="59">
+                    <article class="store-card" data-product="Fast Charge Service" data-price="59" data-category="palvelut">
                         <img src="https://images.unsplash.com/photo-1523419409543-0c1df022bdd9?auto=format&fit=crop&w=1200&q=80" alt="Sähköpyörän akku latauksessa" loading="lazy">
                         <div class="store-card__body">
                             <span class="store-card__tag">Palvelu</span>

@@ -107,17 +107,12 @@ const handleScroll = () => {
 window.addEventListener('scroll', handleScroll);
 handleScroll();
 
-const yearEl = document.getElementById('year');
 if (yearEl) {
     yearEl.textContent = new Date().getFullYear();
 }
 
 const trapFocus = (event) => {
-    if (!isNavOpen()) {
-        return;
-    }
-
-    if (!navLinks) {
+    if (!isNavOpen() || !navLinks) {
         return;
     }
 
@@ -125,6 +120,7 @@ const trapFocus = (event) => {
     if (!focusableElements.length) {
         return;
     }
+
     const first = focusableElements[0];
     const last = focusableElements[focusableElements.length - 1];
 
@@ -163,8 +159,287 @@ document.addEventListener('keydown', (event) => {
     }
 });
 
-const calculatorForm = document.getElementById('savings-calculator');
-const calculatorResult = document.getElementById('savings-result');
+const formatEuro = (value) =>
+    new Intl.NumberFormat('fi-FI', {
+        style: 'currency',
+        currency: 'EUR',
+        maximumFractionDigits: 0,
+    }).format(Math.round(value));
+
+const parseCartState = () => {
+    if (!('localStorage' in window)) {
+        return [];
+    }
+
+    try {
+        const storedValue = window.localStorage.getItem(CART_STORAGE_KEY);
+        if (!storedValue) {
+            return [];
+        }
+
+        const parsed = JSON.parse(storedValue);
+        if (!Array.isArray(parsed)) {
+            return [];
+        }
+
+        return parsed
+            .map((item) => ({
+                name: typeof item.name === 'string' ? item.name : '',
+                price: Number(item.price),
+                quantity: Number(item.quantity ?? 1),
+            }))
+            .filter(
+                (item) =>
+                    Boolean(item.name) &&
+                    Number.isFinite(item.price) &&
+                    item.price >= 0 &&
+                    Number.isFinite(item.quantity) &&
+                    item.quantity > 0,
+            );
+    } catch (error) {
+        return [];
+    }
+};
+
+let cartState = parseCartState();
+
+const saveCartState = () => {
+    if (!('localStorage' in window)) {
+        return;
+    }
+
+    try {
+        window.localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cartState));
+    } catch (error) {
+        // ignore storage errors silently
+    }
+};
+
+const getCartItemCount = () => cartState.reduce((total, item) => total + item.quantity, 0);
+
+const updateNavCartCounters = () => {
+    const count = getCartItemCount();
+    navCartCounters.forEach((counter) => {
+        counter.textContent = String(count);
+    });
+};
+
+const removeCartItem = (name) => {
+    const index = cartState.findIndex((item) => item.name === name);
+    if (index === -1) {
+        return;
+    }
+
+    const item = cartState[index];
+    if (item.quantity > 1) {
+        item.quantity -= 1;
+    } else {
+        cartState.splice(index, 1);
+    }
+
+    saveCartState();
+    updateCartDisplays();
+};
+
+const renderCartItems = (store) => {
+    const itemsList = store.querySelector('[data-cart-items]');
+    const emptyState = store.querySelector('[data-cart-empty]');
+    const totalEl = store.querySelector('[data-cart-total]');
+
+    if (!itemsList || !totalEl) {
+        return;
+    }
+
+    itemsList.innerHTML = '';
+
+    if (!cartState.length) {
+        if (emptyState) {
+            emptyState.style.display = '';
+        }
+        totalEl.textContent = formatEuro(0);
+        return;
+    }
+
+    if (emptyState) {
+        emptyState.style.display = 'none';
+    }
+
+    let subtotal = 0;
+
+    cartState.forEach((item) => {
+        subtotal += item.price * item.quantity;
+
+        const listItem = document.createElement('li');
+        listItem.className = 'store__cart-item';
+
+        const titleWrapper = document.createElement('div');
+        titleWrapper.className = 'store__cart-item-title';
+
+        const nameSpan = document.createElement('span');
+        nameSpan.textContent = item.name;
+
+        const quantitySpan = document.createElement('span');
+        quantitySpan.textContent = `${item.quantity} × ${formatEuro(item.price)}`;
+
+        titleWrapper.append(nameSpan, quantitySpan);
+
+        const removeButton = document.createElement('button');
+        removeButton.type = 'button';
+        removeButton.className = 'store__cart-remove';
+        removeButton.textContent = 'Poista';
+        removeButton.addEventListener('click', () => removeCartItem(item.name));
+
+        listItem.append(titleWrapper, removeButton);
+        itemsList.appendChild(listItem);
+    });
+
+    totalEl.textContent = formatEuro(subtotal);
+};
+
+const updateCartDisplays = () => {
+    storeElements.forEach((store) => {
+        renderCartItems(store);
+    });
+
+    updateNavCartCounters();
+};
+
+const addCartItem = (name, price) => {
+    if (!name || Number.isNaN(price)) {
+        return;
+    }
+
+    const existing = cartState.find((item) => item.name === name);
+    if (existing) {
+        existing.quantity += 1;
+    } else {
+        cartState.push({ name, price, quantity: 1 });
+    }
+
+    saveCartState();
+    updateCartDisplays();
+};
+
+const initializeStoreFilters = (store) => {
+    const filterButtons = store.querySelectorAll('[data-filter]');
+    const productCards = store.querySelectorAll('.store-card');
+
+    if (!filterButtons.length || !productCards.length) {
+        return;
+    }
+
+    const applyFilter = (filterValue) => {
+        productCards.forEach((card) => {
+            const categories = (card.dataset.category ?? '')
+                .split(',')
+                .map((category) => category.trim());
+            const matches = filterValue === 'all' || categories.includes(filterValue);
+            card.classList.toggle('is-hidden', !matches);
+        });
+    };
+
+    filterButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+            filterButtons.forEach((btn) => btn.classList.remove('is-active'));
+            button.classList.add('is-active');
+            applyFilter(button.dataset.filter ?? 'all');
+        });
+    });
+
+    const activeFilter = store.querySelector('.store__filter.is-active');
+    applyFilter(activeFilter?.dataset.filter ?? 'all');
+};
+
+const markButtonAdded = (button) => {
+    const originalLabel = button.dataset.originalLabel ?? button.textContent ?? '';
+    if (!button.dataset.originalLabel) {
+        button.dataset.originalLabel = originalLabel;
+    }
+
+    button.classList.add('is-added');
+    button.textContent = 'Lisätty';
+
+    window.setTimeout(() => {
+        button.classList.remove('is-added');
+        button.textContent = button.dataset.originalLabel ?? originalLabel;
+    }, 1800);
+};
+
+const handleAddToCartClick = (button) => {
+    const productElement = button.closest('[data-product]');
+    if (!productElement) {
+        return;
+    }
+
+    const productName = productElement.dataset.product;
+    const price = Number(productElement.dataset.price);
+
+    addCartItem(productName ?? '', price);
+    markButtonAdded(button);
+};
+
+storeElements.forEach((store) => {
+    initializeStoreFilters(store);
+});
+
+addToCartButtons.forEach((button) => {
+    button.addEventListener('click', () => handleAddToCartClick(button));
+});
+
+const startCounterAnimation = (element) => {
+    const target = Number(element.dataset.target ?? element.textContent ?? '0');
+    if (!Number.isFinite(target)) {
+        element.textContent = `${element.dataset.target ?? element.textContent ?? ''}${element.dataset.suffix ?? ''}`;
+        return;
+    }
+
+    const suffix = element.dataset.suffix ?? '';
+    const duration = Number(element.dataset.duration ?? 1800);
+    const startTime = performance.now();
+
+    const step = (currentTime) => {
+        const progress = Math.min((currentTime - startTime) / duration, 1);
+        const eased = progress ** 0.75;
+        const currentValue = Math.round(target * eased);
+        element.textContent = `${currentValue}${suffix}`;
+
+        if (progress < 1) {
+            window.requestAnimationFrame(step);
+        }
+    };
+
+    window.requestAnimationFrame(step);
+};
+
+const counterObserver =
+    'IntersectionObserver' in window
+        ? new IntersectionObserver(
+              (entries, observerInstance) => {
+                  entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                          startCounterAnimation(entry.target);
+                          observerInstance.unobserve(entry.target);
+                      }
+                  });
+              },
+              {
+                  threshold: 0.4,
+              },
+          )
+        : null;
+
+counterElements.forEach((counter) => {
+    if (prefersReducedMotion.matches) {
+        counter.textContent = `${counter.dataset.target ?? counter.textContent ?? ''}${counter.dataset.suffix ?? ''}`;
+        return;
+    }
+
+    if (counterObserver) {
+        counterObserver.observe(counter);
+    } else {
+        startCounterAnimation(counter);
+    }
+});
 
 const formatCurrency = (value) =>
     new Intl.NumberFormat('fi-FI', {
