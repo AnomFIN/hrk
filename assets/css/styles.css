@@ -1199,17 +1199,6 @@ header,
     margin-top: 1.5rem;
 }
 
-@media (max-width: 1080px) {
-    .store {
-        grid-template-columns: 1fr;
-    }
-
-    .store__cart {
-        position: sticky;
-        top: 100px;
-    }
-}
-
 @media (max-width: 960px) {
     .nav {
         padding: 1rem 1.5rem;
