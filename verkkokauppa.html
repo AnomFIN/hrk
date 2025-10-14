@@ -26,8 +26,8 @@
                 <li><a class="nav__link" href="#yhteys" data-scroll="yhteys">Yhteys</a></li>
                 <li class="nav__cart">
                     <a class="nav__link nav__link--cart" href="index.html" aria-label="Palaa pääsivulle">
-                        <span>Takaisin</span>
-                        <span class="nav__cart-count" aria-hidden="true">⇠</span>
+                        <span>Takaisin etusivulle</span>
+                        <span class="nav__cart-count" data-cart-count>0</span>
                     </a>
                 </li>
             </ul>
@@ -67,61 +67,80 @@
     </a>
 
     <main>
-        <section class="section section--light" id="pyorat" data-reveal>
+        <section class="section section--store" id="pyorat" data-reveal>
             <div class="section__intro">
                 <span class="kicker">Sähköpyörät</span>
                 <h2>Kuratoitu mallisto kaupunkien ja logistiikan tarpeisiin</h2>
                 <p>Kaikki mallimme ovat saatavilla nopealla toimituksella sekä leasing- että yritysostoihin. Jokainen toimitus sisältää AnomFIN-käyttöönoton ja elinkaariseurannan.</p>
             </div>
-            <div class="store__grid">
-                <article class="store-card" data-product="Tenways CGO One" data-price="2899">
-                    <img src="https://images.unsplash.com/photo-1529429617124-aee711a0fb7c?auto=format&fit=crop&w=1200&q=80" alt="Tyylikäs sähköpyörä showroomissa" loading="lazy">
-                    <div class="store-card__body">
-                        <span class="store-card__tag">Urban</span>
-                        <h3>Tenways CGO One</h3>
-                        <p>Kevyt hiilikuiturunko, hihnaveto ja 90 km kantama. Sisältää AnomFIN Launch Care 299 -palvelun.</p>
-                        <div class="store-card__footer">
-                            <span class="store-card__price">2 899 €</span>
-                            <button class="btn btn--secondary" type="button" data-add-to-cart>Lisää koriin</button>
-                        </div>
+            <div class="store store--catalog" data-store>
+                <div class="store__toolbar">
+                    <button class="store__filter is-active" type="button" data-filter="all">Kaikki</button>
+                    <button class="store__filter" type="button" data-filter="urban">Urban</button>
+                    <button class="store__filter" type="button" data-filter="cargo">Cargo</button>
+                    <button class="store__filter" type="button" data-filter="comfort">Comfort</button>
+                    <button class="store__filter" type="button" data-filter="design">Design</button>
+                </div>
+                <aside class="store__cart">
+                    <h3>Ostoskorisi</h3>
+                    <p class="store__cart-empty" data-cart-empty>Lisää tuotteita koriin nähdäksesi yhteenvedon.</p>
+                    <ul class="store__cart-items" data-cart-items></ul>
+                    <div class="store__cart-summary">
+                        <span>Yhteensä</span>
+                        <span data-cart-total>0 €</span>
                     </div>
-                </article>
-                <article class="store-card" data-product="Tern GSD Performance" data-price="5490">
-                    <img src="https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=1200&q=80" alt="Tavarasähköpyörä ulkona" loading="lazy">
-                    <div class="store-card__body">
-                        <span class="store-card__tag">Cargo</span>
-                        <h3>Tern GSD Performance</h3>
-                        <p>Yritystason jakelupyörä kaksoisakkujärjestelmällä. Mukana Fleet Signature 1499 -sopimus.</p>
-                        <div class="store-card__footer">
-                            <span class="store-card__price">5 490 €</span>
-                            <button class="btn btn--secondary" type="button" data-add-to-cart>Lisää koriin</button>
+                    <p class="store__cart-note">Konsulttimme vahvistaa toimitusajan ja maahantuonnin kustannukset ennen laskutusta.</p>
+                </aside>
+                <div class="store__grid">
+                    <article class="store-card" data-product="Tenways CGO One" data-price="2899" data-category="urban">
+                        <img src="https://images.unsplash.com/photo-1529429617124-aee711a0fb7c?auto=format&fit=crop&w=1200&q=80" alt="Tyylikäs sähköpyörä showroomissa" loading="lazy">
+                        <div class="store-card__body">
+                            <span class="store-card__tag">Urban</span>
+                            <h3>Tenways CGO One</h3>
+                            <p>Kevyt hiilikuiturunko, hihnaveto ja 90 km kantama. Sisältää AnomFIN Launch Care 299 -palvelun.</p>
+                            <div class="store-card__footer">
+                                <span class="store-card__price">2 899 €</span>
+                                <button class="btn btn--secondary" type="button" data-add-to-cart>Lisää koriin</button>
+                            </div>
                         </div>
-                    </div>
-                </article>
-                <article class="store-card" data-product="Specialized Turbo Como" data-price="3990">
-                    <img src="https://images.unsplash.com/photo-1523419409543-0c1df022bdd9?auto=format&fit=crop&w=1200&q=80" alt="Design-sähköpyörä kaupunkimaisemassa" loading="lazy">
-                    <div class="store-card__body">
-                        <span class="store-card__tag">Comfort</span>
-                        <h3>Specialized Turbo Como</h3>
-                        <p>Älykäs näytöllinen ajotuki, sisäinen johdotus ja integroidut valot. Premium Pro Active 699 -huoltotaso.</p>
-                        <div class="store-card__footer">
-                            <span class="store-card__price">3 990 €</span>
-                            <button class="btn btn--secondary" type="button" data-add-to-cart>Lisää koriin</button>
+                    </article>
+                    <article class="store-card" data-product="Tern GSD Performance" data-price="5490" data-category="cargo">
+                        <img src="https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=1200&q=80" alt="Tavarasähköpyörä ulkona" loading="lazy">
+                        <div class="store-card__body">
+                            <span class="store-card__tag">Cargo</span>
+                            <h3>Tern GSD Performance</h3>
+                            <p>Yritystason jakelupyörä kaksoisakkujärjestelmällä. Mukana Fleet Signature 1499 -sopimus.</p>
+                            <div class="store-card__footer">
+                                <span class="store-card__price">5 490 €</span>
+                                <button class="btn btn--secondary" type="button" data-add-to-cart>Lisää koriin</button>
+                            </div>
                         </div>
-                    </div>
-                </article>
-                <article class="store-card" data-product="VanMoof S5" data-price="3690">
-                    <img src="https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?auto=format&fit=crop&w=1200&q=80" alt="VanMoof sähköpyörä" loading="lazy">
-                    <div class="store-card__body">
-                        <span class="store-card__tag">Design</span>
-                        <h3>VanMoof S5</h3>
-                        <p>Integroitu varashälytin ja automaattinen vaihteisto. Sisältää kaksi vuoden AnomFIN-takuun.</p>
-                        <div class="store-card__footer">
-                            <span class="store-card__price">3 690 €</span>
-                            <button class="btn btn--secondary" type="button" data-add-to-cart>Lisää koriin</button>
+                    </article>
+                    <article class="store-card" data-product="Specialized Turbo Como" data-price="3990" data-category="comfort">
+                        <img src="https://images.unsplash.com/photo-1523419409543-0c1df022bdd9?auto=format&fit=crop&w=1200&q=80" alt="Design-sähköpyörä kaupunkimaisemassa" loading="lazy">
+                        <div class="store-card__body">
+                            <span class="store-card__tag">Comfort</span>
+                            <h3>Specialized Turbo Como</h3>
+                            <p>Älykäs näytöllinen ajotuki, sisäinen johdotus ja integroidut valot. Premium Pro Active 699 -huoltotaso.</p>
+                            <div class="store-card__footer">
+                                <span class="store-card__price">3 990 €</span>
+                                <button class="btn btn--secondary" type="button" data-add-to-cart>Lisää koriin</button>
+                            </div>
                         </div>
-                    </div>
-                </article>
+                    </article>
+                    <article class="store-card" data-product="VanMoof S5" data-price="3690" data-category="design">
+                        <img src="https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?auto=format&fit=crop&w=1200&q=80" alt="VanMoof sähköpyörä" loading="lazy">
+                        <div class="store-card__body">
+                            <span class="store-card__tag">Design</span>
+                            <h3>VanMoof S5</h3>
+                            <p>Integroitu varashälytin ja automaattinen vaihteisto. Sisältää kahden vuoden AnomFIN-takuun.</p>
+                            <div class="store-card__footer">
+                                <span class="store-card__price">3 690 €</span>
+                                <button class="btn btn--secondary" type="button" data-add-to-cart>Lisää koriin</button>
+                            </div>
+                        </div>
+                    </article>
+                </div>
             </div>
         </section>
 

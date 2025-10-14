@@ -4,23 +4,404 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Helsinki eBike-Service Oy</title>
+    <title>Helsinki eBike-Service Oy • Premium-sähköpyörien maahantuoja</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/styles.css">
 </head>
-<body>
-    <noscript>
-      <div style="background: #ffe3e3; color: #900; padding: 2em; text-align: center; font-weight: bold;">
-        Sivusto vaatii JavaScriptin toimiakseen oikein. Ota JavaScript käyttöön selaimessasi.
-      </div>
-    </noscript>
-    <!-- KAIKKI MUU SISÄLTÖ SÄILYY ENNALLAAN -->
+<body class="is-preload">
     <header class="hero" id="etusivu" data-reveal>
-    <!-- ... (headerin sisältö) ... -->
+        <nav class="nav">
+            <div class="nav__logo" aria-label="Helsinki eBike-Service Oy">Helsinki eBike-Service Oy</div>
+            <button class="nav__toggle" type="button" aria-label="Avaa valikko" aria-controls="nav-menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav__links" id="nav-menu">
+                <li><a class="nav__link" href="#tuonti" data-scroll="tuonti">Maahantuonti</a></li>
+                <li><a class="nav__link" href="#palvelut" data-scroll="palvelut">Palvelut</a></li>
+                <li><a class="nav__link" href="#mallisto" data-scroll="mallisto">Mallisto</a></li>
+                <li><a class="nav__link" href="#prosessi" data-scroll="prosessi">Prosessi</a></li>
+                <li><a class="nav__link" href="#asiakkaat" data-scroll="asiakkaat">Asiakkaat</a></li>
+                <li><a class="nav__link" href="#yhteys" data-scroll="yhteys">Yhteys</a></li>
+                <li class="nav__cart">
+                    <a class="nav__link nav__link--cart" href="verkkokauppa.html" aria-label="Siirry verkkokauppaan">
+                        <span>Verkkokauppa</span>
+                        <span class="nav__cart-count" data-cart-count aria-hidden="true">0</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="hero__content">
+            <span class="hero__badge">AnomFIN • Signature Import Experience</span>
+            <p class="hero__eyebrow">Euroopan halutuimpien sähköpyöräbrändien virallinen maahantuoja</p>
+            <h1>Rakennamme yrityksille ja kunnille tulevaisuuden sähköpyöräkalustot</h1>
+            <p class="hero__lead">Jugi@AnomFIN-tiimi vastaa koko ketjusta: kansainväliset hankintasopimukset, tullaus, Fleet-asennukset ja huoltoverkoston johtaminen. Tuomme Suomeen vain uuden sukupolven sähköpyöriä, joiden suorituskyky on todistettu.</p>
+            <div class="hero__actions">
+                <a class="btn btn--primary btn--xl" href="#tuonti">Tutustu maahantuontiin</a>
+                <a class="btn btn--ghost" href="#yhteys">Varaa kartoitus</a>
+            </div>
+            <p class="hero__signature">AnomFIN • Premium Electric Mobility Integrator</p>
+        </div>
+        <div class="hero__image" data-reveal>
+            <div class="hero__panel">
+                <img src="assets/bg.webp" alt="Uudet sähköpyörät logistisessa keskuksessa" loading="lazy">
+                <div class="hero__panel-caption">
+                    <span>Launch Series 2024</span>
+                    <span>Jugi@AnomFIN Selection</span>
+                </div>
+            </div>
+            <a class="hero__elevator" href="#yhteys" aria-label="Avaa yhteydenottolomake" data-floating-origin>
+                <span class="hero__elevator-glow"></span>
+                <span class="hero__elevator-text">VARAA<br><strong>CONSULTING</strong></span>
+                <span class="hero__elevator-tag">Concierge-palvelu</span>
+            </a>
+        </div>
     </header>
-    <!-- ... (loput sivun sisällöstä) ... -->
+
+    <a class="floating-cta" href="#yhteys" data-floating-cta>
+        <span class="floating-cta__pulse" aria-hidden="true"></span>
+        <span class="floating-cta__label">AnomFIN Concierge</span>
+        <span class="floating-cta__title">Pyydä sähköpyörätilaus</span>
+        <span class="floating-cta__signature">Import • Rekisteröinti • Huolto</span>
+    </a>
+
+    <main>
+        <section class="section" id="tuonti" data-reveal>
+            <div class="section__intro">
+                <span class="kicker">Maahantuonti</span>
+                <h2>Hallittu toimitusketju Euroopan ja Aasian johtavilta valmistajilta</h2>
+                <p>Helsinki eBike-Service Oy on erikoistunut uusien sähköpyörämallien maahantuontiin. Solmimme suorat sopimukset tehtaidemme kanssa, auditoimme laatuprosessit ja toimitamme pyörät viimeisteltyinä asiakkaalle – aina AnomFIN-dokumentaatiolla.</p>
+            </div>
+            <div class="grid grid--3">
+                <article class="feature">
+                    <span class="feature__icon">🌍</span>
+                    <h3>Globaalit partnerit</h3>
+                    <p>Suora edustus mm. Tenways, Tern, Riese &amp; Müller ja Super73 -tehtaille. Saat mallistot ennen julkista lanseerausta.</p>
+                </article>
+                <article class="feature">
+                    <span class="feature__icon">🧾</span>
+                    <h3>Tullaus &amp; compliance</h3>
+                    <p>Hoidamme EU-sertifioinnit, HS-koodit ja akkulogistiikan. Asiakkaamme saa valmiit CE- ja CO₂-raportit.</p>
+                </article>
+                <article class="feature">
+                    <span class="feature__icon">🔧</span>
+                    <h3>Elinkaaripalvelut</h3>
+                    <p>AnomFINin oma huoltoverkosto takaa, että jokainen tuontierä pysyy ajokunnossa ja takuuseuranta on reaaliaikaista.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="section section--light" data-reveal>
+            <div class="metrics">
+                <div class="metrics__item">
+                    <span class="metrics__value" data-counter data-target="1200" data-suffix="+">0</span>
+                    <span class="metrics__label">Tuotua sähköpyörää 2023–2024</span>
+                </div>
+                <div class="metrics__item">
+                    <span class="metrics__value" data-counter data-target="18" data-suffix=" maata">0</span>
+                    <span class="metrics__label">Hankintakohteita globaalisti</span>
+                </div>
+                <div class="metrics__item">
+                    <span class="metrics__value" data-counter data-target="98" data-suffix="%">0</span>
+                    <span class="metrics__label">Asiakastyytyväisyys toimitusnopeudessa</span>
+                </div>
+                <div class="metrics__item">
+                    <span class="metrics__value" data-counter data-target="72" data-suffix="h">0</span>
+                    <span class="metrics__label">Logistinen vasteaika varastolta asiakkaalle</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="section section--experience" id="palvelut" data-reveal>
+            <div class="experience">
+                <div class="experience__intro">
+                    <span class="kicker">Palvelukokonaisuus</span>
+                    <h2>Premium-kaluston käyttöönotto on huolellisesti orkestroitu</h2>
+                    <p>Jugi@AnomFIN-tiimi rakentaa jokaiselle asiakkaalle palveluohjelman, johon sisältyy koulutus, data-analytiikka ja proaktiivinen huolto. Kokemuksemme ulkomaankaupasta näkyy läpinäkyvänä hinnoitteluna ja moitteettomana toimitusketjuna.</p>
+                    <div class="experience__tags">
+                        <span>Hankintastrategia</span>
+                        <span>Fleet Launch</span>
+                        <span>Data Monitoring</span>
+                        <span>24/7 Concierge</span>
+                    </div>
+                </div>
+                <div class="experience__grid">
+                    <article class="experience-card">
+                        <img src="https://images.unsplash.com/photo-1529429617124-aee711a0fb7c?auto=format&fit=crop&w=1200&q=80" alt="Laadunvarmistus sähköpyörätehtaalla" loading="lazy">
+                        <div class="experience-card__body">
+                            <h3>Hankintakonsultointi</h3>
+                            <p>Analysoimme asiakkaan käyttötapaukset ja rakennamme tuontiohjelman. Ennusteet perustuvat markkinadataan ja valmistajien kapasiteetteihin.</p>
+                            <ul>
+                                <li>Segmentointi: yritys, kunta, logistiikka</li>
+                                <li>Valmistajaneuvottelut AnomFIN-brändillä</li>
+                                <li>Riskienhallinta ja auditoinnit</li>
+                            </ul>
+                        </div>
+                    </article>
+                    <article class="experience-card">
+                        <img src="https://images.unsplash.com/photo-1511732351666-a1d79b47b9a4?auto=format&fit=crop&w=1200&q=80" alt="Sähköpyörien käyttöönotto" loading="lazy">
+                        <div class="experience-card__body">
+                            <h3>Käyttöönotto &amp; koulutus</h3>
+                            <p>Tuomme pyörät valmiiksi varusteltuina. Asennamme telematiikan, valvomme akkujen tasapainotuksen ja koulutamme kuljettajat.</p>
+                            <ul>
+                                <li>Fleet dashboard ja raportointi</li>
+                                <li>Reaaliaikaiset huoltomuistutukset</li>
+                                <li>Concierge-palvelu pääkäyttäjille</li>
+                            </ul>
+                        </div>
+                    </article>
+                    <article class="experience-card">
+                        <img src="https://images.unsplash.com/photo-1594007654729-407eedc4be65?auto=format&fit=crop&w=1200&q=80" alt="Huoltoasiantuntija" loading="lazy">
+                        <div class="experience-card__body">
+                            <h3>Elinkaaren optimointi</h3>
+                            <p>Datapohjainen huolto-ohjelma pidentää kaluston käyttöikää ja minimoi seisokit. Raportoimme CO₂-säästöt kuukausittain.</p>
+                            <ul>
+                                <li>Proaktiiviset huoltoslotit</li>
+                                <li>Varapyöräpooli &amp; takuuvalvonta</li>
+                                <li>Jälkimarkkinointi ja buy-back</li>
+                            </ul>
+                        </div>
+                    </article>
+                </div>
+                <div class="experience__timeline" id="prosessi">
+                    <div class="experience__stage" data-reveal>
+                        <span class="experience__stage-time">Viikot 1–2</span>
+                        <h3>Kickoff &amp; tilaus</h3>
+                        <p>Projektisuunnitelma, mallistovahvistus, rahoitusratkaisut ja sopimusten allekirjoitus AnomFIN-portaalissa.</p>
+                    </div>
+                    <div class="experience__stage" data-reveal>
+                        <span class="experience__stage-time">Viikot 3–5</span>
+                        <h3>Tuotanto &amp; laadunvarmistus</h3>
+                        <p>Tehdasvierailut, komponenttiseuranta ja akkukapasiteetin mittaus. Valvomme, että jokainen yksilö täyttää suomalaiset olosuhteet.</p>
+                    </div>
+                    <div class="experience__stage" data-reveal>
+                        <span class="experience__stage-time">Viikot 6–7</span>
+                        <h3>Logistiikka &amp; tullaus</h3>
+                        <p>Merirahti, lentorahti tai rekkatoimitus. Me hoidamme tullauksen, vakuutukset ja rekisteröinnin.</p>
+                    </div>
+                    <div class="experience__stage" data-reveal>
+                        <span class="experience__stage-time">Viikko 8</span>
+                        <h3>Luovutus &amp; jatkuva ylläpito</h3>
+                        <p>Showroom-luovutus, koulutus ja huoltosopimuksen käynnistys. Concierge pitää kaluston liikkeessä.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="mallisto" data-reveal>
+            <div class="section__intro">
+                <span class="kicker">Mallisto</span>
+                <h2>Kuratoidut uutuudet 2024 – saatavilla vain AnomFIN-tuontiohjelmalla</h2>
+                <p>Laajennamme mallistoa jatkuvasti ja valitsemme vain tehdastakuullisia versioita. Nostot alla ovat esimerkkejä tämän kauden toimituksista.</p>
+            </div>
+            <div class="store__grid store__grid--showcase">
+                <article class="store-card" data-reveal>
+                    <img src="https://images.unsplash.com/photo-1485965120184-e220f721d03e?auto=format&fit=crop&w=1200&q=80" alt="Tyylikäs sähköpyörä kaupunkimiljöössä" loading="lazy">
+                    <div class="store-card__body">
+                        <span class="store-card__tag">Urban Performance</span>
+                        <h3>Tenways AGO X Pro</h3>
+                        <p>139 km kantama, Enviolo automaattivaihteisto ja Gates-hihna. Sisältää Launch Care 299 -palvelun.</p>
+                        <div class="store-card__footer">
+                            <span class="store-card__price">Tilaukset alk. 3 690 €</span>
+                            <a class="btn btn--secondary" href="verkkokauppa.html">Siirry tilaamaan</a>
+                        </div>
+                    </div>
+                </article>
+                <article class="store-card" data-reveal>
+                    <img src="https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&w=1200&q=80" alt="Cargo-sähköpyörä lastattuna" loading="lazy">
+                    <div class="store-card__body">
+                        <span class="store-card__tag">Cargo Logistics</span>
+                        <h3>Tern GSD Fleet Edition</h3>
+                        <p>Kaksoisakku, Bosch Cargo Line ja modulaariset kuormatelineet. Fleet Signature 1499 takaa huoltojatkumon.</p>
+                        <div class="store-card__footer">
+                            <span class="store-card__price">Tilaukset alk. 5 890 €</span>
+                            <a class="btn btn--secondary" href="verkkokauppa.html#pyorat">Pyydä tarjousta</a>
+                        </div>
+                    </div>
+                </article>
+                <article class="store-card" data-reveal>
+                    <img src="https://images.unsplash.com/photo-1523419409543-0c1df022bdd9?auto=format&fit=crop&w=1200&q=80" alt="Premium-sähköpyörä sisätiloissa" loading="lazy">
+                    <div class="store-card__body">
+                        <span class="store-card__tag">Executive Comfort</span>
+                        <h3>Riese &amp; Müller Culture Silent</h3>
+                        <p>Premium-runko, Fox-säätöhaarukka ja älykkäät valot. Sisältyy Pro Active 699 -huolto-ohjelmaan.</p>
+                        <div class="store-card__footer">
+                            <span class="store-card__price">Tilaukset alk. 6 490 €</span>
+                            <a class="btn btn--secondary" href="verkkokauppa.html#paketit">Kokoa paketti</a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="section section--light" id="asiakkaat" data-reveal>
+            <div class="gallery">
+                <div class="gallery__intro">
+                    <span class="kicker">Referenssit</span>
+                    <h2>Asiakkaamme luottavat AnomFIN-hankintaan</h2>
+                    <p>Julkisen sektorin toimijat, logistiikkayhtiöt ja liikkumisen edelläkävijät rakentavat kalustonsa kanssamme. Alla poimintoja toteutuksista.</p>
+                </div>
+                <div class="gallery__grid">
+                    <figure class="gallery__item">
+                        <img src="https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=1200&q=80" alt="Kaupunkilogistiikan tiimi sähköpyörien kanssa" loading="lazy">
+                        <figcaption>
+                            <strong>CityPost Logistics</strong>
+                            <span>120 cargo-pyörää, 3 maan toimitusketju, 99,2 % käyttöaste</span>
+                        </figcaption>
+                    </figure>
+                    <figure class="gallery__item">
+                        <img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=1200&q=80" alt="Kunnallisen pyöräjärjestelmän käyttäjät" loading="lazy">
+                        <figcaption>
+                            <strong>Helsingin kaupunki</strong>
+                            <span>Julkisen sektorin leasing, 240 pyörää, CO₂-raportointi kuukausittain</span>
+                        </figcaption>
+                    </figure>
+                    <figure class="gallery__item">
+                        <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=1200&q=80" alt="Yrityksen sähköpyöräpooli" loading="lazy">
+                        <figcaption>
+                            <strong>Nordic Energy Group</strong>
+                            <span>Executive fleet, concierge-huolto ja telematiikkaraportointi</span>
+                        </figcaption>
+                    </figure>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" data-reveal>
+            <div class="section__intro">
+                <span class="kicker">Laskuri</span>
+                <h2>Laske mitä säästät ennakoivalla huollolla</h2>
+                <p>Syötä kalustosi luvut ja arvioi, kuinka paljon AnomFIN-ennakkohuolto vapauttaa kapasiteettia ja säästää kustannuksia.</p>
+            </div>
+            <form class="calculator" data-calculator>
+                <div class="calculator__grid">
+                    <label>
+                        Sähköpyörien määrä
+                        <input type="number" name="machines" min="0" step="1" placeholder="Esim. 45" required>
+                    </label>
+                    <label>
+                        Keskimääräinen seisokki (h/kk)
+                        <input type="number" name="downtime" min="0" step="0.5" placeholder="Esim. 8" required>
+                    </label>
+                    <label>
+                        Tunnin kustannus (€)
+                        <input type="number" name="hourlyCost" min="0" step="50" placeholder="Esim. 120" required>
+                    </label>
+                    <label>
+                        Ennakoivan huollon vaikutus (%)
+                        <input type="number" name="prevented" min="0" max="100" step="5" placeholder="Esim. 65" required>
+                    </label>
+                </div>
+                <button type="submit" class="btn btn--primary">Laske säästö</button>
+            </form>
+            <div class="calculator__result" data-calculator-result>
+                <p class="calculator__placeholder">Syötä luvut nähdäksesi tuoton. AnomFIN auttaa mitoittamaan oikean palvelutason.</p>
+            </div>
+        </section>
+
+        <section class="section section--accent" data-reveal>
+            <div class="section__intro">
+                <span class="kicker">Laatu &amp; sertifikaatit</span>
+                <h2>Laatu on osa jokaista toimitusta</h2>
+                <p>Työskentelemme yhdessä akkutoimittajien, vakuutusyhtiöiden ja viranomaisten kanssa. Asiakkaamme saavat läpinäkyvän dokumentaation.</p>
+            </div>
+            <div class="badges">
+                <div class="badges__item">
+                    <span>ISO 9001 partner-auditoinnit</span>
+                </div>
+                <div class="badges__item">
+                    <span>UL2849 akkustandardien valvonta</span>
+                </div>
+                <div class="badges__item">
+                    <span>CE-merkintä ja EEC-vaatimustenmukaisuus</span>
+                </div>
+                <div class="badges__item">
+                    <span>Hiilijalanjälkiraportointi (GHG Protocol)</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="yhteys" data-reveal>
+            <div class="contact">
+                <div class="contact__info">
+                    <span class="kicker">Concierge</span>
+                    <h2>Varaa strateginen kartoitus</h2>
+                    <p>Helsinki eBike-Service Oy • Jugi@AnomFIN johtaa projektin alusta loppuun. Kerro kalustotarpeesi ja ajamme ensimmäisen erän maahan.</p>
+                    <ul class="contact__details">
+                        <li><strong>Puhelin:</strong> <a href="tel:+358403255131">040 325 5131</a></li>
+                        <li><strong>Sähköposti:</strong> <a href="mailto:info@helsinkiebikeservice.fi">info@helsinkiebikeservice.fi</a></li>
+                        <li><strong>Showroom:</strong> Herttoniemi, Helsinki</li>
+                    </ul>
+                    <div class="contact__cta">
+                        <a class="btn btn--primary" href="mailto:info@helsinkiebikeservice.fi">Sovi tapaaminen</a>
+                        <a class="btn btn--ghost" href="verkkokauppa.html">Tutustu verkkokauppaan</a>
+                    </div>
+                </div>
+                <form class="contact__form">
+                    <h3>Projektin lähtötiedot</h3>
+                    <label>
+                        Nimi / organisaatio
+                        <input type="text" name="nimi" placeholder="Yritys tai yhteyshenkilö" required>
+                    </label>
+                    <label>
+                        Sähköposti
+                        <input type="email" name="email" placeholder="sinä@yritys.fi" required>
+                    </label>
+                    <label>
+                        Kalustotarve
+                        <input type="text" name="malli" placeholder="Esim. 30 cargoa, 20 premiumia">
+                    </label>
+                    <label>
+                        Viesti
+                        <textarea name="viesti" rows="4" placeholder="Kerro toimitusaikataulu, huoltotaso ja erityistoiveet" required></textarea>
+                    </label>
+                    <button type="submit" class="btn btn--primary">Lähetä viesti</button>
+                    <p class="contact__disclaimer">Tallennamme tiedot maahantuontiprosessin käynnistämiseksi. AnomFIN pitää sinut ajan tasalla jokaisesta vaiheesta.</p>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer__branding">
+            <span class="footer__logo">Helsinki eBike-Service Oy</span>
+            <p>Premium-sähköpyörien maahantuonti, huolto ja verkkokauppa. AnomFIN by Jugi rakentaa uudet liikkuvuuden standardit.</p>
+        </div>
+        <div class="footer__links">
+            <div>
+                <h4>Palvelut</h4>
+                <ul>
+                    <li><a href="#tuonti">Maahantuonti</a></li>
+                    <li><a href="#palvelut">Käyttöönotto</a></li>
+                    <li><a href="#asiakkaat">Referenssit</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Ratkaisut</h4>
+                <ul>
+                    <li><a href="#mallisto">Mallisto</a></li>
+                    <li><a href="#prosessi">Projektinhallinta</a></li>
+                    <li><a href="verkkokauppa.html">Verkkokauppa</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Yhteys</h4>
+                <ul>
+                    <li><a href="tel:+358403255131">040 325 5131</a></li>
+                    <li><a href="mailto:info@helsinkiebikeservice.fi">info@helsinkiebikeservice.fi</a></li>
+                    <li>Aarteenetsijäntie 4, 00970 Helsinki</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer__meta">
+            <span>AnomFIN • Premium Electric Mobility</span>
+            <span>© <span id="year"></span> Helsinki eBike-Service Oy</span>
+        </div>
+    </footer>
+
     <script src="assets/js/main.js"></script>
 </body>
 </html>
