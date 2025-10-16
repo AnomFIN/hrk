@@ -7,317 +7,152 @@
     <title>Verkkokauppa • Helsinki eBike-Service Oy</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Roboto:wght@300;400;500&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="assets/css/styles.css">
 </head>
-<body class="is-preload">
-    <header class="hero" id="etusivu" data-reveal>
-        <nav class="nav">
-            <div class="nav__logo">Helsinki eBike-Service Oy</div>
-            <button class="nav__toggle" type="button" aria-label="Avaa valikko" aria-controls="nav-menu" aria-expanded="false">
+<body class="is-preload store-mode">
+    <header class="store-header" data-reveal>
+        <nav class="nav nav--store">
+            <div class="nav__logo" aria-label="Helsinki eBike-Service Oy">
+                <a class="nav__logo-link" href="index.html">Helsinki eBike-Service Oy</a>
+                <span class="nav__logo-sub">AnomFIN eBike Boutique</span>
+            </div>
+            <button class="nav__toggle" type="button" aria-label="Avaa valikko" aria-controls="nav-menu"
+                aria-expanded="false">
                 <span></span>
                 <span></span>
                 <span></span>
             </button>
             <ul class="nav__links" id="nav-menu">
-                <li><a class="nav__link" href="#pyorat" data-scroll="pyorat">Sähköpyörät</a></li>
-                <li><a class="nav__link" href="#varusteet" data-scroll="varusteet">Varusteet</a></li>
-                <li><a class="nav__link" href="#paketit" data-scroll="paketit">Huoltopaketit</a></li>
-                <li><a class="nav__link" href="#yhteys" data-scroll="yhteys">Yhteys</a></li>
+                <li><a class="nav__link nav__link--pill" href="#" data-scroll="mallisto" data-storefront-trigger>Mallisto</a></li>
+                <li><a class="nav__link nav__link--pill" href="#" data-scroll="checkout" data-storefront-trigger>Kassa</a></li>
                 <li class="nav__cart">
-                    <a class="nav__link nav__link--cart" href="index.html" aria-label="Palaa pääsivulle">
-                        <span>Takaisin etusivulle</span>
-                        <span class="nav__cart-count" data-cart-count>0</span>
-                    </a>
+                    <span class="nav__link nav__link--cart">
+                        <span>Ostoskorissa</span>
+                        <span class="nav__cart-count" data-cart-count aria-live="polite">0</span>
+                    </span>
                 </li>
+                <li><a class="nav__link" href="index.html">Takaisin etusivulle</a></li>
             </ul>
         </nav>
-        <div class="hero__content">
-            <span class="hero__badge">Signature Experience • AnomFIN</span>
-            <p class="hero__eyebrow">Verkkokauppa yritys- ja premium-sähköpyörille</p>
-            <h1>AnomFIN eBike Boutique tarjoaa kuratoidut mallit ja elinkaaripalvelut</h1>
-            <p class="hero__lead">Jokainen verkkokaupan tuote on testattu ja dokumentoitu Jugi@AnomFIN -tiimin toimesta. Tilaa räätälöidyt paketit, jotka yhdistävät huollon, varusteet ja koulutuksen saumattomaksi kokonaisuudeksi.</p>
-            <div class="hero__actions">
-                <a class="btn btn--primary btn--xl" href="#pyorat">Katso sähköpyörät</a>
-                <a class="btn btn--store" href="index.html#yhteys">Pyydä asiantuntijaa</a>
+        <div class="store-header__content">
+            <div>
+                <span class="store-header__badge">Signature Experience • AnomFIN</span>
+                <h1>Curated eBike Drop 2024</h1>
+                <p>Jugi@AnomFIN tiimi toimittaa yrityksille hiilineutraalin sähköpyöräkaluston concierge-palveluna. Valitse
+                    malli, sovitaan toimitus ja viimeistele verkkomaksu yhdestä näkymästä.</p>
             </div>
-            <p class="hero__signature">Jugi@AnomFIN curated drop • Premium EV retail</p>
-        </div>
-        <div class="hero__image" data-reveal>
-            <div class="hero__panel">
-                <img src="assets/ebike_web2.png" alt="Sähköpyörä showroomissa" loading="lazy">
-                <div class="hero__panel-caption">
-                    <span>Launch Edition</span>
-                    <span>AnomFIN Boutique</span>
-                </div>
+            <div class="store-header__meta">
+                <span>Live-tilausstatus</span>
+                <strong data-live-status>Varastotilan päivitys 4 min sitten</strong>
             </div>
-            <a class="hero__elevator" href="#yhteys" aria-label="Varaa verkkokaupan demo" data-floating-origin>
-                <span class="hero__elevator-glow"></span>
-                <span class="hero__elevator-text">VARAA<br><strong>LIVE-DEMO</strong></span>
-                <span class="hero__elevator-tag">Vain ajanvarauksella</span>
-            </a>
         </div>
     </header>
 
-    <a class="floating-cta" href="#yhteys" data-floating-cta>
-        <span class="floating-cta__pulse" aria-hidden="true"></span>
-        <span class="floating-cta__label">AnomFIN Concierge</span>
-        <span class="floating-cta__title">Chattaa myyjän kanssa</span>
-        <span class="floating-cta__signature">Premium sähköpyörävalinnat</span>
-    </a>
-
-    <main>
-        <section class="section section--store" id="pyorat" data-reveal>
-            <div class="section__intro">
-                <span class="kicker">Sähköpyörät</span>
-                <h2>Kuratoitu mallisto kaupunkien ja logistiikan tarpeisiin</h2>
-                <p>Kaikki mallimme ovat saatavilla nopealla toimituksella sekä leasing- että yritysostoihin. Jokainen toimitus sisältää AnomFIN-käyttöönoton ja elinkaariseurannan.</p>
+    <main class="storefront" data-storefront>
+        <aside class="storefront__panel storefront__panel--nav">
+            <div class="storefront__panel-header">
+                <h2>Mallistot</h2>
+                <p>Suodata kuratoidut mallit käyttötarkoituksen mukaan. Jokainen tuote sisältää AnomFIN elinkaarituen.</p>
             </div>
-            <div class="store store--catalog" data-store>
-                <div class="store__toolbar">
-                    <button class="store__filter is-active" type="button" data-filter="all">Kaikki</button>
-                    <button class="store__filter" type="button" data-filter="urban">Urban</button>
-                    <button class="store__filter" type="button" data-filter="cargo">Cargo</button>
-                    <button class="store__filter" type="button" data-filter="comfort">Comfort</button>
-                    <button class="store__filter" type="button" data-filter="design">Design</button>
-                </div>
-                <aside class="store__cart">
-                    <h3>Ostoskorisi</h3>
-                    <p class="store__cart-empty" data-cart-empty>Lisää tuotteita koriin nähdäksesi yhteenvedon.</p>
-                    <ul class="store__cart-items" data-cart-items></ul>
-                    <div class="store__cart-summary">
-                        <span>Yhteensä</span>
-                        <span data-cart-total>0 €</span>
-                    </div>
-                    <p class="store__cart-note">Konsulttimme vahvistaa toimitusajan ja maahantuonnin kustannukset ennen laskutusta.</p>
-                </aside>
-                <div class="store__grid">
-                    <article class="store-card" data-product="Tenways CGO One" data-price="2899" data-category="urban">
-                        <img src="https://images.unsplash.com/photo-1529429617124-aee711a0fb7c?auto=format&fit=crop&w=1200&q=80" alt="Tyylikäs sähköpyörä showroomissa" loading="lazy">
-                        <div class="store-card__body">
-                            <span class="store-card__tag">Urban</span>
-                            <h3>Tenways CGO One</h3>
-                            <p>Kevyt hiilikuiturunko, hihnaveto ja 90 km kantama. Sisältää AnomFIN Launch Care 299 -palvelun.</p>
-                            <div class="store-card__footer">
-                                <span class="store-card__price">2 899 €</span>
-                                <button class="btn btn--secondary" type="button" data-add-to-cart>Lisää koriin</button>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="store-card" data-product="Tern GSD Performance" data-price="5490" data-category="cargo">
-                        <img src="https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=1200&q=80" alt="Tavarasähköpyörä ulkona" loading="lazy">
-                        <div class="store-card__body">
-                            <span class="store-card__tag">Cargo</span>
-                            <h3>Tern GSD Performance</h3>
-                            <p>Yritystason jakelupyörä kaksoisakkujärjestelmällä. Mukana Fleet Signature 1499 -sopimus.</p>
-                            <div class="store-card__footer">
-                                <span class="store-card__price">5 490 €</span>
-                                <button class="btn btn--secondary" type="button" data-add-to-cart>Lisää koriin</button>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="store-card" data-product="Specialized Turbo Como" data-price="3990" data-category="comfort">
-                        <img src="https://images.unsplash.com/photo-1523419409543-0c1df022bdd9?auto=format&fit=crop&w=1200&q=80" alt="Design-sähköpyörä kaupunkimaisemassa" loading="lazy">
-                        <div class="store-card__body">
-                            <span class="store-card__tag">Comfort</span>
-                            <h3>Specialized Turbo Como</h3>
-                            <p>Älykäs näytöllinen ajotuki, sisäinen johdotus ja integroidut valot. Premium Pro Active 699 -huoltotaso.</p>
-                            <div class="store-card__footer">
-                                <span class="store-card__price">3 990 €</span>
-                                <button class="btn btn--secondary" type="button" data-add-to-cart>Lisää koriin</button>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="store-card" data-product="VanMoof S5" data-price="3690" data-category="design">
-                        <img src="https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?auto=format&fit=crop&w=1200&q=80" alt="VanMoof sähköpyörä" loading="lazy">
-                        <div class="store-card__body">
-                            <span class="store-card__tag">Design</span>
-                            <h3>VanMoof S5</h3>
-                            <p>Integroitu varashälytin ja automaattinen vaihteisto. Sisältää kahden vuoden AnomFIN-takuun.</p>
-                            <div class="store-card__footer">
-                                <span class="store-card__price">3 690 €</span>
-                                <button class="btn btn--secondary" type="button" data-add-to-cart>Lisää koriin</button>
-                            </div>
-                        </div>
-                    </article>
+            <div class="storefront__filters" role="group" aria-label="Suodata mallistoa">
+                <button class="storefront__filter is-active" type="button" data-category-button="all">Kaikki</button>
+                <button class="storefront__filter" type="button" data-category-button="urban">Urban</button>
+                <button class="storefront__filter" type="button" data-category-button="cargo">Cargo</button>
+                <button class="storefront__filter" type="button" data-category-button="comfort">Comfort</button>
+                <button class="storefront__filter" type="button" data-category-button="design">Design</button>
+            </div>
+            <div class="storefront__divider"></div>
+            <div class="storefront__product-list" data-product-list role="list" aria-label="Tuotelista"></div>
+            <div class="storefront__advisor">
+                <p><strong>AnomFIN Concierge</strong> aktivoi jokaisen tilauksen ja sopii koeajon. Tarvitsetko apua?
+                    <a href="mailto:concierge@anomfin.com">concierge@anomfin.com</a></p>
+                <span class="storefront__signature">Jugi@AnomFIN</span>
+            </div>
+        </aside>
+
+        <section class="storefront__panel storefront__panel--spotlight" id="mallisto">
+            <div class="storefront__gallery">
+                <div class="storefront__badge" data-detail-badge></div>
+                <img class="storefront__image" src="" alt="" data-detail-image>
+                <div class="storefront__gallery-meta">
+                    <span data-detail-availability></span>
+                    <span data-detail-range></span>
                 </div>
             </div>
-        </section>
-
-        <section class="section" id="varusteet" data-reveal>
-            <div class="section__intro">
-                <span class="kicker">Varusteet</span>
-                <h2>Huippuluokan varusteet turvalliseen ajoon</h2>
-                <p>Kypärät, valaisimet ja latausratkaisut, jotka täydentävät sähköpyöräkokonaisuuden. Kaikki varusteet ovat yhteensopivia yllä mainittujen mallien kanssa.</p>
-            </div>
-            <div class="store__grid">
-                <article class="store-card" data-product="Giro Manifest" data-price="289">
-                    <img src="https://images.unsplash.com/photo-1505678261036-a3fcc5e884ee?auto=format&fit=crop&w=1200&q=80" alt="Giro Manifest kypärä" loading="lazy">
-                    <div class="store-card__body">
-                        <span class="store-card__tag">Turvallisuus</span>
-                        <h3>Giro Manifest Spherical</h3>
-                        <p>MIPS-suojaus, säädettävä ilmanvaihto ja integroitu älyvalo. Sisältää sovituksen showroomissa.</p>
-                        <div class="store-card__footer">
-                            <span class="store-card__price">289 €</span>
-                            <button class="btn btn--secondary" type="button" data-add-to-cart>Lisää koriin</button>
-                        </div>
+            <article class="storefront__details">
+                <span class="storefront__category" data-detail-category></span>
+                <h2 data-detail-title></h2>
+                <p class="storefront__lead" data-detail-lead></p>
+                <div class="storefront__grid">
+                    <div>
+                        <h3>Keskeiset hyödyt</h3>
+                        <ul class="storefront__features" data-detail-features></ul>
                     </div>
-                </article>
-                <article class="store-card" data-product="Bosch PowerTube" data-price="799">
-                    <img src="https://images.unsplash.com/photo-1509395176047-4a66953fd231?auto=format&fit=crop&w=1200&q=80" alt="Bosch PowerTube akku" loading="lazy">
-                    <div class="store-card__body">
-                        <span class="store-card__tag">Varaosat</span>
-                        <h3>Bosch PowerTube 625</h3>
-                        <p>Tehokas lisäakku Bosch Performance Line -järjestelmään. Asennus ja diagnostiikka sisältyvät.</p>
-                        <div class="store-card__footer">
-                            <span class="store-card__price">799 €</span>
-                            <button class="btn btn--secondary" type="button" data-add-to-cart>Lisää koriin</button>
-                        </div>
-                    </div>
-                </article>
-                <article class="store-card" data-product="Supernova E3 Pro" data-price="349">
-                    <img src="https://images.unsplash.com/photo-1604272011436-1d760c6fc1d8?auto=format&fit=crop&w=1200&q=80" alt="Supernova valosarja" loading="lazy">
-                    <div class="store-card__body">
-                        <span class="store-card__tag">Valot</span>
-                        <h3>Supernova E3 Pro</h3>
-                        <p>Äärimmäisen kirkas valosarja kaupunki- ja maantieajoihin. Sisältää asennuksen AnomFIN-huollossa.</p>
-                        <div class="store-card__footer">
-                            <span class="store-card__price">349 €</span>
-                            <button class="btn btn--secondary" type="button" data-add-to-cart>Lisää koriin</button>
-                        </div>
-                    </div>
-                </article>
-            </div>
-        </section>
-
-        <section class="section section--light" id="paketit" data-reveal>
-            <div class="section__intro">
-                <span class="kicker">Huoltopaketit</span>
-                <h2>Kolme tasoa sähköpyöräsi täydelliseen ylläpitoon</h2>
-                <p>Valitse huoltopaketti verkkokaupan tilauksen yhteydessä. Paketit voidaan yhdistää kaikkiin malleihin ja varusteisiin.</p>
-            </div>
-            <div class="grid grid--3">
-                <article class="product">
-                    <img src="assets/ebike_web.png" alt="Huoltoasiantuntija säätää sähköpyörää" loading="lazy">
-                    <div class="product__body">
-                        <h3>Launch Care 299</h3>
-                        <p>Perushuolto ja ohjelmistopäivitykset uuden sähköpyörän luovutuksen yhteydessä.</p>
-                        <ul>
-                            <li>299 € kertamaksu</li>
-                            <li>Täydellinen turvatarkastus</li>
-                            <li>Akun kapasiteettiraportti</li>
-                        </ul>
-                    </div>
-                </article>
-                <article class="product">
-                    <img src="assets/ebike_web2.png" alt="Premium sähköpyörä huollossa" loading="lazy">
-                    <div class="product__body">
-                        <h3>Pro Active 699</h3>
-                        <p>Kausihuollot, noutopalvelu ja priorisoitu tuki yrityskäyttöön ja aktiiviharrastajille.</p>
-                        <ul>
-                            <li>699 € vuosimaksu</li>
-                            <li>Varaosat -15 %</li>
-                            <li>24h vasteaika</li>
-                        </ul>
-                    </div>
-                </article>
-                <article class="product">
-                    <img src="assets/ebikewp.webp" alt="Fleet-huolto työpajassa" loading="lazy">
-                    <div class="product__body">
-                        <h3>Fleet Signature 1499</h3>
-                        <p>Laajin palvelu logistisiin flotteihin. Sisältää etävalvonnan, varapyörät ja kuukausiraportoinnin.</p>
-                        <ul>
-                            <li>1 499 € vuosimaksu</li>
-                            <li>Varapyöräpooli</li>
-                            <li>CO₂-seurantadata</li>
-                        </ul>
-                    </div>
-                </article>
-            </div>
-        </section>
-
-        <section class="section" id="yhteys" data-reveal>
-            <div class="section__intro">
-                <span class="kicker">Ota yhteyttä</span>
-                <h2>Henkilökohtainen ostokokemus alkaa yhdestä viestistä</h2>
-                <p>Jätä meille yhteystietosi ja kerro, mikä sähköpyörä kiinnostaa. AnomFIN Concierge räätälöi tarjouksen ja aikataulun.</p>
-            </div>
-            <div class="contact">
-                <div class="contact__info">
-                    <h3>Palvelutiimi</h3>
-                    <p>Helsinki eBike-Service Oy • Jugi@AnomFIN</p>
-                    <ul class="contact__details">
-                        <li><strong>Puhelin:</strong> <a href="tel:+358403255131">040 325 5131</a></li>
-                        <li><strong>Sähköposti:</strong> <a href="mailto:verkkokauppa@helsinkiebikeservice.fi">verkkokauppa@helsinkiebikeservice.fi</a></li>
-                        <li><strong>Showroom:</strong> Herttoniemi, Helsinki</li>
-                    </ul>
-                    <div class="contact__cta">
-                        <a class="btn btn--primary" href="mailto:verkkokauppa@helsinkiebikeservice.fi">Varaa konsultaatio</a>
-                        <a class="btn btn--ghost" href="index.html#etusivu">Takaisin etusivulle</a>
+                    <div>
+                        <h3>Projektipaketit</h3>
+                        <ul class="storefront__packages" data-detail-packages></ul>
                     </div>
                 </div>
-                <form class="contact__form">
-                    <h3>Ostajan brief</h3>
-                    <label>
-                        Nimi
-                        <input type="text" name="nimi" placeholder="Yritys / Yhteyshenkilö" required>
-                    </label>
-                    <label>
-                        Sähköposti
-                        <input type="email" name="email" placeholder="sinä@yritys.fi" required>
-                    </label>
-                    <label>
-                        Valitse kiinnostava malli
-                        <input type="text" name="malli" placeholder="Esim. Tenways CGO One">
-                    </label>
-                    <label>
-                        Viesti
-                        <textarea name="viesti" rows="4" placeholder="Kerro toimitustarpeesta, aikataulusta ja huoltopaketista" required></textarea>
-                    </label>
-                    <button type="submit" class="btn btn--primary">Lähetä viesti</button>
-                    <p class="contact__disclaimer">Tallennamme tietosi tilausprosessia varten. Tervetuloa AnomFIN-asiakkaaksi!</p>
-                </form>
-            </div>
+                <div class="storefront__cta" data-product-spotlight>
+                    <div class="storefront__price">
+                        <span>Tilauksen netto</span>
+                        <strong data-detail-price></strong>
+                        <small data-detail-support></small>
+                    </div>
+                    <div class="storefront__cta-buttons" data-product="" data-price="" data-product-cta>
+                        <button class="btn btn--primary btn--xl" type="button" data-add-to-cart data-product-add>Lisää koriin</button>
+                        <button class="btn btn--ghost" type="button" data-scroll="checkout" data-storefront-trigger>Siirry kassalle</button>
+                    </div>
+                </div>
+            </article>
         </section>
+
+        <aside class="storefront__panel storefront__panel--summary" id="checkout" data-store>
+            <div class="storefront__summary-header">
+                <h2>Ostoskorisi</h2>
+                <p data-cart-empty>Lisää tuotteita koriin nähdäksesi tarjouksen erittelyn.</p>
+            </div>
+            <ul class="storefront__cart-list" data-cart-items></ul>
+            <div class="storefront__total">
+                <span>Välisumma (ALV 0 %)</span>
+                <strong data-cart-total>0 €</strong>
+            </div>
+            <div class="storefront__checkout">
+                <h3>Verkkomaksu</h3>
+                <p>Valitse maksutapa ja viimeistele tilaus turvallisesti AnomFIN maksulinkin kautta.</p>
+                <div class="storefront__payment-buttons">
+                    <button class="storefront__payment-button storefront__payment-button--primary" type="button" data-checkout-button>
+                        <span>Maksa verkkopankissa</span>
+                        <small>Tuetut pankit: OP, Nordea, Danske</small>
+                    </button>
+                    <button class="storefront__payment-button" type="button" data-checkout-button>
+                        <span>Apple Pay / Google Pay</span>
+                        <small>Välitön vahvistus</small>
+                    </button>
+                    <button class="storefront__payment-button" type="button" data-checkout-button>
+                        <span>Yrityskortti</span>
+                        <small>Visa, Mastercard, Amex</small>
+                    </button>
+                </div>
+                <div class="storefront__assurance">
+                    <h4>Tilausprosessin vaiheet</h4>
+                    <ol>
+                        <li>Verkkotilaus ja maksun vahvistus</li>
+                        <li>AnomFIN toimitussuunnitelma 24h sisällä</li>
+                        <li>Käyttöönotto ja koulutus paikan päällä</li>
+                    </ol>
+                </div>
+            </div>
+            <footer class="storefront__footer">
+                <p>Tarvitsetko laskutusta tai leasing-pakettia? Concierge-tiimi rakentaa yrityssopimuksen saman päivän aikana.</p>
+                <a class="storefront__footer-link" href="tel:+358401234567">📞 Soita AnomFIN Concierge -linjalle</a>
+            </footer>
+        </aside>
     </main>
 
-    <footer class="footer">
-        <div class="footer__branding">
-            <span class="footer__logo">Helsinki eBike-Service Oy</span>
-            <p>Sähköpyörien huolto, myynti ja verkkokauppa. AnomFIN curated kokemukset yrityksille ja harrastajille.</p>
-        </div>
-        <div class="footer__links">
-            <div>
-                <h4>Verkkokauppa</h4>
-                <ul>
-                    <li><a href="#pyorat">Sähköpyörät</a></li>
-                    <li><a href="#varusteet">Varusteet</a></li>
-                    <li><a href="#paketit">Huoltopaketit</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4>Palvelut</h4>
-                <ul>
-                    <li><a href="index.html#palvelut">Huolto ja korjaukset</a></li>
-                    <li><a href="index.html#vuokraus">Vuokraus</a></li>
-                    <li><a href="index.html#myynti">Myynti &amp; hankinta</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4>Yhteystiedot</h4>
-                <ul>
-                    <li><a href="tel:+358403255131">040 325 5131</a></li>
-                    <li><a href="mailto:verkkokauppa@helsinkiebikeservice.fi">verkkokauppa@helsinkiebikeservice.fi</a></li>
-                    <li>Aarteenetsijäntie 4, 00970 Helsinki</li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer__meta">
-            <span>AnomFIN • Verkkokauppa</span>
-            <span>© <span id="year"></span> Helsinki eBike-Service Oy</span>
-        </div>
-    </footer>
-
-    <script src="assets/js/main.js"></script>
+    <script src="assets/js/main.js" defer></script>
 </body>
 </html>
