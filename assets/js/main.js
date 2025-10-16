@@ -383,6 +383,390 @@ addToCartButtons.forEach((button) => {
 
 updateCartDisplays();
 
+const basePageTitle = document.title;
+const storefrontElement = document.querySelector('[data-storefront]');
+const storeTriggers = document.querySelectorAll('[data-storefront-trigger]');
+const liveStatusElement = document.querySelector('[data-live-status]');
+
+const updateLiveStatus = (message) => {
+    if (!liveStatusElement || !message) {
+        return;
+    }
+
+    liveStatusElement.textContent = message;
+};
+
+if (storefrontElement) {
+    const productListElement = storefrontElement.querySelector('[data-product-list]');
+    const categoryButtons = storefrontElement.querySelectorAll('[data-category-button]');
+    const checkoutPanel = storefrontElement.querySelector('.storefront__panel--summary');
+    const checkoutButtons = storefrontElement.querySelectorAll('[data-checkout-button]');
+    const detailElements = {
+        badge: storefrontElement.querySelector('[data-detail-badge]'),
+        image: storefrontElement.querySelector('[data-detail-image]'),
+        availability: storefrontElement.querySelector('[data-detail-availability]'),
+        range: storefrontElement.querySelector('[data-detail-range]'),
+        category: storefrontElement.querySelector('[data-detail-category]'),
+        title: storefrontElement.querySelector('[data-detail-title]'),
+        lead: storefrontElement.querySelector('[data-detail-lead]'),
+        features: storefrontElement.querySelector('[data-detail-features]'),
+        packages: storefrontElement.querySelector('[data-detail-packages]'),
+        price: storefrontElement.querySelector('[data-detail-price]'),
+        support: storefrontElement.querySelector('[data-detail-support]'),
+        cta: storefrontElement.querySelector('[data-product-cta]'),
+    };
+
+    const storeProducts = [
+        {
+            id: 'tenways-cgo-one',
+            name: 'Tenways CGO One',
+            category: 'urban',
+            categoryLabel: 'Urban',
+            badge: 'Urban Launch 2024',
+            price: 2899,
+            lead: 'Kevyt hiilikuiturunko, hihnaveto ja 90 km kantama. Sisältää AnomFIN Launch Care 299 -palvelun.',
+            tagline: 'Kevyt hiilikuiturunko • 90 km kantama',
+            features: [
+                'Gates CDX -hihnaveto ja hiilikuiturunko luottokäyttöön',
+                'Mission Control -seuranta ja varashälytin etäkäytöllä',
+                'Premium-akku 36 V / 252 Wh – vaihto 24 h palvelulupauksella',
+            ],
+            packages: [
+                'Launch Care 10 pyörälle • 790 € / kuukausi',
+                'Telematiikka & kuljettajaraportointi • 39 € / ajoneuvo',
+                'Winter Ready -varustepaketti • 420 €',
+            ],
+            range: 'Kantama 90 km • 35 Nm vääntö',
+            availability: 'Saatavuus: Helsinki Fulfillment 6 kpl',
+            support: 'Launch Care 299 sisältyy • 24 h käyttöönotto',
+            status: 'Urban varasto • 6 pyörää valmiina toimitukseen',
+            image: 'https://images.unsplash.com/photo-1529429617124-aee711a0fb7c?auto=format&fit=crop&w=1400&q=80',
+            imageAlt: 'Tenways CGO One sähköpyörä showroomissa',
+        },
+        {
+            id: 'specialized-turbo-como',
+            name: 'Specialized Turbo Como IGH',
+            category: 'comfort',
+            categoryLabel: 'Comfort',
+            badge: 'Executive Fleet',
+            price: 3990,
+            lead: 'Älykäs näytöllinen ajotuki, sisäinen johdotus ja integroidut valot. Premium Pro Active 699 -huoltotaso.',
+            tagline: 'Auto Shift IGH • Älykäs ajotuki',
+            features: [
+                'Automatisoitu IGH-vaihteisto ja 90 Nm tukimoottori',
+                'Custom-tasapainotetut akkumoduulit 710 Wh kapasiteetilla',
+                'Connected Service -portaali yritysflotille',
+            ],
+            packages: [
+                'Executive Comfort -paketti (nahkasatulat & lokasuojat) • 290 €',
+                'Premium Pro Active 699 • sis. 36 kk huoltosopimus',
+                'Työsuhdepyörä leasing -sopimus alk. 119 € / kk',
+            ],
+            range: 'Kantama 130 km • 710 Wh akku',
+            availability: 'Saatavuus: Euroopan keskusvarasto 12 kpl',
+            support: 'Premium Pro Active 699 sisältyy • Concierge-asennus',
+            status: 'Comfort toimituslinja • varmistettu 7 pv toimitus',
+            image: 'https://images.unsplash.com/photo-1523419409543-0c1df022bdd9?auto=format&fit=crop&w=1400&q=80',
+            imageAlt: 'Specialized Turbo Como sähköpyörä urbaanissa miljöössä',
+        },
+        {
+            id: 'tern-gsd-performance',
+            name: 'Tern GSD Performance Duo',
+            category: 'cargo',
+            categoryLabel: 'Cargo',
+            badge: 'Logistics Workhorse',
+            price: 5490,
+            lead: 'Yritystason jakelupyörä kaksoisakkujärjestelmällä ja Bosch Cargo Line -moottorilla.',
+            tagline: 'Bosch Cargo Line • Kaksoisakku 1000 Wh',
+            features: [
+                'Kantavuus 200 kg ja modulaarinen kuormateline',
+                'Bosch Cargo Line Gen4 85 Nm moottori',
+                'Hydrauliset Magura MT5e -jarrut 4-mäntätekniikalla',
+            ],
+            packages: [
+                'Fleet Signature 1499 • sisältää koulutuksen & telematiikan',
+                'Last Mile -lisävarustesetti • 610 €',
+                'Huoltosopimus 36 kk • 49 € / kk',
+            ],
+            range: 'Kantama 160 km • DualBattery 1000 Wh',
+            availability: 'Saatavuus: Nordic Logistics Hub 4 kpl',
+            support: 'Fleet Signature 1499 sisältyy • 48 h huoltolupaus',
+            status: 'Cargo fulfillment • 4 yksikköä tuotantolinjalla',
+            image: 'https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=1400&q=80',
+            imageAlt: 'Tern GSD kuljetussähköpyörä ulkona',
+        },
+        {
+            id: 'vanmoof-s5',
+            name: 'VanMoof S5',
+            category: 'design',
+            categoryLabel: 'Design',
+            badge: 'Design Icon',
+            price: 3690,
+            lead: 'Integroitu varashälytin ja automaattinen vaihteisto. Sisältää kahden vuoden AnomFIN-takuun.',
+            tagline: 'Stealth-design • Integroitu hälytin',
+            features: [
+                'Halo LED -valosignatuurit ja automaattinen vaihteisto',
+                'Theft Defense -palvelu ja GPS-seuranta',
+                'Hydrauliset levyjarrut ja älykkäät turvamoodit',
+            ],
+            packages: [
+                'Design Concierge -personointi • 180 €',
+                'Kaupunkihuolto 24 kk • 32 € / kk',
+                'Kasko & vastuuvakuutus • 19 € / kk',
+            ],
+            range: 'Kantama 150 km • 68 Nm automaattinen boost',
+            availability: 'Saatavuus: Launch Studio Amsterdam 8 kpl',
+            support: 'AnomFIN Design Guarantee 24 kk sisältyy',
+            status: 'Design studio • 8 yksikköä varattavissa nyt',
+            image: 'https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?auto=format&fit=crop&w=1400&q=80',
+            imageAlt: 'VanMoof S5 sähköpyörä minimalistisessa studiossa',
+        },
+        {
+            id: 'riese-muller-load-75',
+            name: 'Riese & Müller Load 75 Touring',
+            category: 'cargo',
+            categoryLabel: 'Cargo',
+            badge: 'Utility Elite',
+            price: 7290,
+            lead: 'Saksalainen premium-lastauspyörä rohkeaan kunnalliskäyttöön. Fox Float -jousitus ja ABS-jarrut.',
+            tagline: 'ABS-jarrut • Fox Float -jousitus',
+            features: [
+                'ABS-levyjarrut ja korkeasäiliöinen kuormatila',
+                'Bosch Cargo Line Speed 85 Nm moottori',
+                'High-Sided Walls -paketti ja säänkestävä kate',
+            ],
+            packages: [
+                'Kunnalliskäyttö -konversio • 980 €',
+                'Fleet Control -telemetria • 69 € / kk',
+                'Huoltotakuu 48 kk • 79 € / kk',
+            ],
+            range: 'Kantama 120 km • DualBattery 1125 Wh',
+            availability: 'Saatavuus: Saksa tehdaslinja 5 kpl',
+            support: 'Concierge Logistics -paketti sisältyy',
+            status: 'Tehdaslinja • 5 yksikköä varattavissa tuotannosta',
+            image: 'https://images.unsplash.com/photo-1616530940355-351fabd9524b?auto=format&fit=crop&w=1400&q=80',
+            imageAlt: 'Riese & Müller Load 75 Touring sähkörahtipyörä',
+        },
+        {
+            id: 'gazelle-ultimate-c380',
+            name: 'Gazelle Ultimate C380 HMB',
+            category: 'comfort',
+            categoryLabel: 'Comfort',
+            badge: 'Commuter Premium',
+            price: 3490,
+            lead: 'Enviolo-vaihteisto ja hihnaveto tekevät työmatkoista saumattomia. Sisältää yritysleasing-konfiguraation.',
+            tagline: 'Enviolo Trekking • Gates-hihnaveto',
+            features: [
+                'Enviolo-vaihteisto portaattomalla säädöllä',
+                'Bosch Performance Line 75 Nm',
+                'Integroitu 625 Wh akku ja Supernova-valot',
+            ],
+            packages: [
+                'Commuter Care 24 kk • 28 € / kk',
+                'Showroom-sovitus ja ajoergonomian kartoitus • sisältyy',
+                'Lisäakku 500 Wh • 520 €',
+            ],
+            range: 'Kantama 110 km • 625 Wh akku',
+            availability: 'Saatavuus: Benelux varasto 9 kpl',
+            support: 'Commuter Care sisältyy • 36 h varastovaraus',
+            status: 'Comfort tuotanto • 9 yksikköä heti toimitukseen',
+            image: 'https://images.unsplash.com/photo-1604147495798-57beb5d6af73?auto=format&fit=crop&w=1400&q=80',
+            imageAlt: 'Gazelle Ultimate C380 sähköpyörä kaupunkimaisemassa',
+        },
+    ];
+
+    let activeCategory = 'all';
+    let activeProductId = storeProducts[0]?.id ?? null;
+    const productButtons = new Map();
+
+    const renderListItems = (items, element) => {
+        if (!element) {
+            return;
+        }
+
+        element.innerHTML = '';
+
+        items.forEach((item) => {
+            const listItem = document.createElement('li');
+            listItem.textContent = item;
+            element.appendChild(listItem);
+        });
+    };
+
+    const updateCategorySelection = () => {
+        categoryButtons.forEach((button) => {
+            const buttonCategory = button.dataset.categoryButton ?? 'all';
+            button.classList.toggle('is-active', buttonCategory === activeCategory);
+        });
+    };
+
+    const updateActiveProductButton = () => {
+        productButtons.forEach((button, id) => {
+            button.classList.toggle('is-active', id === activeProductId);
+        });
+    };
+
+    const selectProduct = (productId) => {
+        const product = storeProducts.find((item) => item.id === productId);
+        if (!product) {
+            return;
+        }
+
+        activeProductId = product.id;
+
+        if (detailElements.badge) {
+            detailElements.badge.textContent = product.badge;
+        }
+
+        if (detailElements.image) {
+            detailElements.image.src = product.image;
+            detailElements.image.alt = product.imageAlt ?? product.name;
+        }
+
+        if (detailElements.availability) {
+            detailElements.availability.textContent = product.availability;
+        }
+
+        if (detailElements.range) {
+            detailElements.range.textContent = product.range;
+        }
+
+        if (detailElements.category) {
+            detailElements.category.textContent = product.categoryLabel;
+        }
+
+        if (detailElements.title) {
+            detailElements.title.textContent = product.name;
+        }
+
+        if (detailElements.lead) {
+            detailElements.lead.textContent = product.lead;
+        }
+
+        renderListItems(product.features ?? [], detailElements.features);
+        renderListItems(product.packages ?? [], detailElements.packages);
+
+        if (detailElements.price) {
+            detailElements.price.textContent = formatEuro(product.price);
+        }
+
+        if (detailElements.support) {
+            detailElements.support.textContent = product.support;
+        }
+
+        if (detailElements.cta) {
+            detailElements.cta.dataset.product = product.name;
+            detailElements.cta.dataset.price = product.price;
+        }
+
+        updateActiveProductButton();
+        updateLiveStatus(product.status);
+        document.title = `${product.name} • ${basePageTitle}`;
+    };
+
+    const renderProductList = (productsToRender) => {
+        if (!productListElement) {
+            return;
+        }
+
+        productListElement.innerHTML = '';
+        productButtons.clear();
+
+        if (!productsToRender.length) {
+            const emptyState = document.createElement('p');
+            emptyState.className = 'storefront__empty';
+            emptyState.textContent = 'Ei tuotteita valitulla suodatuksella.';
+            productListElement.appendChild(emptyState);
+            return;
+        }
+
+        productsToRender.forEach((product) => {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'storefront__product';
+            button.dataset.productId = product.id;
+            button.innerHTML = `
+                <span class="storefront__product-title">${product.name}</span>
+                <span class="storefront__product-meta">
+                    ${formatEuro(product.price)}<br>
+                    <small>${product.tagline}</small>
+                </span>
+            `;
+
+            button.addEventListener('click', () => {
+                selectProduct(product.id);
+            });
+
+            productListElement.appendChild(button);
+            productButtons.set(product.id, button);
+        });
+    };
+
+    const getProductsByCategory = (category) =>
+        category === 'all' ? storeProducts : storeProducts.filter((product) => product.category === category);
+
+    const refreshProductList = () => {
+        const filteredProducts = getProductsByCategory(activeCategory);
+        renderProductList(filteredProducts);
+
+        const fallbackProduct =
+            filteredProducts.find((product) => product.id === activeProductId) ??
+            filteredProducts[0] ??
+            storeProducts[0];
+
+        if (fallbackProduct) {
+            selectProduct(fallbackProduct.id);
+        }
+    };
+
+    categoryButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+            activeCategory = button.dataset.categoryButton ?? 'all';
+            updateCategorySelection();
+            refreshProductList();
+        });
+    });
+
+    const highlightCheckout = () => {
+        if (!checkoutPanel) {
+            return;
+        }
+
+        checkoutPanel.classList.add('is-highlighted');
+        window.setTimeout(() => {
+            checkoutPanel.classList.remove('is-highlighted');
+        }, 1400);
+    };
+
+    checkoutButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+            highlightCheckout();
+        });
+    });
+
+    storeTriggers.forEach((trigger) => {
+        trigger.addEventListener('click', (event) => {
+            const targetId = trigger.getAttribute('data-scroll');
+            if (!targetId) {
+                return;
+            }
+
+            event.preventDefault();
+            const targetElement = document.getElementById(targetId);
+            if (targetElement) {
+                targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+
+            if (targetId === 'checkout') {
+                highlightCheckout();
+            }
+        });
+    });
+
+    updateCategorySelection();
+    refreshProductList();
+}
+
 const startCounterAnimation = (element) => {
     const target = Number(element.dataset.target ?? element.textContent ?? '0');
     if (!Number.isFinite(target)) {
