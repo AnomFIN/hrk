@@ -476,7 +476,7 @@ if (storefrontElement) {
             categoryLabel: 'Cargo',
             badge: 'Logistics Workhorse',
             price: 5490,
-            lead: 'Yritystason jakelupyörä kaksoisakkujärjestelmällä ja Bosch Cargo Line -mootorilla.',
+            lead: 'Yritystason jakelupyörä kaksoisakkujärjestelmällä ja Bosch Cargo Line -moottorilla.',
             tagline: 'Bosch Cargo Line • Kaksoisakku 1000 Wh',
             features: [
                 'Kantavuus 200 kg ja modulaarinen kuormateline',
