@@ -1,0 +1,54 @@
+{
+  "home_sections": [
+    {
+      "type": "hero",
+      "order": 1,
+      "data": {
+        "headline": "Helsinki eBike-Service Oy",
+        "supporting": "Palvelemme sähköpyöräflotteja pääkaupunkiseudulla",
+        "cta": {
+          "text": "Varaa kartoitus",
+          "link": "/ota-yhteytta"
+        }
+      }
+    },
+    {
+      "type": "featured_products",
+      "order": 2,
+      "data": {
+        "title": "Suosituimmat sähköpyörät",
+        "product_ids": ["p-0001", "p-0003"]
+      }
+    },
+    {
+      "type": "services",
+      "order": 3,
+      "data": {
+        "items": [
+          {
+            "title": "Huoltosopimukset",
+            "description": "Ennakoivat tarkastukset, liikkuva huolto ja kalustoraportointi."
+          },
+          {
+            "title": "Leasing",
+            "description": "Täyden palvelun leasing-sopimus 12–48 kuukauden jaksoilla."
+          },
+          {
+            "title": "Koulutukset",
+            "description": "Kuljettajien ja huoltohenkilöstön koulutuspaketit."
+          }
+        ]
+      }
+    }
+  ],
+  "custom_pages": [
+    {
+      "id": "about",
+      "title": "Meistä",
+      "slug": "meista",
+      "content": "<p>Helsinki eBike-Service Oy on sähköpyörähuoltoon, kalustohallintaan ja yritysflottien palveluihin erikoistunut tiimi. Tarjoamme leasing-palvelut, räätälöidyt huoltosuunnitelmat sekä kuljettajakoulutukset.</p>",
+      "created_at": "2024-10-01T09:00:00Z",
+      "updated_at": "2025-01-02T11:00:00Z"
+    }
+  ]
+}
