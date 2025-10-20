@@ -1,0 +1,93 @@
+[
+  {
+    "id": "p-0001",
+    "name": "Sähköpyörä X1 Pro",
+    "slug": "sahkopyora-x1-pro",
+    "sku": "X1-2025",
+    "description": "<p>Kevyt hiilikuiturunko, 250W moottori ja 500Wh akku takaavat pitkän kantaman ja ketterän ajokokemuksen.</p>",
+    "shortdescription": "Premium-kaupunkipyörä, kantama jopa 90 km.",
+    "price": 3599.0,
+    "compare_at_price": 3899.0,
+    "currency": "EUR",
+    "stock": 8,
+    "weightkg": 21.5,
+    "batterywh": 500,
+    "rangekmestimate": 90,
+    "categoryids": ["c-urban"],
+    "images": [
+      "/uploads/images/x1-pro.jpg",
+      "/uploads/images/x1-pro-detail.jpg"
+    ],
+    "attributes": {
+      "moottori": "Bosch Performance CX",
+      "vaihteet": "Shimano XT 12",
+      "jarrut": "Magura MT5"
+    },
+    "meta": {
+      "title": "Sähköpyörä X1 Pro – HRK",
+      "description": "Premium-sähköpyörä työmatkoille ja vapaa-aikaan."
+    },
+    "created_at": "2024-10-10T12:00:00Z",
+    "updated_at": "2025-01-08T09:30:00Z"
+  },
+  {
+    "id": "p-0002",
+    "name": "CargoRunner E-Lastipyörä",
+    "slug": "cargorunner-e-lastipyora",
+    "sku": "CR-01",
+    "description": "<p>Suunniteltu yrityksille ja kunnille. Tilaa jopa 200 kg kuormalle, mukana säädettävä laatikko ja sääsuojat.</p>",
+    "shortdescription": "Tehokas logistiikan sähkölastipyörä.",
+    "price": 4990.0,
+    "compare_at_price": 0,
+    "currency": "EUR",
+    "stock": 4,
+    "weightkg": 38.0,
+    "batterywh": 700,
+    "rangekmestimate": 110,
+    "categoryids": ["c-fleet", "c-cargo"],
+    "images": [
+      "/uploads/images/cargorunner.jpg"
+    ],
+    "attributes": {
+      "kuorma": "200 kg",
+      "akut": "2 x 350 Wh",
+      "varusteet": "LED-valaistus, GPS-seuranta"
+    },
+    "meta": {
+      "title": "CargoRunner yritysfloteille",
+      "description": "Lastipyörä, joka skaalautuu yritysten logistiikkaan."
+    },
+    "created_at": "2024-11-02T08:45:00Z",
+    "updated_at": "2025-01-05T10:15:00Z"
+  },
+  {
+    "id": "p-0003",
+    "name": "TrailFox Enduro E-MTB",
+    "slug": "trailfox-enduro-e-mtb",
+    "sku": "TF-ENDURO",
+    "description": "<p>180mm joustolla varustettu enduro-tykki. Fox Factory -iskarit ja SRAM AXS -vaihteisto.</p>",
+    "shortdescription": "Kilpatason sähköenduro reiteille ja bikeparkkeihin.",
+    "price": 6290.0,
+    "compare_at_price": 6890.0,
+    "currency": "EUR",
+    "stock": 2,
+    "weightkg": 24.8,
+    "batterywh": 630,
+    "rangekmestimate": 75,
+    "categoryids": ["c-mtb"],
+    "images": [
+      "/uploads/images/trailfox.jpg"
+    ],
+    "attributes": {
+      "jousto": "180 mm",
+      "renkaat": "Maxxis Minion DHF/DHR II",
+      "dropper": "RockShox Reverb AXS"
+    },
+    "meta": {
+      "title": "TrailFox Enduro sähkömaastopyörä",
+      "description": "Täysiverinen enduro-sähköpyörä aggressiiviseen ajoon."
+    },
+    "created_at": "2024-12-12T14:10:00Z",
+    "updated_at": "2025-01-04T14:55:00Z"
+  }
+]

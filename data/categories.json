@@ -1,0 +1,22 @@
+[
+  {
+    "id": "c-urban",
+    "name": "Kaupunkipyörät",
+    "description": "Kettereät ja tyylikkäät sähköpyörät työmatkoille ja kaupunkikäyttöön."
+  },
+  {
+    "id": "c-mtb",
+    "name": "Maastopyörät",
+    "description": "Jämerät sähkömaasturit enduro- ja trail-ajoon."
+  },
+  {
+    "id": "c-fleet",
+    "name": "Yritysflotit",
+    "description": "Räätälöidyt ratkaisut yritysten henkilöstölle ja logistiikkaan."
+  },
+  {
+    "id": "c-cargo",
+    "name": "Lastipyörät",
+    "description": "Suuret kuljetuskapasiteetit ja modulaariset tavaratilat."
+  }
+]
