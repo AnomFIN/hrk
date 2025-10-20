@@ -1,0 +1,23 @@
+{
+  "site_title": "Helsinki eBike-Service B2B",
+  "hero": {
+    "title": "Ketterät sähköpyöräratkaisut yrityksille",
+    "subtitle": "Räätälöidyt huoltosopimukset, leasing-paketit ja valmiit kalustot",
+    "image": "/uploads/images/hero-default.jpg",
+    "cta_text": "Tutustu kalustoon",
+    "cta_link": "/verkkokauppa"
+  },
+  "contact": {
+    "email": "huolto@hrk.fi",
+    "phone": "+358 44 123 4567",
+    "business_id": "3496925-8"
+  },
+  "payment": {
+    "methods": ["card", "invoice", "leasing"],
+    "show_installments": true
+  },
+  "seo_defaults": {
+    "meta_title": "Helsinki eBike-Service – sähköpyörähuollot ja flotit",
+    "meta_description": "Helsinki eBike-Service Oy tarjoaa yrityksille sähköpyörähuollot, leasing-kalustot ja myyntipalvelun."
+  }
+}

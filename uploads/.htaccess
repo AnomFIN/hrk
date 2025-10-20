@@ -1,0 +1,6 @@
+# Estetään PHP- ja muiden suoritettavien tiedostojen suoritus uploads-kansiossa
+<FilesMatch "\.(php|php5|phps|phtml|cgi|pl|exe|sh)$">
+  Order allow,deny
+  Deny from all
+</FilesMatch>
+Options -Indexes
