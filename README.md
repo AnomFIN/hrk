@@ -25,23 +25,44 @@ Automaattiset GitHub Actions -workflowt on poistettu, jotta ristiriitaiset asetu
 > **Huom.** Mikäli automaatio halutaan palauttaa, kannattaa aloittaa GitHubin virallisesta Pages-workflow-pohjasta ja varmistaa, ettei rinnakkaisia julkaisuja ole käynnissä.
 
 — AnomFIN | AnomTools
+
 # Helsinki eBike-Service Oy
 
 Moderni yhden sivun verkkosivusto Helsinki eBike-Service Oy:lle. Sivusto sisältää sähköpyörähuollon palvelukuvaukset, huoltopaketit sekä interaktiivisen verkkokauppakokemuksen, jossa voi koostaa ostoskorin ja jättää yhteydenottopyynnön.
 
-## Kehitysympäristö
+## Why this design
 
-Sivusto on rakennettu puhtaalla HTML-, CSS- ja JavaScript-toteutuksella ilman rakennustyökaluja. Riittää, että avaat `index.html`-tiedoston selaimessa.
+- Single-page arkkitehtuuri, jossa verkkokauppa avautuu overlayn päälle – navigointi on saumaton eikä erillistä `verkkokauppa.html`-tiedostoa tarvita.
+- jQuery-pohjaiset fade- ja scroll-animaatiot varmistavat, että siirtymät toimivat tasaisesti myös vanhemmissa selaimissa.
+- Ostoskori säilytetään `localStorage`-avaimessa (`helsinki-ebike-cart`), joten tuotetiedot pysyvät session yli ilman palvelinlogiikkaa.
+- Turvallinen oletus: ei evalia, ei dynaamisia skriptejä ja kaikki mail-/tel-linkit ovat suoraviivaisia.
+
+## Setup & local development
+
+1. Käynnistä kevyt palvelin projektin juuresta: `python3 -m http.server 4173`.
+2. Avaa selain ja siirry osoitteeseen `http://localhost:4173/index.html`.
+3. Muutosten aikana selain päivittyy automaattisesti; selainvälimuistin voi tyhjentää `Cmd+Shift+R` / `Ctrl+Shift+R`.
+
+### Komennot
+
+- `python3 -m http.server 4173` – palvelee staattisen sivuston paikallisesti.
+
+## Verification steps
+
+1. Avaa pääsivu ja varmista, että hero-osio ja mittarit animoituvat näkyviin.
+2. Klikkaa ylävalikon **Verkkokauppa**-painiketta: overlayn tulee fadeutua esiin, runkosivun häipyä ja ostoskorin pysyä tyhjänä.
+3. Lisää tuote koriin (esim. “Tenways CGO One”) ja tarkista, että laskuri päivittyy sekä navissa että kassapaneelissa.
+4. Sulje overlay `Sulje`-painikkeella tai Escillä – taustasivun tulee palautua kirkkaaksi ja fokus palata viimeksi käytettyyn elementtiin.
 
 ## Pääominaisuudet
 
 - Responsiivinen hero-osio, jossa yrityksen ydintiedot ja mittarit
 - Palvelu- ja huoltopakettikortit sähköpyörille ja yritysfloteille
-- Verkkokauppasektio, jossa on ostoskorilaskuri ja mahdollisuus poistaa tuotteita
+- Yhdistetty verkkokauppa-overlay, jossa on ostoskorilaskuri ja maksutavan valinta
 - Ajantasaiset yritystiedot (Y-tunnus 3496925-8, Aarteenetsijäntie 4 E, Helsinki)
 - Yhteydenottolomake ja call-to-action -painikkeet nopeaan kontaktinottoon
 
-## Admin-hallintapaneeli (uusi)
+## Admin-hallintapaneeli (PHP)
 
 AnomFINin HRK Admin -kokonaisuus mahdollistaa koko sivuston sisällön, tuotteiden ja tilausten hallinnan ilman tietokantaa. Ratkaisu toimii puhtaasti JSON-tiedostojen varassa ja soveltuu sekä kehitys- että tuotantokäyttöön pienillä ympäristövaatimuksilla.
 
@@ -94,6 +115,8 @@ logs/
 4. Päivitä hero-asetukset ja SEO-tiedot ja varmista muutokset `data/settings.json` -tiedostossa.
 5. Muuta tilauksen tila Tilaukset-välilehdeltä ja tarkista merkintä audit-logista.
 
-> **Huomio**: Jos haluat siirtyä JSON-varastosta tietokantaan, suosittelemme luomaan `DataStorage`-rajapinnan ja toteuttamaan vaihtoehtoisen PDO/Doctrine -backingin. Adminin API-kerros on jo valmiiksi erotettu tiedostokutsujen taakse.
+## TODO – seuraavat askeleet
 
-— AnomFIN | Jugi@AnomFIN
+- Lisää tuotteiden haku ja suodatuksen muistaminen `sessionStorage`-avaimella.
+- Kytke kassapainikkeisiin webhook-pohjainen maksulinkin luonti (esim. Stripe Payment Links API).
+- Toteuta a11y-audit (esim. Pa11y CLI) osaksi julkaisuprosessia.
