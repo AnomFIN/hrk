@@ -1,7 +1,56 @@
-const nav = document.querySelector('.nav');
-const navToggle = document.querySelector('.nav__toggle');
-const navLinks = document.querySelector('.nav__links');
-const navAnchorLinks = document.querySelectorAll('.nav__link[data-scroll]');
+// hrk — Torque meets telemetry.
+const siteShell = document.querySelector('[data-site-shell]');
+const navElements = Array.from(document.querySelectorAll('.nav'));
+const navControllers = navElements
+    .map((navElement) => {
+        const toggle = navElement.querySelector('.nav__toggle');
+        const links = navElement.querySelector('.nav__links');
+
+        if (!toggle || !links) {
+            return null;
+        }
+
+        const setState = (isOpen) => {
+            links.classList.toggle('nav__links--open', isOpen);
+            toggle.classList.toggle('nav__toggle--active', isOpen);
+            toggle.setAttribute('aria-expanded', String(isOpen));
+        };
+
+        setState(false);
+
+        toggle.addEventListener('click', () => {
+            setState(!links.classList.contains('nav__links--open'));
+        });
+
+        links.addEventListener('click', (event) => {
+            if (!event.target.matches('a, button')) {
+                return;
+            }
+
+            setState(false);
+
+            if (!navElement.closest('[data-storefront-layer]')) {
+                toggle.focus();
+            }
+        });
+
+        return {
+            element: navElement,
+            toggle,
+            links,
+            setState,
+            isOpen: () => links.classList.contains('nav__links--open'),
+        };
+    })
+    .filter(Boolean);
+
+const primaryNavController =
+    navControllers.find(({ element }) => element.closest('[data-site-shell]')) ?? navControllers[0] ?? null;
+
+const nav = primaryNavController?.element ?? null;
+const navToggle = primaryNavController?.toggle ?? null;
+const navLinks = primaryNavController?.links ?? null;
+const navAnchorLinks = nav ? nav.querySelectorAll('.nav__link[data-scroll]') : [];
 const revealElements = document.querySelectorAll('[data-reveal]');
 const floatingCta = document.querySelector('[data-floating-cta]');
 const floatingOrigin = document.querySelector('[data-floating-origin]');
@@ -19,33 +68,162 @@ const prefersReducedMotion = window.matchMedia
     ? window.matchMedia('(prefers-reduced-motion: reduce)')
     : { matches: false };
 
-const isNavOpen = () => navLinks?.classList.contains('nav__links--open') ?? false;
+const isNavOpen = () => primaryNavController?.isOpen() ?? false;
 
 const setNavState = (isOpen) => {
-    if (!navLinks || !navToggle) {
-        return;
-    }
-
-    navLinks.classList.toggle('nav__links--open', isOpen);
-    navToggle.classList.toggle('nav__toggle--active', isOpen);
-    navToggle.setAttribute('aria-expanded', String(isOpen));
-};
-
-const toggleNav = () => {
-    setNavState(!isNavOpen());
+    primaryNavController?.setState(isOpen);
 };
 
 const closeNav = () => setNavState(false);
 
-setNavState(false);
+const $ = window.jQuery ?? null;
+const storeLayer = document.querySelector('[data-storefront-layer]');
+const storeSurface = storeLayer?.querySelector('.storefront-layer__surface');
+const storeOpeners = document.querySelectorAll('[data-storefront-open]');
+const storeClosers = document.querySelectorAll('[data-storefront-close]');
+const storeTriggers = document.querySelectorAll('[data-storefront-trigger]');
 
-navToggle?.addEventListener('click', toggleNav);
+let restoreFocusElement = null;
+let selectStoreProduct = null;
 
-navLinks?.addEventListener('click', (event) => {
-    if (event.target.matches('a')) {
-        closeNav();
-        navToggle?.focus();
+const isStoreOpen = () => document.body.classList.contains('store-mode');
+
+const dimSiteShell = () => {
+    if (!siteShell) {
+        return;
     }
+
+    siteShell.classList.add('is-muted');
+
+    if ($) {
+        $(siteShell).stop(true, true).animate({ opacity: 0.12 }, 260, 'swing');
+    } else {
+        siteShell.style.opacity = '0.12';
+    }
+};
+
+const undimSiteShell = () => {
+    if (!siteShell) {
+        return;
+    }
+
+    const restoreOpacity = () => {
+        siteShell.classList.remove('is-muted');
+        siteShell.style.opacity = '';
+    };
+
+    if ($) {
+        $(siteShell).stop(true, true).animate({ opacity: 1 }, 240, 'swing', restoreOpacity);
+    } else {
+        restoreOpacity();
+    }
+};
+
+const scrollStorefrontTo = (targetId) => {
+    if (!storeSurface || !targetId) {
+        return;
+    }
+
+    const targetElement = document.getElementById(targetId);
+    if (!targetElement) {
+        return;
+    }
+
+    const offset = Math.max(targetElement.offsetTop - 24, 0);
+
+    if ($) {
+        $(storeSurface).stop(true, true).animate({ scrollTop: offset }, 360, 'swing');
+    } else {
+        storeSurface.scrollTo({ top: offset, behavior: 'smooth' });
+    }
+};
+
+const openStorefront = ({ targetId, productId } = {}) => {
+    if (!storeLayer) {
+        return;
+    }
+
+    const resolvedTarget = targetId || 'storefront-mallisto';
+
+    if (isStoreOpen()) {
+        if (productId && typeof selectStoreProduct === 'function') {
+            selectStoreProduct(productId);
+        }
+        scrollStorefrontTo(resolvedTarget);
+        return;
+    }
+
+    restoreFocusElement = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    document.body.classList.add('store-mode');
+    storeLayer.setAttribute('aria-hidden', 'false');
+    dimSiteShell();
+
+    const finalize = () => {
+        storeSurface?.focus({ preventScroll: true });
+        scrollStorefrontTo(resolvedTarget);
+        if (productId && typeof selectStoreProduct === 'function') {
+            selectStoreProduct(productId);
+        }
+    };
+
+    if ($) {
+        $(storeLayer)
+            .stop(true, true)
+            .css('display', 'flex')
+            .hide()
+            .fadeIn(320, 'swing', finalize);
+    } else {
+        storeLayer.style.display = 'flex';
+        finalize();
+    }
+};
+
+const closeStorefront = () => {
+    if (!storeLayer || !isStoreOpen()) {
+        return;
+    }
+
+    document.body.classList.remove('store-mode');
+
+    const finalize = () => {
+        storeLayer.setAttribute('aria-hidden', 'true');
+        if (restoreFocusElement) {
+            restoreFocusElement.focus({ preventScroll: true });
+        }
+        restoreFocusElement = null;
+    };
+
+    if ($) {
+        $(storeLayer)
+            .stop(true, true)
+            .fadeOut(240, 'swing', () => {
+                $(storeLayer).css('display', 'none');
+                finalize();
+            });
+    } else {
+        storeLayer.style.display = 'none';
+        finalize();
+    }
+
+    undimSiteShell();
+};
+
+storeOpeners.forEach((opener) => {
+    opener.addEventListener('click', (event) => {
+        const rawTarget = opener.getAttribute('data-scroll') ?? opener.getAttribute('href');
+        const productId = opener.getAttribute('data-storefront-product') ?? undefined;
+        const targetId = rawTarget && rawTarget.startsWith('#') ? rawTarget.slice(1) : rawTarget;
+
+        event.preventDefault();
+        openStorefront({ targetId, productId });
+    });
+});
+
+storeClosers.forEach((closer) => {
+    closer.addEventListener('click', (event) => {
+        event.preventDefault();
+        closeStorefront();
+    });
 });
 
 const updateNavOnScroll = () => {
@@ -148,7 +326,18 @@ window.addEventListener('resize', () => {
 });
 
 document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && isNavOpen()) {
+    if (event.key !== 'Escape') {
+        return;
+    }
+
+    if (isStoreOpen()) {
+        event.preventDefault();
+        closeStorefront();
+        return;
+    }
+
+    if (isNavOpen()) {
+        event.preventDefault();
         closeNav();
         navToggle?.focus();
     }
@@ -385,7 +574,6 @@ updateCartDisplays();
 
 const basePageTitle = document.title;
 const storefrontElement = document.querySelector('[data-storefront]');
-const storeTriggers = document.querySelectorAll('[data-storefront-trigger]');
 const liveStatusElement = document.querySelector('[data-live-status]');
 
 const updateLiveStatus = (message) => {
@@ -744,24 +932,42 @@ if (storefrontElement) {
         });
     });
 
-    storeTriggers.forEach((trigger) => {
-        trigger.addEventListener('click', (event) => {
-            const targetId = trigger.getAttribute('data-scroll');
-            if (!targetId) {
-                return;
-            }
+    const handleStorefrontTrigger = (trigger, event) => {
+        const rawTarget = trigger.getAttribute('data-scroll') ?? trigger.getAttribute('href');
+        const targetId = rawTarget && rawTarget.startsWith('#') ? rawTarget.slice(1) : rawTarget;
+        const productId = trigger.getAttribute('data-storefront-product') ?? undefined;
 
+        if (!targetId && !productId) {
+            return;
+        }
+
+        if (!isStoreOpen()) {
             event.preventDefault();
-            const targetElement = document.getElementById(targetId);
-            if (targetElement) {
-                targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
+            openStorefront({ targetId, productId });
+            return;
+        }
 
-            if (targetId === 'checkout') {
+        if (productId) {
+            selectProduct(productId);
+        }
+
+        if (targetId) {
+            event.preventDefault();
+            scrollStorefrontTo(targetId);
+
+            if (targetId === 'storefront-checkout') {
                 highlightCheckout();
             }
+        }
+    };
+
+    storeTriggers.forEach((trigger) => {
+        trigger.addEventListener('click', (event) => {
+            handleStorefrontTrigger(trigger, event);
         });
     });
+
+    selectStoreProduct = selectProduct;
 
     updateCategorySelection();
     refreshProductList();
