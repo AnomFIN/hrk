@@ -516,9 +516,9 @@
                     <span></span>
                     <span></span>
                 </button>
-                <ul class="nav__links" id="store-nav-menu">
-                    <li><a class="nav__link nav__link--pill" href="#" data-scroll="storefront-mallisto" data-storefront-trigger>Mallisto</a></li>
-                    <li><a class="nav__link nav__link--pill" href="#" data-scroll="storefront-checkout" data-storefront-trigger>Kassa</a></li>
+                <ul class="nav__links" id="store-nav-menu" role="tablist">
+                    <li><a class="nav__link nav__link--pill is-active" href="#" role="tab" aria-selected="true" data-storefront-tab="mallisto" data-scroll="storefront-mallisto" data-storefront-trigger>Mallisto</a></li>
+                    <li><a class="nav__link nav__link--pill" href="#" role="tab" aria-selected="false" data-storefront-tab="checkout" data-scroll="storefront-checkout" data-storefront-trigger>Kassa</a></li>
                     <li class="nav__cart">
                         <span class="nav__link nav__link--cart">
                             <span>Ostoskorissa</span>
@@ -532,7 +532,7 @@
                 <div>
                     <span class="store-header__badge">Signature Experience • AnomFIN</span>
                     <h1>Curated eBike Drop 2024</h1>
-                    <p>Jugi@AnomFIN tiimi toimittaa yrityksille hiilineutraalin sähköpyöräkaluston concierge-palveluna. Valitse malli, sovitaan toimitus ja viimeistele verkkomaksu yhdestä näkymästä.</p>
+                    <p>Mallisto on esivalittu Specialized-, Trek-, Riese &amp; Müller-, Gazelle- ja Giant -kumppanien huippumalleista. Aloita mallistosta ja siirry kassalle, kun kokoonpano on valmis.</p>
                 </div>
                 <div class="store-header__meta">
                     <span>Live-tilausstatus</span>
@@ -540,18 +540,31 @@
                 </div>
             </header>
 
-            <main class="storefront" data-storefront>
-                <aside class="storefront__panel storefront__panel--nav">
+            <div class="storefront__steps" aria-hidden="true">
+                <div class="storefront__step storefront__step--active">Mallisto</div>
+                <div class="storefront__step">Kassa</div>
+            </div>
+
+            <main class="storefront storefront--mallisto" data-storefront data-storefront-root>
+                <aside class="storefront__panel storefront__panel--nav" data-storefront-view="mallisto" aria-hidden="false">
                     <div class="storefront__panel-header">
-                        <h2>Mallistot</h2>
-                        <p>Suodata kuratoidut mallit käyttötarkoituksen mukaan. Jokainen tuote sisältää AnomFIN elinkaarituen.</p>
+                        <h2>Mallisto</h2>
+                        <p class="storefront__panel-lead">Kuratointi vastaa etusivulla esiteltyjä valmistajia. Jokainen malli on valittu yritys- ja kuntakäyttöön AnomFIN Concierge -palvelun kanssa.</p>
+                        <ul class="storefront__brand-list" role="list">
+                            <li>Specialized</li>
+                            <li>Trek</li>
+                            <li>Riese &amp; Müller</li>
+                            <li>Gazelle</li>
+                            <li>Giant</li>
+                        </ul>
                     </div>
                     <div class="storefront__filters" role="group" aria-label="Suodata mallistoa">
                         <button class="storefront__filter is-active" type="button" data-category-button="all">Kaikki</button>
-                        <button class="storefront__filter" type="button" data-category-button="urban">Urban</button>
+                        <button class="storefront__filter" type="button" data-category-button="executive">Executive</button>
+                        <button class="storefront__filter" type="button" data-category-button="trail">Trail</button>
                         <button class="storefront__filter" type="button" data-category-button="cargo">Cargo</button>
-                        <button class="storefront__filter" type="button" data-category-button="comfort">Comfort</button>
-                        <button class="storefront__filter" type="button" data-category-button="design">Design</button>
+                        <button class="storefront__filter" type="button" data-category-button="commuter">Commuter</button>
+                        <button class="storefront__filter" type="button" data-category-button="utility">Utility</button>
                     </div>
                     <div class="storefront__divider"></div>
                     <div class="storefront__product-list" data-product-list role="list" aria-label="Tuotelista"></div>
@@ -561,7 +574,7 @@
                     </div>
                 </aside>
 
-                <section class="storefront__panel storefront__panel--spotlight" id="storefront-mallisto">
+                <section class="storefront__panel storefront__panel--spotlight" id="storefront-mallisto" data-storefront-view="mallisto" aria-hidden="false">
                     <div class="storefront__gallery">
                         <div class="storefront__badge" data-detail-badge></div>
                         <img class="storefront__image" src="" alt="" data-detail-image>
@@ -598,7 +611,70 @@
                     </article>
                 </section>
 
-                <aside class="storefront__panel storefront__panel--summary" id="storefront-checkout" data-store>
+                <section class="storefront__panel storefront__panel--checkout" id="storefront-checkout" data-storefront-view="checkout" hidden aria-hidden="true">
+                    <div class="storefront__panel-header">
+                        <h2>Kassa</h2>
+                        <p>Viimeistele yritys- tai kuntatilauksesi. Tiedot salataan ja välitetään AnomFIN Concierge -palvelulle.</p>
+                    </div>
+                    <form class="checkout-form" data-checkout-form>
+                        <div class="checkout-form__grid">
+                            <label class="checkout-form__field">
+                                <span>Yritys / organisaatio</span>
+                                <input type="text" name="company" required maxlength="80" autocomplete="organization" data-auto-focus>
+                            </label>
+                            <label class="checkout-form__field">
+                                <span>Y-tunnus</span>
+                                <input type="text" name="businessId" required maxlength="20" pattern="[0-9]{7}-[0-9]" autocomplete="off" placeholder="1234567-8">
+                                <small>Muoto: 1234567-8</small>
+                            </label>
+                            <label class="checkout-form__field">
+                                <span>Yhteyshenkilö</span>
+                                <input type="text" name="contact" required maxlength="60" autocomplete="name">
+                            </label>
+                            <label class="checkout-form__field">
+                                <span>Sähköposti</span>
+                                <input type="email" name="email" required maxlength="120" autocomplete="email" inputmode="email">
+                            </label>
+                            <label class="checkout-form__field">
+                                <span>Puhelin</span>
+                                <input type="tel" name="phone" required maxlength="30" inputmode="tel" autocomplete="tel">
+                            </label>
+                            <label class="checkout-form__field">
+                                <span>Toimituskunta</span>
+                                <input type="text" name="city" required maxlength="50" autocomplete="address-level2">
+                            </label>
+                            <label class="checkout-form__field checkout-form__field--span">
+                                <span>Toimitusaikatoive</span>
+                                <select name="deliveryWindow" required>
+                                    <option value="">Valitse</option>
+                                    <option value="2-4 weeks">2–4 viikkoa</option>
+                                    <option value="4-6 weeks">4–6 viikkoa</option>
+                                    <option value="custom">Sovitaan erikseen</option>
+                                </select>
+                            </label>
+                            <label class="checkout-form__field checkout-form__field--span">
+                                <span>Lisätiedot</span>
+                                <textarea name="notes" rows="3" maxlength="400" placeholder="Kaluston käyttötarkoitus, varustelu, toimitusrajaukset..."></textarea>
+                            </label>
+                        </div>
+                        <label class="checkout-form__consent">
+                            <input type="checkbox" name="consent" value="yes" required>
+                            <span>Hyväksyn, että tietoni tallennetaan AnomFIN Concierge -palveluun tilausta varten.</span>
+                        </label>
+                        <div class="checkout-form__actions">
+                            <button class="btn btn--ghost" type="button" data-storefront-back="mallisto">Takaisin mallistoon</button>
+                            <button class="btn btn--primary btn--xl" type="submit">Lähetä tilauspyyntö</button>
+                        </div>
+                        <div class="checkout-form__errors" data-form-errors role="alert" aria-live="polite"></div>
+                    </form>
+                    <div class="checkout-form__confirmation" data-checkout-confirmation hidden>
+                        <h3>Tilauksen vastaanotto onnistui</h3>
+                        <p>AnomFIN Concierge kuittaa tilauksen muutamassa minuutissa ja vahvistaa toimitusaikataulun.</p>
+                        <dl data-checkout-summary></dl>
+                    </div>
+                </section>
+
+                <aside class="storefront__panel storefront__panel--summary" id="storefront-order" data-store>
                     <div class="storefront__summary-header">
                         <h2>Ostoskorisi</h2>
                         <p data-cart-empty>Lisää tuotteita koriin nähdäksesi tarjouksen erittelyn.</p>
@@ -644,6 +720,6 @@
     </div>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-3fpCfGo3nKpSybLu7saEh8GZ4HzyBbs596k8ZZrPmPo=" crossorigin="anonymous"></script>
-    <script src="assets/js/main.js"></script>
+    <script type="module" src="assets/js/main.js"></script>
 </body>
 </html>

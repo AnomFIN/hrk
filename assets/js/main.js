@@ -1,4 +1,5 @@
 // hrk — Torque meets telemetry.
+import { createStorefrontViewState } from './storefront-view.js';
 const siteShell = document.querySelector('[data-site-shell]');
 const navElements = Array.from(document.querySelectorAll('.nav'));
 const navControllers = navElements
@@ -77,14 +78,105 @@ const setNavState = (isOpen) => {
 const closeNav = () => setNavState(false);
 
 const $ = window.jQuery ?? null;
+const storeRoot = document.querySelector('[data-storefront-root]');
+const storeTabs = document.querySelectorAll('[data-storefront-tab]');
+const storeViewElements = document.querySelectorAll('[data-storefront-view]');
+const storeSteps = document.querySelectorAll('.storefront__step');
+const storeBackButtons = document.querySelectorAll('[data-storefront-back]');
 const storeLayer = document.querySelector('[data-storefront-layer]');
 const storeSurface = storeLayer?.querySelector('.storefront-layer__surface');
 const storeOpeners = document.querySelectorAll('[data-storefront-open]');
 const storeClosers = document.querySelectorAll('[data-storefront-close]');
 const storeTriggers = document.querySelectorAll('[data-storefront-trigger]');
+const storeCheckoutForm = document.querySelector('[data-checkout-form]');
+const checkoutErrorBox = storeCheckoutForm?.querySelector('[data-form-errors]') ?? null;
+const checkoutConfirmation = document.querySelector('[data-checkout-confirmation]');
+const checkoutSummary = document.querySelector('[data-checkout-summary]');
+const checkoutAutoFocusField = storeCheckoutForm?.querySelector('[data-auto-focus]') ?? null;
 
 let restoreFocusElement = null;
 let selectStoreProduct = null;
+let storefrontViewController = null;
+
+const viewTargets = {
+    mallisto: 'storefront-mallisto',
+    checkout: 'storefront-checkout',
+};
+
+const viewNameOrder = Object.keys(viewTargets);
+
+const updateStorefrontSteps = (activeView) => {
+    viewNameOrder.forEach((viewName, index) => {
+        const stepElement = storeSteps[index];
+        if (stepElement) {
+            stepElement.classList.toggle('storefront__step--active', viewName === activeView);
+        }
+    });
+};
+
+const renderCheckoutErrors = (messages) => {
+    if (!checkoutErrorBox) {
+        return;
+    }
+
+    checkoutErrorBox.classList.toggle('is-visible', Boolean(messages.length));
+
+    if (!messages.length) {
+        checkoutErrorBox.innerHTML = '';
+        return;
+    }
+
+    const title = document.createElement('strong');
+    title.textContent = 'Korjaa seuraavat tiedot:';
+
+    const list = document.createElement('ul');
+    messages.forEach((message) => {
+        const item = document.createElement('li');
+        item.textContent = message;
+        list.appendChild(item);
+    });
+
+    checkoutErrorBox.innerHTML = '';
+    checkoutErrorBox.append(title, list);
+};
+
+const handleStorefrontViewChange = (view) => {
+    updateStorefrontSteps(view);
+
+    if (view === 'checkout') {
+        window.requestAnimationFrame(() => {
+            checkoutAutoFocusField?.focus({ preventScroll: true });
+        });
+    } else {
+        renderCheckoutErrors([]);
+    }
+};
+
+if (storeRoot) {
+    storefrontViewController = createStorefrontViewState({
+        root: storeRoot,
+        tabs: storeTabs,
+        views: storeViewElements,
+        defaultView: 'mallisto',
+        onViewChange: handleStorefrontViewChange,
+    });
+
+    storefrontViewController?.init();
+} else {
+    handleStorefrontViewChange('mallisto');
+}
+
+const syncStorefrontViewForTarget = (targetId) => {
+    if (!targetId) {
+        return;
+    }
+
+    if (targetId === viewTargets.checkout) {
+        storefrontViewController?.setView('checkout');
+    } else if (targetId === viewTargets.mallisto) {
+        storefrontViewController?.setView('mallisto');
+    }
+};
 
 const isStoreOpen = () => document.body.classList.contains('store-mode');
 
@@ -144,6 +236,8 @@ const openStorefront = ({ targetId, productId } = {}) => {
     }
 
     const resolvedTarget = targetId || 'storefront-mallisto';
+
+    syncStorefrontViewForTarget(resolvedTarget);
 
     if (isStoreOpen()) {
         if (productId && typeof selectStoreProduct === 'function') {
@@ -380,7 +474,7 @@ const parseCartState = () => {
                     Number.isFinite(item.quantity) &&
                     item.quantity > 0,
             );
-    } catch (error) {
+    } catch {
         return [];
     }
 };
@@ -394,12 +488,24 @@ const saveCartState = () => {
 
     try {
         window.localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cartState));
-    } catch (error) {
+    } catch {
         // ignore storage errors silently
     }
 };
 
 const getCartItemCount = () => cartState.reduce((total, item) => total + item.quantity, 0);
+const getCartSubtotal = () => cartState.reduce((total, item) => total + item.price * item.quantity, 0);
+
+const sanitizeInput = (value) => String(value ?? '').replace(/\s+/g, ' ').trim();
+const normalizeBusinessId = (value) => sanitizeInput(value).replace(/[^0-9-]/g, '');
+const normalizePhone = (value) => sanitizeInput(value).replace(/[^0-9+]/g, '');
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+const deliveryWindowLabels = {
+    '2-4 weeks': '2–4 viikkoa',
+    '4-6 weeks': '4–6 viikkoa',
+    custom: 'Sovitaan erikseen',
+};
 
 const updateNavCartCounters = () => {
     const count = getCartItemCount();
@@ -606,108 +712,56 @@ if (storefrontElement) {
 
     const storeProducts = [
         {
-            id: 'tenways-cgo-one',
-            name: 'Tenways CGO One',
-            category: 'urban',
-            categoryLabel: 'Urban',
-            badge: 'Urban Launch 2024',
-            price: 2899,
-            lead: 'Kevyt hiilikuiturunko, hihnaveto ja 90 km kantama. Sisältää AnomFIN Launch Care 299 -palvelun.',
-            tagline: 'Kevyt hiilikuiturunko • 90 km kantama',
+            id: 'specialized-turbo-vado-igh',
+            name: 'Specialized Turbo Vado 5.0 IGH',
+            category: 'executive',
+            categoryLabel: 'Executive',
+            badge: 'Flagship Commuter',
+            price: 5890,
+            lead: 'Specializedin yritysflotteihin optimoitu Vado IGH. Mission Control -telemetria, automaattinen vaihde ja 710 Wh akku.',
+            tagline: 'Mission Control • IGH-vaihteisto',
             features: [
-                'Gates CDX -hihnaveto ja hiilikuiturunko luottokäyttöön',
-                'Mission Control -seuranta ja varashälytin etäkäytöllä',
-                'Premium-akku 36 V / 252 Wh – vaihto 24 h palvelulupauksella',
+                'Automatisoitu IGH-vaihteisto ja Gates Carbon Drive -hihnaveto',
+                'Specialized Mission Control -telemetria ja geofencing',
+                '710 Wh akku ja 4A pikalataus • 150 km toimintamatka',
             ],
             packages: [
-                'Launch Care 10 pyörälle • 790 € / kuukausi',
-                'Telematiikka & kuljettajaraportointi • 39 € / ajoneuvo',
-                'Winter Ready -varustepaketti • 420 €',
+                'Executive Fit -sovituskäynti • sisältyy',
+                'Fleet Care 36 kk • 69 € / kk',
+                'DualBattery-integrointi 710 Wh + 710 Wh • 1 190 €',
             ],
-            range: 'Kantama 90 km • 35 Nm vääntö',
-            availability: 'Saatavuus: Helsinki Fulfillment 6 kpl',
-            support: 'Launch Care 299 sisältyy • 24 h käyttöönotto',
-            status: 'Urban varasto • 6 pyörää valmiina toimitukseen',
+            range: 'Kantama 150 km • 710 Wh akku',
+            availability: 'Saatavuus: Specialized Europe Hub 12 kpl',
+            support: 'Fleet Care 36 kk sisältyy • Concierge käyttöönotto',
+            status: 'Executive-linjasto • 12 yksikköä varattavissa',
             image: 'https://images.unsplash.com/photo-1529429617124-aee711a0fb7c?auto=format&fit=crop&w=1400&q=80',
-            imageAlt: 'Tenways CGO One sähköpyörä showroomissa',
+            imageAlt: 'Specialized Turbo Vado sähköpyörä lasiseinäisessä showroomissa',
         },
         {
-            id: 'specialized-turbo-como',
-            name: 'Specialized Turbo Como IGH',
-            category: 'comfort',
-            categoryLabel: 'Comfort',
-            badge: 'Executive Fleet',
-            price: 3990,
-            lead: 'Älykäs näytöllinen ajotuki, sisäinen johdotus ja integroidut valot. Premium Pro Active 699 -huoltotaso.',
-            tagline: 'Auto Shift IGH • Älykäs ajotuki',
+            id: 'trek-rail-98',
+            name: 'Trek Rail 9.8 GX',
+            category: 'trail',
+            categoryLabel: 'Trail',
+            badge: 'Carbon Trail Pro',
+            price: 7690,
+            lead: 'Trek Rail 9.8 GX tarjoaa hiilikuiturungon, Bosch Smart System -telemetrian ja yritysfloteille varatun toimituskiintiön.',
+            tagline: 'OCLV Carbon • Bosch Smart System',
             features: [
-                'Automatisoitu IGH-vaihteisto ja 90 Nm tukimoottori',
-                'Custom-tasapainotetut akkumoduulit 710 Wh kapasiteetilla',
-                'Connected Service -portaali yritysflotille',
+                'OCLV Mountain Carbon -runko ja 85 Nm Performance CX -moottori',
+                '160/150 mm jousitus ja AirWiz-painevalvonta tekniseen käyttöön',
+                'Bosch Smart System + Trek Central -raportointi fleet-valvontaan',
             ],
             packages: [
-                'Executive Comfort -paketti (nahkasatulat & lokasuojat) • 290 €',
-                'Premium Pro Active 699 • sis. 36 kk huoltosopimus',
-                'Työsuhdepyörä leasing -sopimus alk. 119 € / kk',
+                'Trail Support 36 kk • 89 € / kk',
+                'Teknisen henkilöstön koulutuspaketti • 640 €',
+                'Range Extender 750 Wh • 790 €',
             ],
-            range: 'Kantama 130 km • 710 Wh akku',
-            availability: 'Saatavuus: Euroopan keskusvarasto 12 kpl',
-            support: 'Premium Pro Active 699 sisältyy • Concierge-asennus',
-            status: 'Comfort toimituslinja • varmistettu 7 pv toimitus',
-            image: 'https://images.unsplash.com/photo-1523419409543-0c1df022bdd9?auto=format&fit=crop&w=1400&q=80',
-            imageAlt: 'Specialized Turbo Como sähköpyörä urbaanissa miljöössä',
-        },
-        {
-            id: 'tern-gsd-performance',
-            name: 'Tern GSD Performance Duo',
-            category: 'cargo',
-            categoryLabel: 'Cargo',
-            badge: 'Logistics Workhorse',
-            price: 5490,
-            lead: 'Yritystason jakelupyörä kaksoisakkujärjestelmällä ja Bosch Cargo Line -moottorilla.',
-            tagline: 'Bosch Cargo Line • Kaksoisakku 1000 Wh',
-            features: [
-                'Kantavuus 200 kg ja modulaarinen kuormateline',
-                'Bosch Cargo Line Gen4 85 Nm moottori',
-                'Hydrauliset Magura MT5e -jarrut 4-mäntätekniikalla',
-            ],
-            packages: [
-                'Fleet Signature 1499 • sisältää koulutuksen & telematiikan',
-                'Last Mile -lisävarustesetti • 610 €',
-                'Huoltosopimus 36 kk • 49 € / kk',
-            ],
-            range: 'Kantama 160 km • DualBattery 1000 Wh',
-            availability: 'Saatavuus: Nordic Logistics Hub 4 kpl',
-            support: 'Fleet Signature 1499 sisältyy • 48 h huoltolupaus',
-            status: 'Cargo fulfillment • 4 yksikköä tuotantolinjalla',
-            image: 'https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=1400&q=80',
-            imageAlt: 'Tern GSD kuljetussähköpyörä ulkona',
-        },
-        {
-            id: 'vanmoof-s5',
-            name: 'VanMoof S5',
-            category: 'design',
-            categoryLabel: 'Design',
-            badge: 'Design Icon',
-            price: 3690,
-            lead: 'Integroitu varashälytin ja automaattinen vaihteisto. Sisältää kahden vuoden AnomFIN-takuun.',
-            tagline: 'Stealth-design • Integroitu hälytin',
-            features: [
-                'Halo LED -valosignatuurit ja automaattinen vaihteisto',
-                'Theft Defense -palvelu ja GPS-seuranta',
-                'Hydrauliset levyjarrut ja älykkäät turvamoodit',
-            ],
-            packages: [
-                'Design Concierge -personointi • 180 €',
-                'Kaupunkihuolto 24 kk • 32 € / kk',
-                'Kasko & vastuuvakuutus • 19 € / kk',
-            ],
-            range: 'Kantama 150 km • 68 Nm automaattinen boost',
-            availability: 'Saatavuus: Launch Studio Amsterdam 8 kpl',
-            support: 'AnomFIN Design Guarantee 24 kk sisältyy',
-            status: 'Design studio • 8 yksikköä varattavissa nyt',
-            image: 'https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?auto=format&fit=crop&w=1400&q=80',
-            imageAlt: 'VanMoof S5 sähköpyörä minimalistisessa studiossa',
+            range: 'Kantama 120 km • 750 Wh akku',
+            availability: 'Saatavuus: Trek Euro Distribution 7 kpl',
+            support: 'Trail Support 36 kk sisältyy • 72 h varaosalogistiikka',
+            status: 'Trail lineup • 7 pyörää vahvistettuna 2024 toimituksiin',
+            image: 'https://images.unsplash.com/photo-1509099380898-5c9af0b64081?auto=format&fit=crop&w=1400&q=80',
+            imageAlt: 'Trek Rail sähkömaastopyörä vuoristopolulla',
         },
         {
             id: 'riese-muller-load-75',
@@ -715,51 +769,77 @@ if (storefrontElement) {
             category: 'cargo',
             categoryLabel: 'Cargo',
             badge: 'Utility Elite',
-            price: 7290,
-            lead: 'Saksalainen premium-lastauspyörä rohkeaan kunnalliskäyttöön. Fox Float -jousitus ja ABS-jarrut.',
-            tagline: 'ABS-jarrut • Fox Float -jousitus',
+            price: 7890,
+            lead: 'Saksalainen cargo-työjuhta kunnalliskäyttöön – ABS-jarrut, Fox Float -jousitus ja DualBattery 1125 Wh.',
+            tagline: 'ABS • DualBattery 1125 Wh',
             features: [
-                'ABS-levyjarrut ja korkeasäiliöinen kuormatila',
-                'Bosch Cargo Line Speed 85 Nm moottori',
-                'High-Sided Walls -paketti ja säänkestävä kate',
+                'Bosch Cargo Line Speed 85 Nm + ABS-levyjarrut',
+                'High-Sided Walls PRO ja Weather Cover PRO -kuormaratkaisu',
+                'FOX Float 34 Performance -etuhaarukka',
             ],
             packages: [
-                'Kunnalliskäyttö -konversio • 980 €',
-                'Fleet Control -telemetria • 69 € / kk',
+                'Municipal Duty -varustelu • 1 120 €',
+                'Fleet Control telemetria • 69 € / kk',
                 'Huoltotakuu 48 kk • 79 € / kk',
             ],
             range: 'Kantama 120 km • DualBattery 1125 Wh',
-            availability: 'Saatavuus: Saksa tehdaslinja 5 kpl',
-            support: 'Concierge Logistics -paketti sisältyy',
+            availability: 'Saatavuus: Riese & Müller Werk 5 kpl',
+            support: 'Concierge Logistics sisältyy • 48 h vaste',
             status: 'Tehdaslinja • 5 yksikköä varattavissa tuotannosta',
             image: 'https://images.unsplash.com/photo-1616530940355-351fabd9524b?auto=format&fit=crop&w=1400&q=80',
-            imageAlt: 'Riese & Müller Load 75 Touring sähkörahtipyörä',
+            imageAlt: 'Riese & Müller Load 75 cargo-sähköpyörä varustettuna',
         },
         {
             id: 'gazelle-ultimate-c380',
             name: 'Gazelle Ultimate C380 HMB',
-            category: 'comfort',
-            categoryLabel: 'Comfort',
+            category: 'commuter',
+            categoryLabel: 'Commuter',
             badge: 'Commuter Premium',
             price: 3490,
-            lead: 'Enviolo-vaihteisto ja hihnaveto tekevät työmatkoista saumattomia. Sisältää yritysleasing-konfiguraation.',
-            tagline: 'Enviolo Trekking • Gates-hihnaveto',
+            lead: 'Gazellen Enviolo-hihnavetoinen commuter tekee työmatkoista saumattomia ja on valmis leasing-malliin.',
+            tagline: 'Enviolo + Gates • 625 Wh',
             features: [
-                'Enviolo-vaihteisto portaattomalla säädöllä',
-                'Bosch Performance Line 75 Nm',
-                'Integroitu 625 Wh akku ja Supernova-valot',
+                'Enviolo Trekking -vaihteisto portaattomalla säädöllä',
+                'Bosch Performance Line 75 Nm ja 625 Wh PowerTube',
+                'Integroitu Supernova-valaistus ja MIK HD -tavarateline',
             ],
             packages: [
                 'Commuter Care 24 kk • 28 € / kk',
-                'Showroom-sovitus ja ajoergonomian kartoitus • sisältyy',
+                'Työmatkaetuprosessi ja käyttöönotto • sisältyy',
                 'Lisäakku 500 Wh • 520 €',
             ],
             range: 'Kantama 110 km • 625 Wh akku',
-            availability: 'Saatavuus: Benelux varasto 9 kpl',
+            availability: 'Saatavuus: Gazelle Benelux varasto 9 kpl',
             support: 'Commuter Care sisältyy • 36 h varastovaraus',
-            status: 'Comfort tuotanto • 9 yksikköä heti toimitukseen',
+            status: 'Commuter tuotanto • 9 yksikköä heti toimitukseen',
             image: 'https://images.unsplash.com/photo-1604147495798-57beb5d6af73?auto=format&fit=crop&w=1400&q=80',
             imageAlt: 'Gazelle Ultimate C380 sähköpyörä kaupunkimaisemassa',
+        },
+        {
+            id: 'giant-stormguard-e-plus',
+            name: 'Giant Stormguard E+',
+            category: 'utility',
+            categoryLabel: 'Utility',
+            badge: 'All-Terrain Utility',
+            price: 6290,
+            lead: 'Giant Stormguard E+ selviytyy Suomen olosuhteista SyncDrive Pro -moottorilla ja Defender-suojauksella.',
+            tagline: 'Maastovarmuus • Pro 85 Nm',
+            features: [
+                'SyncDrive Pro 85 Nm ja automaattinen vaihteistotuki',
+                'Defender-vahvistetut lokasuojat ja MIK HD -kantavuus',
+                'DualCharge-latausportit ja integroitu valosarja',
+            ],
+            packages: [
+                'Utility Shield -suojauspaketti • 540 €',
+                'Telematiikka + turvallisuusseuranta • 49 € / kk',
+                'Winter Performance -kitkavarustus • 390 €',
+            ],
+            range: 'Kantama 140 km • 800 Wh akku',
+            availability: 'Saatavuus: Giant Nordic Hub 10 kpl',
+            support: 'Utility Shield sisältyy • 72 h huoltovaste',
+            status: 'Utility varasto • 10 pyörää vahvistettuna',
+            image: 'https://images.unsplash.com/photo-1525104698733-6fe5ce3b7291?auto=format&fit=crop&w=1400&q=80',
+            imageAlt: 'Giant Stormguard E+ sähköpyörä sateisella kadulla',
         },
     ];
 
@@ -947,31 +1027,169 @@ if (storefrontElement) {
             return;
         }
 
-        if (productId) {
-            selectProduct(productId);
+    if (productId) {
+        selectProduct(productId);
+    }
+
+    if (targetId) {
+        event.preventDefault();
+        syncStorefrontViewForTarget(targetId);
+        scrollStorefrontTo(targetId);
+
+        if (targetId === 'storefront-checkout') {
+            highlightCheckout();
         }
-
-        if (targetId) {
-            event.preventDefault();
-            scrollStorefrontTo(targetId);
-
-            if (targetId === 'storefront-checkout') {
-                highlightCheckout();
-            }
         }
     };
 
-    storeTriggers.forEach((trigger) => {
-        trigger.addEventListener('click', (event) => {
-            handleStorefrontTrigger(trigger, event);
-        });
+storeTriggers.forEach((trigger) => {
+    trigger.addEventListener('click', (event) => {
+        handleStorefrontTrigger(trigger, event);
     });
+});
 
-    selectStoreProduct = selectProduct;
+storeBackButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+        const targetView = button.getAttribute('data-storefront-back') ?? 'mallisto';
+        const resolvedTarget = viewTargets[targetView] ?? viewTargets.mallisto;
+
+        storefrontViewController?.setView(targetView);
+        scrollStorefrontTo(resolvedTarget);
+    });
+});
+
+selectStoreProduct = selectProduct;
 
     updateCategorySelection();
     refreshProductList();
 }
+
+const logCheckoutIntent = ({ company, city, deliveryWindow }, subtotal) => {
+    try {
+        window.console?.info?.('storefront.checkout.intent', {
+            company,
+            city,
+            deliveryWindow,
+            subtotal,
+            cartSize: cartState.length,
+            timestamp: new Date().toISOString(),
+        });
+    } catch {
+        // ignore logging failures silently
+    }
+};
+
+storeCheckoutForm?.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(storeCheckoutForm);
+    const payload = {
+        company: sanitizeInput(formData.get('company')), 
+        businessId: normalizeBusinessId(formData.get('businessId')),
+        contact: sanitizeInput(formData.get('contact')),
+        email: sanitizeInput(formData.get('email')).toLowerCase(),
+        phone: normalizePhone(formData.get('phone')),
+        city: sanitizeInput(formData.get('city')),
+        deliveryWindow: sanitizeInput(formData.get('deliveryWindow')),
+        notes: sanitizeInput(formData.get('notes')),
+        consent: formData.get('consent') === 'yes',
+    };
+
+    const errors = [];
+    const businessIdPattern = /^[0-9]{7}-[0-9]$/;
+
+    if (!payload.company) {
+        errors.push('Anna yrityksen tai organisaation nimi.');
+    }
+
+    if (!businessIdPattern.test(payload.businessId)) {
+        errors.push('Syötä Y-tunnus muodossa 1234567-8.');
+    }
+
+    if (!payload.contact) {
+        errors.push('Lisää yhteyshenkilön nimi.');
+    }
+
+    if (!emailPattern.test(payload.email)) {
+        errors.push('Syötä validi sähköpostiosoite.');
+    }
+
+    if (payload.phone.replace(/[^0-9]/g, '').length < 7) {
+        errors.push('Lisää toimiva puhelinnumero kansainvälisessä muodossa.');
+    }
+
+    if (!payload.city) {
+        errors.push('Lisää toimituskunta.');
+    }
+
+    if (!payload.deliveryWindow) {
+        errors.push('Valitse toimitusaikatoive.');
+    }
+
+    if (!payload.consent) {
+        errors.push('Hyväksy tietojen tallennus tilausta varten.');
+    }
+
+    if (!cartState.length) {
+        errors.push('Lisää vähintään yksi malli ostoskoriin ennen tilauksen lähettämistä.');
+    }
+
+    if (errors.length) {
+        renderCheckoutErrors(errors);
+        if (checkoutConfirmation) {
+            checkoutConfirmation.setAttribute('hidden', '');
+        }
+        if (checkoutSummary) {
+            checkoutSummary.innerHTML = '';
+        }
+        return;
+    }
+
+    renderCheckoutErrors([]);
+
+    const subtotal = getCartSubtotal();
+    const deliveryLabel = deliveryWindowLabels[payload.deliveryWindow] ?? payload.deliveryWindow;
+    const summaryEntries = [
+        ['Mallisto', cartState.map((item) => `${item.quantity} × ${item.name}`).join(', ') || 'Ei tuotteita'],
+        ['Yritys', payload.company],
+        ['Y-tunnus', payload.businessId],
+        ['Yhteyshenkilö', payload.contact],
+        ['Sähköposti', payload.email],
+        ['Puhelin', payload.phone],
+        ['Toimituskunta', payload.city],
+        ['Toimitusaika', deliveryLabel],
+        ['Tilausarvo', formatEuro(subtotal)],
+    ];
+
+    if (payload.notes) {
+        summaryEntries.push(['Lisätiedot', payload.notes]);
+    }
+
+    if (checkoutSummary) {
+        checkoutSummary.innerHTML = '';
+        summaryEntries.forEach(([label, value]) => {
+            const dt = document.createElement('dt');
+            dt.textContent = label;
+            const dd = document.createElement('dd');
+            dd.textContent = value;
+            checkoutSummary.append(dt, dd);
+        });
+    }
+
+    if (checkoutConfirmation) {
+        checkoutConfirmation.removeAttribute('hidden');
+    }
+
+    logCheckoutIntent({ company: payload.company, city: payload.city, deliveryWindow: deliveryLabel }, subtotal);
+
+    storeCheckoutForm.reset();
+    storefrontViewController?.setView('checkout');
+    window.requestAnimationFrame(() => {
+        checkoutAutoFocusField?.focus({ preventScroll: true });
+    });
+
+    scrollStorefrontTo(viewTargets.checkout);
+});
 
 const startCounterAnimation = (element) => {
     const target = Number(element.dataset.target ?? element.textContent ?? '0');

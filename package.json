@@ -1,0 +1,22 @@
+{
+  "name": "hrk",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "python3 -m http.server 4173",
+    "lint": "eslint \"assets/js/**/*.js\"",
+    "lint:fix": "eslint \"assets/js/**/*.js\" --fix",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.6.0",
+    "eslint": "^9.6.0",
+    "eslint-config-prettier": "^9.1.0",
+    "globals": "^15.4.0",
+    "jsdom": "^27.0.1",
+    "prettier": "^3.3.2",
+    "vitest": "^1.6.0"
+  }
+}
