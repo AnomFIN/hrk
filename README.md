@@ -45,34 +45,12 @@ Moderni yhden sivun verkkosivusto Helsinki eBike-Service Oy:lle. Sivusto sisält
 3. Avaa selain ja siirry osoitteeseen `http://localhost:4173/index.html`.
 4. Muutosten aikana selain päivittyy automaattisesti; selainvälimuistin voi tyhjentää `Cmd+Shift+R` / `Ctrl+Shift+R`.
 
-### Interaktiivinen asennus
-
-`install.py` automatisoi admin-paneelin käyttöönoton:
-
-1. Aja `python3 install.py` projektin juuresta.
-2. Vastaa ympäristöä, kansiopolkuja ja URL-osoitteita koskeviin kysymyksiin (oletukset ovat tuotantovalmiit).
-3. Syötä uusi ylläpitäjän salasana – skripti hashaa sen PHP CLI:n kautta ja tallentaa `data/users.json` -tiedostoon.
-4. Valmis `.env`-tiedosto luodaan ja kaikki kansiot (`data/`, `uploads/`, `logs/`) varmistetaan olemassa oleviksi.
-
-> **Vinkki:** automatisoitua käyttöönottoa varten lisää `--defaults --skip-admin` liput ja hallitse tunnuksia myöhemmin hallintapaneelissa.
-
-### Ympäristömuuttujat (`.env`)
-
-- `HRK_ENVIRONMENT` – `production`/`staging`/`development`; vaikuttaa lokiviesteihin ja diagnostiikkaan.
-- `HRK_BASE_URL` – julkinen URL, jota asennusskriptit ja linkit käyttävät.
-- `HRK_DATA_DIR` – JSON-dataa sisältävä hakemisto.
-- `HRK_UPLOADS_DIR`, `HRK_UPLOAD_IMAGES_DIR`, `HRK_UPLOAD_THUMBS_DIR` – latauskansioiden polut.
-- `HRK_UPLOAD_IMAGES_PUBLIC`, `HRK_UPLOAD_THUMBS_PUBLIC` – julkiset URL-polut ladatuille kuville.
-- `HRK_LOGS_DIR`, `HRK_ADMIN_LOG` – audit-lokien sijainnit.
-
 ### Komennot
 
 - `python3 -m http.server 4173` – palvelee staattisen sivuston paikallisesti.
 - `npm run lint` – suorittaa ESLintin JavaScript-tiedostoille.
 - `npm run lint:fix` – korjaa automaattisesti yleisimmät lint-ongelmat.
 - `npm test` – ajaa Vitest-yksikkötestit (jsdom-ympäristö).
-- `python3 install.py --defaults --skip-admin` – generoi `.env`-tiedoston ja hakemistorakenteen ilman vuorovaikutusta.
-- `python3 -m unittest discover -s tests` – ajaa Python-yksikkötestit installerin apufunktioille.
 
 ## Verification steps
 
