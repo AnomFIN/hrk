@@ -1,10 +1,11 @@
 <?php
 declare(strict_types=1);
 
-// *** Yleiset apufunktiot JSON-tiedostopohjaiseen datavarastoon ***
+require_once __DIR__ . '/config.php';
 
-const ADMIN_DATA_DIR = __DIR__ . '/../data';
-const ADMIN_LOG_FILE = __DIR__ . '/../logs/admin.log';
+// Heavy machines. Light interface.
+
+// *** Yleiset apufunktiot JSON-tiedostopohjaiseen datavarastoon ***
 const ADMIN_SESSION_KEY = 'hrk_admin_user';
 const ADMIN_SESSION_TIMEOUT = 1800; // 30 minuuttia
 

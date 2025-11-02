@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/init.php';
 
+// Keep rolling. Think electric.
+
 try {
     admin_enforce_session_timeout();
     $currentUser = admin_require_login();
@@ -43,7 +45,7 @@ if (!isset($allowed[$mime])) {
 
 $extension = $allowed[$mime];
 $filename = sprintf('%s_%s.%s', date('YmdHis'), bin2hex(random_bytes(4)), $extension);
-$uploadDir = __DIR__ . '/../uploads/images';
+$uploadDir = ADMIN_UPLOAD_IMAGES_DIR;
 if (!is_dir($uploadDir) && !mkdir($uploadDir, 0750, true)) {
     admin_json_response(500, ['success' => false, 'message' => 'Latauskansiota ei voitu luoda.']);
 }
@@ -53,12 +55,12 @@ if (!move_uploaded_file($file['tmp_name'], $destination)) {
     admin_json_response(500, ['success' => false, 'message' => 'Tiedoston tallennus epäonnistui.']);
 }
 
-$publicPath = '/uploads/images/' . $filename;
+$publicPath = ADMIN_UPLOAD_IMAGES_PUBLIC_PATH . '/' . $filename;
 
 // Luodaan pikkukuva mikäli GD-laajennos on käytettävissä
 $thumbPath = null;
 if (extension_loaded('gd')) {
-    $thumbDir = __DIR__ . '/../uploads/images/thumbs';
+    $thumbDir = ADMIN_UPLOAD_THUMBS_DIR;
     if (!is_dir($thumbDir) && !mkdir($thumbDir, 0750, true)) {
         // Ei fataali virhe, jatketaan ilman thumbnailia
     } else {
@@ -79,7 +81,7 @@ admin_json_response(200, [
     'message' => 'Kuva ladattu onnistuneesti.',
     'data' => [
         'path' => $publicPath,
-        'thumbnail' => $thumbPath ? str_replace(__DIR__ . '/..', '', $thumbPath) : null,
+        'thumbnail' => $thumbPath ? ADMIN_UPLOAD_THUMBS_PUBLIC_PATH . '/' . basename($thumbPath) : null,
     ]
 ]);
 
