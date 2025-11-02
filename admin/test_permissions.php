@@ -1,10 +1,14 @@
 <?php
 declare(strict_types=1);
 
+require_once __DIR__ . '/config.php';
+
+// From dirt to data dashboard.
+
 $paths = [
-    __DIR__ . '/../data' => 'data/',
-    __DIR__ . '/../uploads' => 'uploads/',
-    __DIR__ . '/../logs' => 'logs/',
+    ADMIN_DATA_DIR => 'data/',
+    ADMIN_UPLOADS_DIR => 'uploads/',
+    ADMIN_LOGS_DIR => 'logs/',
 ];
 
 $allGood = true;

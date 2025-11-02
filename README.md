@@ -35,24 +35,53 @@ Moderni yhden sivun verkkosivusto Helsinki eBike-Service Oy:lle. Sivusto sisält
 - Single-page arkkitehtuuri, jossa verkkokauppa avautuu overlayn päälle – navigointi on saumaton eikä erillistä `verkkokauppa.html`-tiedostoa tarvita.
 - jQuery-pohjaiset fade- ja scroll-animaatiot varmistavat, että siirtymät toimivat tasaisesti myös vanhemmissa selaimissa.
 - Ostoskori säilytetään `localStorage`-avaimessa (`helsinki-ebike-cart`), joten tuotetiedot pysyvät session yli ilman palvelinlogiikkaa.
+- Verkkokauppa ohjaa oletuksena **Mallisto → Kassa** -polulle: Mallisto-näkymä vastaa hero-osiossa mainittuja Specialized-, Trek-, Riese & Müller-, Gazelle- ja Giant-kumppaneita ja kassavaiheessa piilotetaan tuotevalinta kokonaan.
 - Turvallinen oletus: ei evalia, ei dynaamisia skriptejä ja kaikki mail-/tel-linkit ovat suoraviivaisia.
 
 ## Setup & local development
 
-1. Käynnistä kevyt palvelin projektin juuresta: `python3 -m http.server 4173`.
-2. Avaa selain ja siirry osoitteeseen `http://localhost:4173/index.html`.
-3. Muutosten aikana selain päivittyy automaattisesti; selainvälimuistin voi tyhjentää `Cmd+Shift+R` / `Ctrl+Shift+R`.
+1. Asenna kehitysriippuvuudet: `npm install`.
+2. Käynnistä kevyt palvelin projektin juuresta: `python3 -m http.server 4173`.
+3. Avaa selain ja siirry osoitteeseen `http://localhost:4173/index.html`.
+4. Muutosten aikana selain päivittyy automaattisesti; selainvälimuistin voi tyhjentää `Cmd+Shift+R` / `Ctrl+Shift+R`.
+
+### Interaktiivinen asennus
+
+`install.py` automatisoi admin-paneelin käyttöönoton:
+
+1. Aja `python3 install.py` projektin juuresta.
+2. Vastaa ympäristöä, kansiopolkuja ja URL-osoitteita koskeviin kysymyksiin (oletukset ovat tuotantovalmiit).
+3. Syötä uusi ylläpitäjän salasana – skripti hashaa sen PHP CLI:n kautta ja tallentaa `data/users.json` -tiedostoon.
+4. Valmis `.env`-tiedosto luodaan ja kaikki kansiot (`data/`, `uploads/`, `logs/`) varmistetaan olemassa oleviksi.
+
+> **Vinkki:** automatisoitua käyttöönottoa varten lisää `--defaults --skip-admin` liput ja hallitse tunnuksia myöhemmin hallintapaneelissa.
+
+### Ympäristömuuttujat (`.env`)
+
+- `HRK_ENVIRONMENT` – `production`/`staging`/`development`; vaikuttaa lokiviesteihin ja diagnostiikkaan.
+- `HRK_BASE_URL` – julkinen URL, jota asennusskriptit ja linkit käyttävät.
+- `HRK_DATA_DIR` – JSON-dataa sisältävä hakemisto.
+- `HRK_UPLOADS_DIR`, `HRK_UPLOAD_IMAGES_DIR`, `HRK_UPLOAD_THUMBS_DIR` – latauskansioiden polut.
+- `HRK_UPLOAD_IMAGES_PUBLIC`, `HRK_UPLOAD_THUMBS_PUBLIC` – julkiset URL-polut ladatuille kuville.
+- `HRK_LOGS_DIR`, `HRK_ADMIN_LOG` – audit-lokien sijainnit.
 
 ### Komennot
 
 - `python3 -m http.server 4173` – palvelee staattisen sivuston paikallisesti.
+- `npm run lint` – suorittaa ESLintin JavaScript-tiedostoille.
+- `npm run lint:fix` – korjaa automaattisesti yleisimmät lint-ongelmat.
+- `npm test` – ajaa Vitest-yksikkötestit (jsdom-ympäristö).
+- `python3 install.py --defaults --skip-admin` – generoi `.env`-tiedoston ja hakemistorakenteen ilman vuorovaikutusta.
+- `python3 -m unittest discover -s tests` – ajaa Python-yksikkötestit installerin apufunktioille.
 
 ## Verification steps
 
 1. Avaa pääsivu ja varmista, että hero-osio ja mittarit animoituvat näkyviin.
-2. Klikkaa ylävalikon **Verkkokauppa**-painiketta: overlayn tulee fadeutua esiin, runkosivun häipyä ja ostoskorin pysyä tyhjänä.
-3. Lisää tuote koriin (esim. “Tenways CGO One”) ja tarkista, että laskuri päivittyy sekä navissa että kassapaneelissa.
-4. Sulje overlay `Sulje`-painikkeella tai Escillä – taustasivun tulee palautua kirkkaaksi ja fokus palata viimeksi käytettyyn elementtiin.
+2. Klikkaa ylävalikon **Verkkokauppa**-painiketta: overlayn tulee fadeutua esiin, `Mallisto`-pilotti on aktiivinen ja tuotelistauksessa näkyvät Specialized, Trek, Riese & Müller, Gazelle ja Giant -mallit.
+3. Lisää tuote koriin (esim. "Specialized Turbo Vado 5.0 IGH") ja tarkista, että laskuri päivittyy sekä navissa että oikean reunan yhteenvetopaneelissa.
+4. Paina **Siirry kassalle**: Mallisto- ja tuote-paneelit katoavat, `Kassa`-pilotti aktivoituu ja lomake pyytää yritys-, yhteys- ja toimitustietoja.
+5. Täytä kassalomake esimerkkitiedoilla (esim. yritys "Testi Oy", Y-tunnus `1234567-8`) ja lähetä – lomakkeen alle ilmestyy yhteenveto, joka listaa valitut tuotteet ja vahvistaa AnomFIN Concierge -kuittauksen.
+6. Sulje overlay `Sulje`-painikkeella tai Escillä – taustasivun tulee palautua kirkkaaksi ja fokus palata viimeksi käytettyyn elementtiin.
 
 ## Pääominaisuudet
 
