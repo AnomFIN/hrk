@@ -1114,7 +1114,7 @@ storeCheckoutForm?.addEventListener('submit', (event) => {
     }
 
     // Email validation is handled by HTML5 input type="email"
-    if (!payload.email || payload.email.trim() === '') {
+    if (!payload.email) {
         errors.push('Syötä validi sähköpostiosoite.');
     }
 
