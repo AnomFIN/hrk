@@ -1,119 +1,152 @@
 @echo off
-REM ===============================================
-REM Kuittisovellus - Asennusskripti Windows 11
-REM Tarkistaa Python-version ja asentaa riippuvuudet
-REM ===============================================
+REM ================================================================
+REM Kuittitulostin - Asennusskripti / Receipt Printer - Install Script
+REM Harjun Raskaskone Oy (HRK)
+REM ================================================================
 
 echo.
-echo ================================================
-echo   KUITTISOVELLUS - ASENNUSSKRIPTI
-echo   LV Electronics
-echo ================================================
+echo ===============================================
+echo   KUITTITULOSTIN - ASENNUS
+echo   RECEIPT PRINTER - INSTALLATION
+echo ===============================================
 echo.
 
-REM Tarkista, onko Python asennettu
-echo [1/4] Tarkistetaan Python-asennus...
-python --version >nul 2>&1
-if %errorlevel% neq 0 (
-    echo.
-    echo [VIRHE] Python ei ole asennettu tai ei loydy PATH-muuttujasta!
+REM Tarkista Python-asennus / Check Python installation
+echo Tarkistetaan Python-asennus...
+echo Checking Python installation...
+echo.
+
+where python >nul 2>&1
+if %ERRORLEVEL% neq 0 (
+    echo [VIRHE] Python ei loytynyt!
+    echo [ERROR] Python not found!
     echo.
     echo Lataa Python osoitteesta: https://www.python.org/downloads/
-    echo Muista valita "Add Python to PATH" asennuksen aikana!
+    echo Download Python from: https://www.python.org/downloads/
     echo.
+    echo Varmista, etta valitset "Add Python to PATH" asennuksen aikana!
+    echo Make sure to check "Add Python to PATH" during installation!
     pause
     exit /b 1
 )
 
-REM Näytä Python-versio
+echo [OK] Python loytyi / Python found
 echo.
-for /f "tokens=*" %%i in ('python --version 2^>^&1') do set PYTHON_VERSION=%%i
-echo Loytyi: %PYTHON_VERSION%
 
-REM Tarkista Python-versio (3.7 tai uudempi suositeltu)
-python -c "import sys; exit(0 if sys.version_info >= (3, 7) else 1)" 2>nul
-if %errorlevel% neq 0 (
-    echo.
-    echo [VAROITUS] Python-versio on vanhempi kuin 3.7
-    echo Sovellus saattaa toimia, mutta suositellaan paivitysta.
-    echo.
-)
-
-REM Tarkista pip
+REM Tarkista Python-versio / Check Python version
+echo Tarkistetaan Python-versio...
+echo Checking Python version...
+python --version
 echo.
-echo [2/4] Tarkistetaan pip (Python-pakettien hallintaohjelma)...
+
+REM Tarkista pip / Check pip
+echo Tarkistetaan pip...
+echo Checking pip...
 python -m pip --version >nul 2>&1
-if %errorlevel% neq 0 (
-    echo.
-    echo [VIRHE] pip ei ole kaytettavissa!
-    echo Yrita asentaa pip komennolla: python -m ensurepip --upgrade
-    echo.
-    pause
-    exit /b 1
+if %ERRORLEVEL% neq 0 (
+    echo [VAROITUS] pip ei loytynyt, yritetaan asentaa...
+    echo [WARNING] pip not found, trying to install...
+    python -m ensurepip --default-pip
+    if %ERRORLEVEL% neq 0 (
+        echo [VIRHE] pip:n asennus epaonnistui!
+        echo [ERROR] Failed to install pip!
+        pause
+        exit /b 1
+    )
 )
 
-echo Pip on kaytettavissa.
-
-REM Päivitä pip (valinnainen mutta suositeltu)
+echo [OK] pip loytyi / pip found
 echo.
-echo [3/4] Paivitetaan pip uusimpaan versioon...
+
+REM Paivita pip / Update pip
+echo Paivitetaan pip...
+echo Updating pip...
 python -m pip install --upgrade pip
-if %errorlevel% neq 0 (
-    echo [VAROITUS] pip:in paivitys epaonnistui, jatketaan silti...
-)
+echo.
 
-REM Asenna riippuvuudet
+REM Asenna riippuvuudet / Install dependencies
+echo ===============================================
+echo   ASENNETAAN RIIPPUVUUDET
+echo   INSTALLING DEPENDENCIES
+echo ===============================================
 echo.
-echo [4/4] Asennetaan riippuvuudet...
-echo.
-echo Asennetaan: Pillow (PNG-kuvatuki)
+
+echo Asennetaan Pillow (kuvankasittely)...
+echo Installing Pillow (image processing)...
 python -m pip install pillow
-if %errorlevel% neq 0 (
+if %ERRORLEVEL% neq 0 (
     echo [VAROITUS] Pillow:n asennus epaonnistui!
-    echo PNG-tallennus ei valttamatta toimi.
-    echo.
-)
-
-echo.
-echo Asennetaan: colorama (varillinen terminaali)
-python -m pip install colorama
-if %errorlevel% neq 0 (
-    echo [VAROITUS] colorama:n asennus epaonnistui!
-    echo Terminaaliversio toimii ilman varitystakin.
-    echo.
-)
-
-REM Tarkista Tkinter (pitäisi tulla Pythonin mukana)
-echo.
-echo Tarkistetaan Tkinter (GUI-kirjasto)...
-python -c "import tkinter" 2>nul
-if %errorlevel% neq 0 (
-    echo [VAROITUS] Tkinter ei ole kaytettavissa!
-    echo GUI ei toimi, mutta terminaaliversio toimii.
-    echo.
-    echo Windows-asennuksessa Tkinter tulee yleensa Pythonin mukana.
-    echo Jos haluat GUI:n, asenna Python uudelleen ja varmista,
-    echo etta valitset "tcl/tk and IDLE" -komponentin.
+    echo [WARNING] Failed to install Pillow!
+    echo PNG-tallennus ei toimi ilman Pillow:ta.
+    echo PNG save will not work without Pillow.
     echo.
 ) else (
-    echo Tkinter on kaytettavissa - GUI toimii!
+    echo [OK] Pillow asennettu / Pillow installed
+    echo.
 )
 
-REM Yhteenveto
+echo Asennetaan colorama (terminaalivari)...
+echo Installing colorama (terminal colors)...
+python -m pip install colorama
+if %ERRORLEVEL% neq 0 (
+    echo [VAROITUS] colorama:n asennus epaonnistui!
+    echo [WARNING] Failed to install colorama!
+    echo Terminaalitila toimii ilman varijakin.
+    echo Terminal mode will work without colors.
+    echo.
+) else (
+    echo [OK] colorama asennettu / colorama installed
+    echo.
+)
+
+REM Tarkista, onko tkinter kaytettavissa / Check if tkinter is available
+echo Tarkistetaan tkinter (GUI-kirjasto)...
+echo Checking tkinter (GUI library)...
+python -c "import tkinter" >nul 2>&1
+if %ERRORLEVEL% neq 0 (
+    echo [VAROITUS] tkinter ei ole kaytettavissa!
+    echo [WARNING] tkinter is not available!
+    echo GUI-tila ei toimi. Kayta terminaalitilaa: python receipt_app.py --terminal
+    echo GUI mode will not work. Use terminal mode: python receipt_app.py --terminal
+    echo.
+) else (
+    echo [OK] tkinter loytyi / tkinter found
+    echo.
+)
+
+REM Nayta yhteenveto / Show summary
 echo.
-echo ================================================
+echo ===============================================
 echo   ASENNUS VALMIS!
-echo ================================================
+echo   INSTALLATION COMPLETE!
+echo ===============================================
 echo.
-echo Asennetut kirjastot:
-python -m pip list | findstr /i "pillow colorama"
+echo Voit nyt kayttaa ohjelmaa / You can now run the program:
 echo.
-echo Voit nyt kaynnistaa sovelluksen komennolla:
-echo   python receipt_app.py
+echo   GUI-tila (suositeltu):
+echo   GUI mode (recommended):
+echo     python receipt_app.py
 echo.
-echo tai kaksoisnapsauttamalla receipt_app.py -tiedostoa
-echo (jos Python on liitetty .py-tiedostoihin).
+echo   Terminaalitila:
+echo   Terminal mode:
+echo     python receipt_app.py --terminal
 echo.
-echo ================================================
+echo ===============================================
 echo.
+
+REM Kysy, kaynnistetaanko ohjelma / Ask if to start the program
+set /p START="Kaynnistetaanko ohjelma nyt? (k/e) / Start program now? (y/n): "
+if /i "%START%"=="k" goto start_program
+if /i "%START%"=="y" goto start_program
+goto end
+
+:start_program
+echo.
+echo Kaynnistetaan kuittitulostin...
+echo Starting receipt printer...
+echo.
+python receipt_app.py
+goto end
+
+:end
 pause
