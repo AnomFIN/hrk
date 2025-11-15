@@ -671,6 +671,10 @@
                         <h3>Tilauksen vastaanotto onnistui</h3>
                         <p>AnomFIN Concierge kuittaa tilauksen muutamassa minuutissa ja vahvistaa toimitusaikataulun.</p>
                         <dl data-checkout-summary></dl>
+                        <div class="checkout-receipt-actions">
+                            <button class="btn btn--primary" type="button" onclick="tulostaKuitti()">🖨️ Tulosta kuitti</button>
+                            <button class="btn btn--ghost" type="button" onclick="lataaTilausKuitti()">📄 Lataa PDF</button>
+                        </div>
                     </div>
                 </section>
 
@@ -719,7 +723,321 @@
         </div>
     </div>
 
+    <style>
+        /* Kuittitulostuksen tyylit */
+        .checkout-receipt-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .checkout-receipt-actions .btn {
+            flex: 1;
+        }
+        
+        /* Tulostusalue (piilotettu) */
+        .receipt-print-area {
+            display: none;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            line-height: 1.4;
+            white-space: pre-line;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            
+            .receipt-print-area, .receipt-print-area * {
+                visibility: visible;
+            }
+            
+            .receipt-print-area {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                display: block !important;
+            }
+            
+            @page {
+                margin: 0.5in;
+                size: auto;
+            }
+        }
+    </style>
+
+    <div class="receipt-print-area" id="receiptPrintArea"></div>
+
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-3fpCfGo3nKpSybLu7saEh8GZ4HzyBbs596k8ZZrPmPo=" crossorigin="anonymous"></script>
     <script type="module" src="assets/js/main.js"></script>
+    
+    <script>
+        // ========== KUITTITULOSTUS TOIMINNALLISUUS ==========
+        
+        // Globaalit muuttujat tilaustiedoille
+        let viimeisinTilaus = null;
+        
+        // Kuuntele checkout-formin lähetystä ja tallenna tiedot
+        document.addEventListener('DOMContentLoaded', function() {
+            const checkoutForm = document.querySelector('[data-checkout-form]');
+            if (checkoutForm) {
+                checkoutForm.addEventListener('submit', function(e) {
+                    // Tallenna tilaustiedot ennen lähetystä
+                    const formData = new FormData(e.target);
+                    viimeisinTilaus = {
+                        yritys: formData.get('company'),
+                        ytunnus: formData.get('businessId'),
+                        yhteyshenkilö: formData.get('contact'),
+                        email: formData.get('email'),
+                        puhelin: formData.get('phone'),
+                        kunta: formData.get('city'),
+                        toimitusaika: formData.get('deliveryWindow'),
+                        lisätiedot: formData.get('notes'),
+                        aikaleima: new Date(),
+                        tilauksNumero: 'HRK' + Date.now().toString().slice(-6)
+                    };
+                });
+            }
+        });
+        
+        // Muodosta kuittiteksti
+        function muodostaTilausKuitti() {
+            if (!viimeisinTilaus) {
+                return 'Ei tilaustietoja saatavilla.';
+            }
+            
+            const pvm = viimeisinTilaus.aikaleima.toLocaleDateString('fi-FI', { 
+                day: '2-digit', 
+                month: '2-digit', 
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            
+            let kuitti = `╔═══════════════════════════╗
+║                           ║
+║    ██╗  ██╗██████╗ ██╗   ║
+║    ██║  ██║██╔══██╗██║   ║
+║    ███████║██████╔╝██║   ║
+║    ██╔══██║██╔══██╗██║   ║
+║    ██║  ██║██║  ██║██║   ║
+║    ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝   ║
+║                           ║
+║ Helsinki eBike-Service Oy ║
+║                           ║
+╚═══════════════════════════╝
+
+Helsinki eBike-Service Oy
+Sähköpyörien maahantuoja
+www.helsinki-ebike-service.fi
+Y-tunnus: 1234567-8
+
+==================================================
+TILAUSVAHVISTUS #${viimeisinTilaus.tilauksNumero}
+${pvm}
+==================================================
+
+ASIAKASTIEDOT:
+Yritys/Organisaatio: ${viimeisinTilaus.yritys}
+Y-tunnus: ${viimeisinTilaus.ytunnus}
+Yhteyshenkilö: ${viimeisinTilaus.yhteyshenkilö}
+Sähköposti: ${viimeisinTilaus.email}
+Puhelin: ${viimeisinTilaus.puhelin}
+Toimituskunta: ${viimeisinTilaus.kunta}
+
+TOIMITUS:
+Toimitusaikatoive: ${viimeisinTilaus.toimitusaika}
+
+`;
+
+            if (viimeisinTilaus.lisätiedot) {
+                kuitti += `LISÄTIEDOT:\n${viimeisinTilaus.lisätiedot}\n\n`;
+            }
+
+            // Hae ostoskori (jos saatavilla)
+            const cartItems = document.querySelectorAll('[data-cart-items] li');
+            if (cartItems.length > 0) {
+                kuitti += `TILATUT TUOTTEET:\n`;
+                kuitti += `${'Tuote'.padEnd(30)} ${'Määrä'.padStart(8)} ${'Hinta'.padStart(12)}\n`;
+                kuitti += '-'.repeat(50) + '\n';
+                
+                cartItems.forEach(item => {
+                    const name = item.querySelector('.storefront__cart-item-name')?.textContent || 'Tuntematon tuote';
+                    const qty = item.querySelector('.storefront__cart-item-qty')?.textContent || '1';
+                    const price = item.querySelector('.storefront__cart-item-price')?.textContent || '0 €';
+                    
+                    const shortName = name.length > 30 ? name.substring(0, 27) + '...' : name;
+                    kuitti += `${shortName.padEnd(30)} ${qty.padStart(8)} ${price.padStart(12)}\n`;
+                });
+                
+                const total = document.querySelector('[data-cart-total]')?.textContent || '0 €';
+                kuitti += '-'.repeat(50) + '\n';
+                kuitti += `${'VÄLISUMMA (ALV 0%):'.padEnd(38)} ${total.padStart(12)}\n`;
+                kuitti += '='.repeat(50) + '\n';
+            }
+
+            kuitti += `
+SEURAAVAT VAIHEET:
+1. AnomFIN Concierge ottaa yhteyttä 24h sisällä
+2. Toimitussuunnitelma ja tarjous
+3. Sopimuksen allekirjoitus
+4. Tuotanto ja toimitus
+5. Asennus ja käyttöönotto
+
+YHTEYSTIEDOT:
+AnomFIN Concierge: +358 40 123 4567
+Sähköposti: concierge@anomfin.fi
+Verkkosivu: www.helsinki-ebike-service.fi
+
+Kiitos tilauksestanne!
+
+Tilausnumero: #${viimeisinTilaus.tilauksNumero}
+Käsitelty: Web-verkkokauppa
+Aika: ${viimeisinTilaus.aikaleima.toISOString()}
+
+Helsinki eBike-Service Oy
+Corporate Mobility Partner Program
+
+`;
+            return kuitti;
+        }
+        
+        // Tulosta kuitti
+        function tulostaKuitti() {
+            try {
+                const kuittiteksti = muodostaTilausKuitti();
+                
+                // Luo uusi ikkuna tulostusta varten
+                const tulostusIkkuna = window.open('', 'TilausKuitti', 'width=700,height=900,scrollbars=yes');
+                
+                if (!tulostusIkkuna) {
+                    alert('Ponnahdusikkunan avaaminen estettiin. Salli ponnahdusikkunat ja yritä uudelleen.');
+                    return;
+                }
+
+                // Kirjoita kuitti ikkunaan
+                tulostusIkkuna.document.write(`
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Helsinki eBike-Service - Tilausvahvistus #${viimeisinTilaus ? viimeisinTilaus.tilauksNumero : 'XXXX'}</title>
+    <meta charset="UTF-8">
+    <style>
+        body { 
+            font-family: 'Courier New', monospace; 
+            font-size: 12px; 
+            line-height: 1.4; 
+            margin: 20px;
+            white-space: pre-line;
+        }
+        @media print {
+            body { margin: 0; }
+            @page { margin: 0.5in; }
+        }
+        .print-actions {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: white;
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        .print-actions button {
+            margin: 5px;
+            padding: 10px 20px;
+            font-size: 14px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .print-btn {
+            background: #007bff;
+            color: white;
+        }
+        .close-btn {
+            background: #6c757d;
+            color: white;
+        }
+        @media print {
+            .print-actions { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="print-actions">
+        <button class="print-btn" onclick="window.print()">🖨️ Tulosta</button>
+        <button class="close-btn" onclick="window.close()">✕ Sulje</button>
+    </div>
+    <div>${kuittiteksti}</div>
+</body>
+</html>`);
+                
+                tulostusIkkuna.document.close();
+                tulostusIkkuna.focus();
+                
+                // Näytä onnistumisilmoitus
+                setTimeout(() => {
+                    if (typeof $ !== 'undefined') {
+                        // Jos jQuery on käytettävissä, käytä sitä ilmoitukseen
+                        $('body').append('<div style="position: fixed; top: 20px; right: 20px; background: #28a745; color: white; padding: 15px 20px; border-radius: 8px; font-weight: bold; z-index: 9999;">✅ Kuitti-ikkuna avattu! Paina 🖨️ Tulosta nappia ikkunassa.</div>');
+                        setTimeout(() => $('body > div:last').fadeOut(2000, function() { $(this).remove(); }), 3000);
+                    }
+                }, 500);
+                
+            } catch (error) {
+                console.error('Tulostusvirhe:', error);
+                alert('Kuitin tulostus epäonnistui: ' + error.message + '\n\nYritä ladata PDF-versio.');
+            }
+        }
+
+        // Lataa tilauksen kuitti PDF:nä (yksinkertainen teksti-tiedosto)
+        function lataaTilausKuitti() {
+            try {
+                const kuittiteksti = muodostaTilausKuitti();
+                const blob = new Blob([kuittiteksti], { type: 'text/plain;charset=utf-8' });
+                
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `Helsinki_eBike_Tilausvahvistus_${viimeisinTilaus ? viimeisinTilaus.tilauksNumero : 'UNKNOWN'}_${new Date().toISOString().slice(0,10)}.txt`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                // Näytä onnistumisilmoitus
+                if (typeof $ !== 'undefined') {
+                    $('body').append('<div style="position: fixed; top: 20px; right: 20px; background: #17a2b8; color: white; padding: 15px 20px; border-radius: 8px; font-weight: bold; z-index: 9999;">📄 Tilausvahvistus ladattu! Avaa tiedosto ja tulosta Ctrl+P.</div>');
+                    setTimeout(() => $('body > div:last').fadeOut(2000, function() { $(this).remove(); }), 3000);
+                }
+                
+            } catch (error) {
+                console.error('Latausvirhe:', error);
+                alert('Kuitin lataus epäonnistui: ' + error.message);
+            }
+        }
+        
+        // Näppäinkomennot
+        document.addEventListener('keydown', function(e) {
+            // Ctrl+P tulostaa kuitin jos tilausvahvistus on näkyvissä
+            if (e.ctrlKey && e.key === 'p') {
+                const confirmation = document.querySelector('[data-checkout-confirmation]');
+                if (confirmation && !confirmation.hidden) {
+                    e.preventDefault();
+                    tulostaKuitti();
+                }
+            }
+        });
+    </script>
 </body>
 </html>
