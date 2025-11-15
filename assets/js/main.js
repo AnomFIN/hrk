@@ -475,6 +475,7 @@ const parseCartState = () => {
                     item.quantity > 0,
             );
     } catch {
+        // Intentionally ignore parsing errors and return empty cart on invalid data
         return [];
     }
 };
@@ -489,17 +490,19 @@ const saveCartState = () => {
     try {
         window.localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cartState));
     } catch {
-        // ignore storage errors silently
+        // Intentionally ignore storage errors (e.g., quota exceeded, private mode)
     }
 };
 
 const getCartItemCount = () => cartState.reduce((total, item) => total + item.quantity, 0);
 const getCartSubtotal = () => cartState.reduce((total, item) => total + item.price * item.quantity, 0);
 
+// Note: sanitizeInput only normalizes whitespace and does NOT prevent XSS attacks.
+// XSS protection relies on inserting values into the DOM using textContent (not innerHTML).
 const sanitizeInput = (value) => String(value ?? '').replace(/\s+/g, ' ').trim();
 const normalizeBusinessId = (value) => sanitizeInput(value).replace(/[^0-9-]/g, '');
 const normalizePhone = (value) => sanitizeInput(value).replace(/[^0-9+]/g, '');
-const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const MIN_PHONE_DIGITS = 7;
 
 const deliveryWindowLabels = {
     '2-4 weeks': '2–4 viikkoa',
@@ -1075,7 +1078,7 @@ const logCheckoutIntent = ({ company, city, deliveryWindow }, subtotal) => {
             timestamp: new Date().toISOString(),
         });
     } catch {
-        // ignore logging failures silently
+        // Intentionally ignore logging failures to prevent disrupting checkout flow
     }
 };
 
@@ -1110,11 +1113,12 @@ storeCheckoutForm?.addEventListener('submit', (event) => {
         errors.push('Lisää yhteyshenkilön nimi.');
     }
 
-    if (!emailPattern.test(payload.email)) {
+    // Email validation is handled by HTML5 input type="email"
+    if (!payload.email) {
         errors.push('Syötä validi sähköpostiosoite.');
     }
 
-    if (payload.phone.replace(/[^0-9]/g, '').length < 7) {
+    if (payload.phone.replace(/[^0-9]/g, '').length < MIN_PHONE_DIGITS) {
         errors.push('Lisää toimiva puhelinnumero kansainvälisessä muodossa.');
     }
 
