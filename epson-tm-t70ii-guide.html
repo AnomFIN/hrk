@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Epson TM-T70II ESC/POS Kuittitulostin</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.95);
+            color: #2c3e50;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #e67e22;
+            padding-bottom: 20px;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #e67e22;
+            margin-bottom: 10px;
+        }
+        
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 25px;
+        }
+        
+        .card h3 {
+            color: #e67e22;
+            margin-bottom: 15px;
+            font-size: 18px;
+            border-bottom: 2px solid #e67e22;
+            padding-bottom: 8px;
+        }
+        
+        .method {
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .method-title {
+            font-weight: bold;
+            color: #27ae60;
+            margin-bottom: 8px;
+        }
+        
+        .code-block {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+        
+        .button {
+            background: linear-gradient(135deg, #e67e22 0%, #d35400 100%);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(230, 126, 34, 0.4);
+        }
+        
+        .specs {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+        
+        .specs h3 {
+            margin-bottom: 15px;
+            border-bottom: 2px solid rgba(255,255,255,0.3);
+            padding-bottom: 8px;
+        }
+        
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        
+        .warning {
+            background: #f39c12;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            .specs-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">🖨️ Epson TM-T70II Thermal Printer</div>
+            <p>ESC/POS komentosarja ja tulostusmahdollisuudet LV Electronics -kuiteille</p>
+        </div>
+
+        <!-- Tulostimen tekniset tiedot -->
+        <div class="specs">
+            <h3>📋 Tulostimen tekniset tiedot</h3>
+            <div class="specs-grid">
+                <div>
+                    <strong>Malli:</strong> Epson TM-T70II<br>
+                    <strong>Tyyppi:</strong> Thermal Receipt Printer<br>
+                    <strong>Tulostusleveys:</strong> 80mm (3.15")<br>
+                    <strong>Merkkejä/rivi:</strong> 48 merkkiä (12 CPI)
+                </div>
+                <div>
+                    <strong>Liitännät:</strong> USB, Serial (RS-232), Ethernet<br>
+                    <strong>Komennot:</strong> ESC/POS<br>
+                    <strong>Automaattileikkuri:</strong> Kyllä<br>
+                    <strong>Käyttöjärjestelmät:</strong> Windows, Linux, macOS
+                </div>
+            </div>
+        </div>
+
+        <div class="content-grid">
+            <!-- Yksinkertaiset tulostusmahdollisuudet -->
+            <div class="card">
+                <h3>🎯 Yksinkertaiset tulostusmahdollisuudet</h3>
+                
+                <div class="method">
+                    <div class="method-title">1. Windows - Notepad tulostus</div>
+                    <p>Lataa TXT-tiedosto web-kassasta ja tulosta Notepadissa:</p>
+                    <div class="code-block">1. Avaa kuitti.txt Notepadissa
+2. Ctrl+P tai File → Print
+3. Valitse "TM-T70II" tulostin
+4. Print Settings: 
+   - Paper: Receipt Paper
+   - Quality: Draft (nopeampi)
+5. Paina OK</div>
+                </div>
+
+                <div class="method">
+                    <div class="method-title">2. Copy-Paste POS-ohjelmiin</div>
+                    <p>Kopioi kuittiteksti suoraan POS-ohjelmaan:</p>
+                    <div class="code-block">1. Valitse kuittiteksti web-kassasta
+2. Ctrl+C (kopioi)
+3. Avaa POS-ohjelma (esim. kassaohjelma)
+4. Liitä teksti tulostus-alueeseen
+5. Lähetä tulostimeen</div>
+                </div>
+
+                <div class="method">
+                    <div class="method-title">3. Web-selaimen tulostus</div>
+                    <p>Käytä selaimen sisäänrakennettua tulostustoimintoa:</p>
+                    <div class="code-block">1. Web-kassassa: "🖨️ Selaimen tulostus"
+2. Valitse tulostimeksi "TM-T70II"
+3. Asetukset:
+   - Layout: Portrait
+   - Margins: Minimum
+   - Scale: 100%
+4. Tulosta</div>
+                </div>
+            </div>
+
+            <!-- Kehittyneet menetelmät -->
+            <div class="card">
+                <h3>⚙️ Kehittyneet menetelmät</h3>
+                
+                <div class="method">
+                    <div class="method-title">4. ESC/POS JavaScript (Chrome)</div>
+                    <p>Web Serial API (vaatii HTTPS tai localhost):</p>
+                    <div class="code-block">// Avaa sarja-porttiyhteys
+const port = await navigator.serial.requestPort();
+await port.open({ baudRate: 9600 });
+
+// ESC/POS komennot
+const writer = port.writable.getWriter();
+const encoder = new TextEncoder();
+
+// Alusta tulostin
+await writer.write(encoder.encode('\x1B\x40'));
+
+// Tulosta kuitti
+await writer.write(encoder.encode(kuittiteksti));
+
+// Leikkaa paperi
+await writer.write(encoder.encode('\x1D\x56\x00'));
+
+writer.releaseLock();
+await port.close();</div>
+                    <button class="button" onclick="testESCPOS()">🧪 Testaa ESC/POS</button>
+                </div>
+
+                <div class="method">
+                    <div class="method-title">5. USB Raw Printing (Windows)</div>
+                    <p>Suora USB-tulostus ilman drivereita:</p>
+                    <div class="code-block">// PowerShell skripti
+$printer = "TM-T70II"
+$text = Get-Content "kuitti.txt"
+
+# Lähetä suoraan USB:iin
+Out-Printer -Name $printer -InputObject $text</div>
+                </div>
+
+                <div class="method">
+                    <div class="method-title">6. Network/IP Printing</div>
+                    <p>Jos tulostin on verkossa (Ethernet malli):</p>
+                    <div class="code-block"># Linux/macOS terminal
+echo "kuittiteksti" | nc 192.168.1.100 9100
+
+# Windows PowerShell
+$ip = "192.168.1.100"
+$port = 9100
+$socket = New-Object System.Net.Sockets.TcpClient($ip, $port)
+$stream = $socket.GetStream()
+$writer = New-Object System.IO.StreamWriter($stream)
+$writer.WriteLine($kuittiteksti)
+$writer.Flush()
+$socket.Close()</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ESC/POS komennot -->
+        <div class="card">
+            <h3>📟 ESC/POS komentosarja TM-T70II:lle</h3>
+            
+            <div class="warning">
+                ⚠️ Huom: ESC/POS komennot toimivat suorassa sarjaliikenne- tai USB-yhteydessä. 
+                Web-selaimessa tarvitaan Web Serial API tai erillinen POS-ohjelma.
+            </div>
+
+            <div class="method">
+                <div class="method-title">Perustoiminnot</div>
+                <div class="code-block">// Alusta tulostin (ESC @)
+\x1B\x40
+
+// Keskitä teksti (ESC a 1)  
+\x1B\x61\x01
+
+// Lihavointi päälle (ESC E 1)
+\x1B\x45\x01
+
+// Lihavointi pois (ESC E 0) 
+\x1B\x45\x00
+
+// Fonttikoko 2x (GS ! 17)
+\x1D\x21\x11
+
+// Normaalikoko (GS ! 0)
+\x1D\x21\x00
+
+// Rivinvaihto
+\x0A
+
+// Leikkaa paperi (GS V 0)
+\x1D\x56\x00
+
+// Avaa kassilokero (ESC p 0 25 250)
+\x1B\x70\x00\x19\xFA</div>
+            </div>
+
+            <div class="method">
+                <div class="method-title">LV Electronics kuitti ESC/POS:lla</div>
+                <div class="code-block" id="escposExample">Lataa esimerkkikoodi...</div>
+                <button class="button" onclick="generoiESCPOS()">🔄 Generoi ESC/POS koodi</button>
+                <button class="button" onclick="kopioiESCPOS()">📋 Kopioi koodi</button>
+            </div>
+        </div>
+
+        <!-- Asennusohjeet -->
+        <div class="card">
+            <h3>💿 Asennusohjeet</h3>
+            
+            <div class="method">
+                <div class="method-title">Windows 11 asennus</div>
+                <div class="code-block">1. Lataa Epson TM-T70II Windows-driveri:
+   - Epson virallinen sivusto
+   - Advanced Printer Driver v6.xx
+
+2. Liitä tulostin USB:lla tai verkkokaapelilla
+
+3. Asenna driveri:
+   - Suorita EPSONxxxxx.exe
+   - Seuraa asennusohjeita
+   - Valitse yhteysmenetelmä (USB/Network)
+
+4. Testaa tulostus:
+   - Devices & Printers → TM-T70II
+   - Print Test Page
+
+5. Aseta oletustulostimeksi (valinnainen)</div>
+            </div>
+
+            <div class="method">
+                <div class="method-title">POS-ohjelman integrointi</div>
+                <div class="code-block">Yleiset kassaohjelmat jotka tukevat TM-T70II:
+
+• Square POS
+• Shopify POS  
+• Loyverse POS (ilmainen)
+• EPOS Now
+• Lightspeed Retail
+• Toast POS
+• Windows Store: "POS Printer Driver"
+
+Asetukset:
+- Printer Model: TM-T70II / TM-T70
+- Connection: USB tai Network
+- Paper Width: 80mm
+- Character Set: CP-1252 (Western European)</div>
+            </div>
+        </div>
+
+        <!-- Vianmääritys -->
+        <div class="card">
+            <h3>🔧 Vianmääritys</h3>
+            
+            <div class="method">
+                <div class="method-title">Yleiset ongelmat ja ratkaisut</div>
+                <div class="code-block">❌ Tulostin ei reagoi:
+✅ Tarkista virtajohto ja USB-kaapeli
+✅ Varmista että paperi on paikallaan
+✅ Kokeile Device Manager → Update Driver
+
+❌ Kuitti tulostuu väärin:
+✅ Aseta Character encoding: UTF-8 → Windows-1252
+✅ Tarkista paperin leveys (80mm)
+✅ Säädä tulostimen DIP-kytkimet
+
+❌ Automaattileikkuri ei toimi:
+✅ Tarkista että leikkurikomento lähetetään (\x1D\x56\x00)
+✅ Puhdista leikkuri alkoholilla
+✅ Tarkista leikkurin asetukset driverissä
+
+❌ Verkko-ongelmat (Ethernet-malli):
+✅ Tarkista IP-osoite: ping 192.168.1.100  
+✅ Portti 9100 avoinna: telnet 192.168.1.100 9100
+✅ Reset network settings: pidä FEED 10 sek käynnistyksessä</div>
+            </div>
+        </div>
+
+        <!-- Takaisin web-kassaan -->
+        <div style="text-align: center; margin-top: 30px;">
+            <button class="button" onclick="window.close()" style="font-size: 16px; padding: 15px 30px;">
+                ⬅️ Takaisin web-kassaan
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // ========== ESC/POS GENERAATTORI ==========
+        function generoiESCPOS() {
+            const kuittiteksti = `╔═══════════════════════════╗
+║    ██╗     ██╗   ██╗     ║
+║    ██║     ██║   ██║     ║
+║    ███████╗ ╚████╔╝      ║
+║   LV Electronics          ║
+╚═══════════════════════════╝
+
+LV Electronics
+Hämeentie 123, 00500 Helsinki
+Tel: +358 50 123 4567
+Y-tunnus: 1234567-8
+
+==================================================
+KUITTI #000001 - ${new Date().toLocaleDateString('fi-FI')}
+==================================================
+
+Tuote                     Määrä    À hinta      Yht.
+--------------------------------------------------
+iPhone 15 Pro                 1   1299.00€   1299.00€
+USB-C Kaapeli                 2     25.00€     50.00€
+
+--------------------------------------------------
+Välisumma (veroton):                     1088.71€
+ALV 24%:                                  261.29€
+==================================================
+YHTEENSÄ:                               1349.00€
+==================================================
+
+Kiitos käynnistänne!
+
+`;
+
+            // Muunna ESC/POS komennoiksi
+            let escpos = '';
+            
+            // Alusta tulostin
+            escpos += '\\x1B\\x40'; // ESC @
+            
+            // Keskitä otsikko
+            escpos += '\\x1B\\x61\\x01'; // ESC a 1 (center)
+            escpos += '\\x1B\\x45\\x01'; // ESC E 1 (bold on)
+            escpos += '\\x1D\\x21\\x11'; // GS ! 17 (2x size)
+            
+            // Logo ja otsikko
+            const rivit = kuittiteksti.split('\\n');
+            rivit.slice(0, 12).forEach(rivi => {
+                escpos += rivi.replace(/[\\x00-\\x1F\\x7F-\\xFF]/g, '') + '\\x0A';
+            });
+            
+            // Palaa normaaliin
+            escpos += '\\x1D\\x21\\x00'; // Normal size
+            escpos += '\\x1B\\x45\\x00'; // Bold off
+            escpos += '\\x1B\\x61\\x00'; // Left align
+            
+            // Yritystiedot ja kuitti
+            rivit.slice(12).forEach(rivi => {
+                if (rivi.includes('YHTEENSÄ')) {
+                    escpos += '\\x1B\\x45\\x01'; // Bold on
+                    escpos += '\\x1D\\x21\\x11'; // 2x size
+                }
+                escpos += rivi + '\\x0A';
+                if (rivi.includes('YHTEENSÄ')) {
+                    escpos += '\\x1D\\x21\\x00'; // Normal size
+                    escpos += '\\x1B\\x45\\x00'; // Bold off
+                }
+            });
+            
+            // Leikkaa paperi
+            escpos += '\\x0A\\x0A\\x0A'; // 3 rivinvaihtoa
+            escpos += '\\x1D\\x56\\x00'; // Cut paper
+            
+            // Näytä JavaScript-muodossa
+            const jsCode = `// ESC/POS komennot Epson TM-T70II:lle
+const escposCommands = "${escpos}";
+
+// Lähetä USB Serial -yhteydellä
+async function printToTM70II() {
+    try {
+        // Pyydä sarjaportin käyttöoikeus
+        const port = await navigator.serial.requestPort();
+        await port.open({ 
+            baudRate: 9600, 
+            dataBits: 8, 
+            parity: 'none', 
+            stopBits: 1 
+        });
+        
+        const writer = port.writable.getWriter();
+        const encoder = new TextEncoder();
+        
+        // Muunna hex-koodit binäärisiksi
+        const binaryData = escposCommands.replace(/\\\\x([0-9A-F]{2})/g, (match, hex) => {
+            return String.fromCharCode(parseInt(hex, 16));
+        });
+        
+        // Lähetä tulostimeen
+        await writer.write(encoder.encode(binaryData));
+        
+        writer.releaseLock();
+        await port.close();
+        
+        console.log('Kuitti lähetetty TM-T70II tulostimeen!');
+    } catch (error) {
+        console.error('Tulostusvirhe:', error);
+        alert('Tulostus epäonnistui: ' + error.message);
+    }
+}
+
+// Käytä: printToTM70II();`;
+
+            document.getElementById('escposExample').textContent = jsCode;
+        }
+
+        function kopioiESCPOS() {
+            const koodi = document.getElementById('escposExample').textContent;
+            
+            // Kopioi leikepöydälle
+            navigator.clipboard.writeText(koodi).then(() => {
+                alert('ESC/POS koodi kopioitu leikepöydälle!');
+            }).catch(err => {
+                // Fallback vanhemmille selaimille
+                const textArea = document.createElement('textarea');
+                textArea.value = koodi;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                alert('Koodi kopioitu leikepöydälle!');
+            });
+        }
+
+        function testESCPOS() {
+            if (!navigator.serial) {
+                alert('Web Serial API ei ole käytettävissä tässä selaimessa.\\n\\nKokeile Chrome 89+ tai Edge 89+ ja varmista että sivusto on HTTPS:llä tai localhost:lla.');
+                return;
+            }
+            
+            const testKoodi = `// Testaa ESC/POS yhteys
+async function testConnection() {
+    try {
+        const port = await navigator.serial.requestPort();
+        await port.open({ baudRate: 9600 });
+        
+        const writer = port.writable.getWriter();
+        const encoder = new TextEncoder();
+        
+        // Lähetä testiteksti
+        await writer.write(encoder.encode('\\x1B\\x40')); // Init
+        await writer.write(encoder.encode('LV Electronics Testi\\n'));
+        await writer.write(encoder.encode('TM-T70II OK!\\n\\n\\n'));
+        await writer.write(encoder.encode('\\x1D\\x56\\x00')); // Cut
+        
+        writer.releaseLock();
+        await port.close();
+        
+        alert('Testi lähetetty tulostimeen!');
+    } catch (error) {
+        alert('Virhe: ' + error.message);
+    }
+}
+
+testConnection();`;
+            
+            // Suorita testikoodi
+            eval(testKoodi);
+        }
+
+        // Alustus
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('🖨️ Epson TM-T70II ohjesivusto ladattu');
+            generoiESCPOS(); // Generoi esimerkkikoodi automaattisesti
+        });
+    </script>
+</body>
+</html>

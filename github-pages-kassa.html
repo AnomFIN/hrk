@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LV Electronics - GitHub Pages Kassa</title>
+    <style>
+        /* ========== YLEISET TYYLIT ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 10px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            overflow: hidden;
+        }
+
+        /* ========== HEADER ========== */
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .logo {
+            font-family: 'Courier New', monospace;
+            margin-bottom: 10px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .logo-ascii {
+            font-size: 10px;
+            line-height: 1.2;
+            margin: 10px 0;
+            white-space: pre;
+            font-family: 'Courier New', monospace;
+        }
+
+        .github-badge {
+            background: rgba(255,255,255,0.1);
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            margin-top: 10px;
+            display: inline-block;
+        }
+
+        /* ========== MAIN LAYOUT ========== */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 450px;
+            gap: 0;
+            min-height: 650px;
+        }
+
+        .kassa-alue {
+            padding: 25px;
+        }
+
+        .kuitti-alue {
+            background: #f8f9fa;
+            border-left: 2px solid #e9ecef;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ========== TUOTE-LOMAKE ========== */
+        .tuote-lomake {
+            background: #ffffff;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+
+        .lomake-otsikko {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .lomake-kentat {
+            display: grid;
+            grid-template-columns: 2fr 100px 120px 120px;
+            gap: 15px;
+            align-items: end;
+        }
+
+        .kentta-ryhmä {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: 600;
+            color: #34495e;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        input[type="text"], input[type="number"] {
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #fafbfc;
+        }
+
+        input[type="text"]:focus, input[type="number"]:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.15);
+            background: white;
+        }
+
+        .lisää-nappi {
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .lisää-nappi:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(46, 204, 113, 0.4);
+        }
+
+        /* ========== TUOTELISTA ========== */
+        .tuotelista-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tuotelista-otsikko {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tuotelista {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            overflow: hidden;
+            border: 2px solid #e9ecef;
+        }
+
+        .tuote-header {
+            background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%);
+            color: white;
+            padding: 15px;
+            display: grid;
+            grid-template-columns: 2fr 80px 100px 100px 60px;
+            gap: 15px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .tuote-rivi {
+            display: grid;
+            grid-template-columns: 2fr 80px 100px 100px 60px;
+            gap: 15px;
+            padding: 15px;
+            border-bottom: 1px solid #f1f3f4;
+            align-items: center;
+            transition: all 0.2s ease;
+        }
+
+        .tuote-rivi:hover {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+
+        .tuote-rivi:last-child {
+            border-bottom: none;
+        }
+
+        .poista-nappi {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .poista-nappi:hover {
+            transform: scale(1.15) rotate(90deg);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+        }
+
+        /* ========== SUMMAT ========== */
+        .summat {
+            background: linear-gradient(135deg, #ecf0f1 0%, #d5dbdb 100%);
+            padding: 25px;
+            border-radius: 12px;
+            margin: 20px 0;
+            border: 2px solid #bdc3c7;
+        }
+
+        .summa-rivi {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .kokonaissumma {
+            font-size: 26px;
+            font-weight: bold;
+            color: #27ae60;
+            border-top: 3px solid #34495e;
+            padding-top: 15px;
+            margin-top: 15px;
+        }
+
+        /* ========== TULOSTUS-TOIMINNOT ========== */
+        .tulostus-toiminnot {
+            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .tulostus-otsikko {
+            font-size: 16px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tulostus-napit {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .tulostus-nappi {
+            padding: 12px 18px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .browser-print {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+        }
+
+        .browser-print:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+        }
+
+        .txt-download {
+            background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+        }
+
+        .txt-download:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(155, 89, 182, 0.4);
+        }
+
+        .pos-print {
+            background: linear-gradient(135deg, #e67e22 0%, #d35400 100%);
+            grid-column: span 2;
+        }
+
+        .pos-print:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(230, 126, 34, 0.4);
+        }
+
+        /* ========== MUUT TOIMINNOT ========== */
+        .muut-toiminnot {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .toiminto-nappi {
+            padding: 15px 25px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .tyhjenna-nappi {
+            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+            color: white;
+        }
+
+        .tyhjenna-nappi:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(243, 156, 18, 0.4);
+        }
+
+        .tallenna-nappi {
+            background: linear-gradient(135deg, #16a085 0%, #1abc9c 100%);
+            color: white;
+        }
+
+        .tallenna-nappi:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(26, 188, 156, 0.4);
+        }
+
+        /* ========== KUITTI-ESIKATSELU ========== */
+        .kuitti-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .kuitti-otsikko {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .kuitti-esikatselu {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            flex: 1;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            line-height: 1.4;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .kuitti-sisalto {
+            padding: 20px;
+            white-space: pre-line;
+            min-height: 100%;
+        }
+
+        /* ========== POS PRINTER INFO ========== */
+        .pos-info {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+            border: 2px solid #f1c40f;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            font-size: 13px;
+        }
+
+        .pos-info-title {
+            font-weight: bold;
+            color: #f39c12;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 1200px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .kuitti-alue {
+                border-left: none;
+                border-top: 2px solid #e9ecef;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .lomake-kentat {
+                grid-template-columns: 1fr;
+            }
+            
+            .tuote-header, .tuote-rivi {
+                grid-template-columns: 2fr 1fr;
+                text-align: left;
+            }
+            
+            .tuote-header > div:nth-child(n+3),
+            .tuote-rivi > div:nth-child(n+3) {
+                display: none;
+            }
+            
+            .tulostus-napit {
+                grid-template-columns: 1fr;
+            }
+            
+            .pos-print {
+                grid-column: span 1;
+            }
+        }
+
+        /* ========== TULOSTUSTYYLIT ========== */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            
+            .kuitti-tulostus, .kuitti-tulostus * {
+                visibility: visible;
+            }
+            
+            .kuitti-tulostus {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                font-family: 'Courier New', monospace;
+                font-size: 12px;
+                line-height: 1.4;
+                white-space: pre-line;
+            }
+            
+            @page {
+                margin: 0.5in;
+                size: auto;
+            }
+        }
+
+        .kuitti-tulostus {
+            display: none;
+        }
+
+        /* ========== ANIMAATIOT ========== */
+        @keyframes lisaysAnimaatio {
+            from {
+                opacity: 0;
+                transform: translateX(-30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+            }
+        }
+
+        .tuote-rivi.uusi {
+            animation: lisaysAnimaatio 0.6s ease-out;
+        }
+
+        @keyframes pulssi {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .nappi-painettu {
+            animation: pulssi 0.3s ease-in-out;
+        }
+
+        /* ========== ILMOITUKSET ========== */
+        .ilmoitus {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 10px;
+            color: white;
+            font-weight: bold;
+            z-index: 1000;
+            transform: translateX(400px);
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            max-width: 300px;
+        }
+
+        .ilmoitus.onnistui {
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+        }
+
+        .ilmoitus.virhe {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+        }
+
+        .ilmoitus.info {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+        }
+
+        .ilmoitus.nakyva {
+            transform: translateX(0);
+        }
+
+        /* ========== LOADING SPINNER ========== */
+        .loading {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">LV Electronics</div>
+            <div class="logo-ascii">╔═══════════════════════════╗
+║    ██╗     ██╗   ██╗     ║
+║    ██║     ██║   ██║     ║
+║    ██║     ╚██╗ ██╔╝     ║
+║    ███████╗ ╚████╔╝      ║
+║    ╚══════╝  ╚═══╝       ║
+║   LV Electronics          ║
+╚═══════════════════════════╝</div>
+            <p>Hämeentie 123, 00500 Helsinki | Tel: +358 50 123 4567 | Y-tunnus: 1234567-8</p>
+            <div class="github-badge">✨ GitHub Pages Edition - Toimii ilman palvelinta</div>
+        </div>
+
+        <div class="main-content">
+            <!-- Kassa-alue -->
+            <div class="kassa-alue">
+                <!-- Tuote-lomake -->
+                <div class="tuote-lomake">
+                    <div class="lomake-otsikko">
+                        🛒 Lisää tuote kuittiin
+                    </div>
+                    <div class="lomake-kentat">
+                        <div class="kentta-ryhmä">
+                            <label for="tuoteNimi">Tuotteen nimi</label>
+                            <input type="text" id="tuoteNimi" placeholder="Esim. iPhone 15 Pro" required>
+                        </div>
+                        <div class="kentta-ryhmä">
+                            <label for="tuoteMaara">Määrä</label>
+                            <input type="number" id="tuoteMaara" value="1" min="1" required>
+                        </div>
+                        <div class="kentta-ryhmä">
+                            <label for="tuoteHinta">Hinta (€)</label>
+                            <input type="number" id="tuoteHinta" step="0.01" placeholder="0.00" required>
+                        </div>
+                        <div class="kentta-ryhmä">
+                            <label>&nbsp;</label>
+                            <button class="lisää-nappi" onclick="lisääTuote()">
+                                ➕ Lisää kuittiin
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tuotelista -->
+                <div class="tuotelista-container">
+                    <div class="tuotelista-otsikko">
+                        📋 Tuotteet kuitilla (<span id="tuoteMaara">0</span>)
+                    </div>
+                    <div class="tuotelista">
+                        <div class="tuote-header">
+                            <div>Tuote</div>
+                            <div>Määrä</div>
+                            <div>Hinta (€)</div>
+                            <div>Yhteensä (€)</div>
+                            <div></div>
+                        </div>
+                        <div id="tuoteListaContainer">
+                            <div style="padding: 40px; text-align: center; color: #7f8c8d; font-style: italic;">
+                                🛍️ Ei tuotteita kuitilla<br>
+                                <small>Lisää tuotteita yllä olevan lomakkeen kautta</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Summat -->
+                <div class="summat">
+                    <div class="summa-rivi">
+                        <span>Välisumma (veroton):</span>
+                        <span id="valisumma">0.00 €</span>
+                    </div>
+                    <div class="summa-rivi">
+                        <span>ALV (24%):</span>
+                        <span id="alv">0.00 €</span>
+                    </div>
+                    <div class="summa-rivi kokonaissumma">
+                        <span>YHTEENSÄ:</span>
+                        <span id="kokonaissumma">0.00 €</span>
+                    </div>
+                </div>
+
+                <!-- Tulostus-toiminnot -->
+                <div class="tulostus-toiminnot">
+                    <div class="tulostus-otsikko">
+                        🖨️ Tulostusmahdollisuudet
+                    </div>
+                    <div class="tulostus-napit">
+                        <button class="tulostus-nappi browser-print" onclick="tulostaSelaimestaWindow()">
+                            🖥️ Selaimen tulostus
+                        </button>
+                        <button class="tulostus-nappi txt-download" onclick="lataaTxtTiedosto()">
+                            📄 Lataa TXT
+                        </button>
+                        <button class="tulostus-nappi pos-print" onclick="näytäEpsonOhje()">
+                            🏪 Epson TM-T70II -ohjeet
+                        </button>
+                    </div>
+                    <div class="pos-info" id="epsonOhje" style="display: none;">
+                        <div class="pos-info-title">
+                            🏪 Epson TM-T70II Thermal Printer
+                        </div>
+                        <div>
+                            <strong>Tulostusmahdollisuudet:</strong><br>
+                            1. <strong>Windows:</strong> Lataa TXT-tiedosto ja avaa Notepadissa, tulosta Ctrl+P<br>
+                            2. <strong>POS-ohjelmat:</strong> Kopioi kuittiteksti alla olevasta esikatselu-alueesta<br>
+                            3. <strong>USB/Serial:</strong> Käytä ESC/POS komentoja (katso dev-työkalut)<br>
+                            4. <strong>Network:</strong> Jos tulostin tukee IP-tulostusta
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Muut toiminnot -->
+                <div class="muut-toiminnot">
+                    <button class="toiminto-nappi tyhjenna-nappi" onclick="tyhjennaKuitti()">
+                        🗑️ Tyhjennä kuitti
+                    </button>
+                    <button class="toiminto-nappi tallenna-nappi" onclick="tallennaLocalStorage()">
+                        💾 Tallenna paikallisesti
+                    </button>
+                </div>
+            </div>
+
+            <!-- Kuitti-esikatselu -->
+            <div class="kuitti-alue">
+                <div class="kuitti-container">
+                    <div class="kuitti-otsikko">
+                        📄 Kuitti-esikatselu
+                        <div class="loading" id="loadingSpinner"></div>
+                    </div>
+                    <div class="kuitti-esikatselu">
+                        <div class="kuitti-sisalto" id="kuittiSisalto">
+Lisää tuotteita nähdäksesi kuitti-esikatselun...
+
+Tulostus toimii GitHub Pages:issa ilman palvelinta:
+• Selaimen tulostus (Chrome, Firefox, Safari, Edge)
+• TXT-tiedoston lataus
+• Kopiointi/liittäminen POS-ohjelmiin</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Piilotettu tulostusalue -->
+    <div class="kuitti-tulostus" id="kuittiTulostus"></div>
+
+    <script>
+        // ========== POLYFILLS VANHEMMILLE SELAIMILLE ==========
+        // String.prototype.padStart polyfill
+        if (!String.prototype.padStart) {
+            String.prototype.padStart = function padStart(targetLength, padString) {
+                targetLength = targetLength >> 0; // truncate if number or convert non-number to 0;
+                padString = String((typeof padString !== 'undefined' ? padString : ' '));
+                if (this.length > targetLength) {
+                    return String(this);
+                }
+                else {
+                    targetLength = targetLength - this.length;
+                    if (targetLength > padString.length) {
+                        padString += padString.repeat(targetLength / padString.length); // append to original to ensure we are longer than needed
+                    }
+                    return padString.slice(0, targetLength) + String(this);
+                }
+            };
+        }
+
+        // String.prototype.padEnd polyfill
+        if (!String.prototype.padEnd) {
+            String.prototype.padEnd = function padEnd(targetLength, padString) {
+                targetLength = targetLength >> 0; // floor if number or convert non-number to 0;
+                padString = String((typeof padString !== 'undefined' ? padString : ' '));
+                if (this.length > targetLength) {
+                    return String(this);
+                }
+                else {
+                    targetLength = targetLength - this.length;
+                    if (targetLength > padString.length) {
+                        padString += padString.repeat(targetLength / padString.length); // append to original to ensure we are longer than needed
+                    }
+                    return String(this) + padString.slice(0, targetLength);
+                }
+            };
+        }
+
+        // String.prototype.repeat polyfill (tarvitaan padStart/padEnd:lle)
+        if (!String.prototype.repeat) {
+            String.prototype.repeat = function(count) {
+                'use strict';
+                if (this == null) {
+                    throw new TypeError('can\'t convert ' + this + ' to object');
+                }
+                var str = '' + this;
+                count = +count;
+                if (count != count) {
+                    count = 0;
+                }
+                if (count < 0) {
+                    throw new RangeError('repeat count must be non-negative');
+                }
+                if (count == Infinity) {
+                    throw new RangeError('repeat count must be less than infinity');
+                }
+                count = Math.floor(count);
+                if (str.length == 0 || count == 0) {
+                    return '';
+                }
+                var result = '';
+                while (count > 0) {
+                    if (count % 2 == 1) {
+                        result += str;
+                    }
+                    if (count > 1) {
+                        str += str;
+                    }
+                    count >>= 1;
+                }
+                return result;
+            };
+        }
+
+        // ========== GLOBAALIT MUUTTUJAT ==========
+        let tuotteet = [];
+        let seuraavaId = 1;
+        let kuittiNumero = 1;
+
+        // ========== TUOTE-LUOKKA ==========
+        class Tuote {
+            constructor(id, nimi, maara, hinta) {
+                this.id = id;
+                this.nimi = nimi;
+                this.maara = parseInt(maara);
+                this.hinta = parseFloat(hinta);
+            }
+
+            yhteensa() {
+                return this.maara * this.hinta;
+            }
+        }
+
+        // ========== LOCAL STORAGE HALLINTA ==========
+        function lataaLocalStorage() {
+            try {
+                const tallennettuData = localStorage.getItem('lv-electronics-kuitti');
+                if (tallennettuData) {
+                    const data = JSON.parse(tallennettuData);
+                    if (data.tuotteet && Array.isArray(data.tuotteet)) {
+                        tuotteet = data.tuotteet.map(t => new Tuote(t.id, t.nimi, t.maara, t.hinta));
+                        seuraavaId = data.seuraavaId || tuotteet.length + 1;
+                        kuittiNumero = data.kuittiNumero || 1;
+                        päivitäKaikkiNäkymät();
+                        näytäIlmoitus('Tallennettu kuitti ladattu!', 'info');
+                    }
+                }
+            } catch (error) {
+                console.error('LocalStorage latausvirhe:', error);
+            }
+        }
+
+        function tallennaLocalStorage() {
+            try {
+                const data = {
+                    tuotteet: tuotteet,
+                    seuraavaId: seuraavaId,
+                    kuittiNumero: kuittiNumero,
+                    tallennettu: new Date().toISOString()
+                };
+                localStorage.setItem('lv-electronics-kuitti', JSON.stringify(data));
+                näytäIlmoitus('Kuitti tallennettu paikallisesti!', 'onnistui');
+            } catch (error) {
+                console.error('LocalStorage tallennusvirhe:', error);
+                näytäIlmoitus('Tallennus epäonnistui!', 'virhe');
+            }
+        }
+
+        // ========== TUOTTEEN LISÄÄMINEN ==========
+        function lisääTuote() {
+            const nimi = document.getElementById('tuoteNimi').value.trim();
+            const maara = document.getElementById('tuoteMaara').value;
+            const hinta = document.getElementById('tuoteHinta').value;
+
+            // Validointi
+            if (!nimi || !maara || !hinta) {
+                näytäIlmoitus('Täytä kaikki kentät!', 'virhe');
+                return;
+            }
+
+            if (parseInt(maara) <= 0) {
+                näytäIlmoitus('Määrä pitää olla positiivinen!', 'virhe');
+                return;
+            }
+
+            if (parseFloat(hinta) < 0) {
+                näytäIlmoitus('Hinta ei voi olla negatiivinen!', 'virhe');
+                return;
+            }
+
+            // Lisää tuote animaatiolla
+            const nappi = document.querySelector('.lisää-nappi');
+            nappi.classList.add('nappi-painettu');
+            setTimeout(() => nappi.classList.remove('nappi-painettu'), 300);
+
+            const tuote = new Tuote(seuraavaId++, nimi, maara, hinta);
+            tuotteet.push(tuote);
+
+            // Päivitä näkymät
+            päivitäKaikkiNäkymät();
+            tyhjennäLomake();
+            
+            näytäIlmoitus(`Tuote "${nimi}" lisätty kuittiin!`, 'onnistui');
+        }
+
+        // ========== TUOTTEEN POISTAMINEN ==========
+        function poistaTuote(id) {
+            const tuote = tuotteet.find(t => t.id === id);
+            tuotteet = tuotteet.filter(tuote => tuote.id !== id);
+            päivitäKaikkiNäkymät();
+            
+            if (tuote) {
+                näytäIlmoitus(`"${tuote.nimi}" poistettu kuittilta!`, 'onnistui');
+            }
+        }
+
+        // ========== KUITIN TYHJENTÄMINEN ==========
+        function tyhjennaKuitti() {
+            if (tuotteet.length === 0) {
+                näytäIlmoitus('Kuitti on jo tyhjä!', 'virhe');
+                return;
+            }
+
+            if (confirm(`Haluatko varmasti tyhjentää koko kuitin?\n(${tuotteet.length} tuotetta)`)) {
+                tuotteet = [];
+                seuraavaId = 1;
+                päivitäKaikkiNäkymät();
+                näytäIlmoitus('Kuitti tyhjennetty!', 'onnistui');
+            }
+        }
+
+        // ========== NÄKYMIEN PÄIVITYS ==========
+        function päivitäKaikkiNäkymät() {
+            päivitäTuotelista();
+            päivitäSummat();
+            päivitäKuittiEsikatselu();
+            päivitäTuoteMäärä();
+        }
+
+        function tyhjennäLomake() {
+            document.getElementById('tuoteNimi').value = '';
+            document.getElementById('tuoteMaara').value = '1';
+            document.getElementById('tuoteHinta').value = '';
+            document.getElementById('tuoteNimi').focus();
+        }
+
+        function päivitäTuoteMäärä() {
+            document.getElementById('tuoteMaara').textContent = tuotteet.length;
+        }
+
+        function päivitäTuotelista() {
+            const container = document.getElementById('tuoteListaContainer');
+            
+            if (tuotteet.length === 0) {
+                container.innerHTML = 
+                    '<div style="padding: 40px; text-align: center; color: #7f8c8d; font-style: italic;">' +
+                        '🛍️ Ei tuotteita kuitilla<br>' +
+                        '<small>Lisää tuotteita yllä olevan lomakkeen kautta</small>' +
+                    '</div>';
+                return;
+            }
+
+            const html = tuotteet.map(tuote => 
+                '<div class="tuote-rivi uusi">' +
+                    '<div title="' + tuote.nimi + '">' + (tuote.nimi.length > 25 ? tuote.nimi.substring(0, 25) + '...' : tuote.nimi) + '</div>' +
+                    '<div>' + tuote.maara + ' kpl</div>' +
+                    '<div>' + tuote.hinta.toFixed(2) + ' €</div>' +
+                    '<div>' + tuote.yhteensa().toFixed(2) + ' €</div>' +
+                    '<div>' +
+                        '<button class="poista-nappi" onclick="poistaTuote(' + tuote.id + ')" title="Poista tuote \'' + tuote.nimi.replace(/'/g, '&#39;') + '\'">' +
+                            '✕' +
+                        '</button>' +
+                    '</div>' +
+                '</div>'
+            ).join('');
+
+            container.innerHTML = html;
+        }
+
+        function päivitäSummat() {
+            const valisumma = tuotteet.reduce((summa, tuote) => summa + tuote.yhteensa(), 0);
+            const alv = valisumma * 0.24;
+            const kokonaissumma = valisumma + alv;
+
+            document.getElementById('valisumma').textContent = valisumma.toFixed(2) + ' €';
+            document.getElementById('alv').textContent = alv.toFixed(2) + ' €';
+            document.getElementById('kokonaissumma').textContent = kokonaissumma.toFixed(2) + ' €';
+        }
+
+        // ========== KUITTI-ESIKATSELUN PÄIVITYS ==========
+        function päivitäKuittiEsikatselu() {
+            const kuittiSisalto = document.getElementById('kuittiSisalto');
+            
+            if (tuotteet.length === 0) {
+                kuittiSisalto.textContent = 'Lisää tuotteita nähdäksesi kuitti-esikatselun...\n\n' +
+'Tulostus toimii GitHub Pages:issa ilman palvelinta:\n' +
+'• Selaimen tulostus (Chrome, Firefox, Safari, Edge)\n' +  
+'• TXT-tiedoston lataus\n' +
+'• Kopiointi/liittäminen POS-ohjelmiin';
+                return;
+            }
+
+            const kuittiteksti = muodostaKuittiteksti();
+            kuittiSisalto.textContent = kuittiteksti;
+        }
+
+        // ========== KUITTITEKSTI ==========
+        function muodostaKuittiteksti() {
+            const nyt = new Date();
+            const pvm = nyt.toLocaleDateString('fi-FI', { 
+                day: '2-digit', 
+                month: '2-digit', 
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+
+            let kuitti = '╔═══════════════════════════╗\n' +
+'║                           ║\n' +
+'║    ██╗     ██╗   ██╗     ║\n' +
+'║    ██║     ██║   ██║     ║\n' +
+'║    ██║     ██║   ██║     ║\n' +
+'║    ██║     ╚██╗ ██╔╝     ║\n' +
+'║    ███████╗ ╚████╔╝      ║\n' +
+'║    ╚══════╝  ╚═══╝       ║\n' +
+'║                           ║\n' +
+'║   LV Electronics          ║\n' +
+'║                           ║\n' +
+'╚═══════════════════════════╝\n\n' +
+'LV Electronics\n' +
+'Hämeentie 123, 00500 Helsinki\n' +
+'Tel: +358 50 123 4567\n' +
+'Y-tunnus: 1234567-8\n\n' +
+'==================================================\n' +
+'KUITTI #' + String(kuittiNumero).padStart(6, '0') + ' - ' + pvm + '\n' +
+'==================================================\n\n';
+
+            if (tuotteet.length > 0) {
+                kuitti += 'Tuote'.padEnd(25) + ' ' + 'Määrä'.padStart(5) + ' ' + 'À hinta'.padStart(10) + ' ' + 'Yht.'.padStart(10) + '\n';
+                kuitti += '-'.repeat(50) + '\n';
+
+                tuotteet.forEach(tuote => {
+                    const nimi = tuote.nimi.length > 25 ? tuote.nimi.substring(0, 22) + '...' : tuote.nimi;
+                    kuitti += nimi.padEnd(25) + ' ' + tuote.maara.toString().padStart(5) + ' ' + tuote.hinta.toFixed(2).padStart(10) + '€ ' + tuote.yhteensa().toFixed(2).padStart(10) + '€\n';
+                });
+            }
+
+            const valisumma = tuotteet.reduce((summa, tuote) => summa + tuote.yhteensa(), 0);
+            const alv = valisumma * 0.24;
+            const kokonaissumma = valisumma + alv;
+
+            kuitti += '\n' + '-'.repeat(50) + '\n' +
+'Välisumma (veroton):'.padEnd(30) + ' ' + valisumma.toFixed(2).padStart(18) + '€\n' +
+'ALV 24%:'.padEnd(30) + ' ' + alv.toFixed(2).padStart(18) + '€\n' +
+'='.repeat(50) + '\n' +
+'YHTEENSÄ:'.padEnd(30) + ' ' + kokonaissumma.toFixed(2).padStart(18) + '€\n' +
+'='.repeat(50) + '\n\n' +
+'Kiitos käynnistänne!\n' +
+'GitHub Pages Edition\n\n' +
+'Kuittinumero: #' + String(kuittiNumero).padStart(6, '0') + '\n' +
+'Käsittelijä: Web-kassa\n' +
+'Aika: ' + nyt.toISOString() + '\n\n';
+            return kuitti;
+        }
+
+        // ========== TULOSTUSTOIMINNOT ==========
+        
+        // 1. Selaimen tulostus uudessa ikkunassa
+        function tulostaSelaimestaWindow() {
+            if (tuotteet.length === 0) {
+                näytäIlmoitus('Lisää ensin tuotteita kuittiin!', 'virhe');
+                return;
+            }
+
+            try {
+                const kuittiteksti = muodostaKuittiteksti();
+                
+                // Luo uusi ikkuna
+                const tulostusIkkuna = window.open('', 'KuittiTulostus', 'width=600,height=800,scrollbars=yes');
+                
+                if (!tulostusIkkuna) {
+                    throw new Error('Ponnahdusikkunan avaaminen estettiin');
+                }
+
+                // Kirjoita kuitti ikkunaan (turvallisempi tapa)
+                const htmlSisalto = [
+                    '<!DOCTYPE html>',
+                    '<html>',
+                    '<head>',
+                    '    <title>LV Electronics - Kuitti #' + String(kuittiNumero).padStart(6, '0') + '</title>',
+                    '    <meta charset="UTF-8">',
+                    '    <style>',
+                    '        body { font-family: "Courier New", monospace; font-size: 12px; line-height: 1.4; margin: 20px; white-space: pre-line; }',
+                    '        @media print { body { margin: 0; } @page { margin: 0.5in; } }',
+                    '        .tulostus-napit { position: fixed; top: 10px; right: 10px; background: white; padding: 10px; border: 2px solid #ccc; border-radius: 5px; }',
+                    '        .tulostus-napit button { margin: 5px; padding: 8px 15px; font-size: 14px; cursor: pointer; }',
+                    '        @media print { .tulostus-napit { display: none; } }',
+                    '    </style>',
+                    '</head>',
+                    '<body>',
+                    '    <div class="tulostus-napit">',
+                    '        <button onclick="window.print()">🖨️ Tulosta</button>',
+                    '        <button onclick="window.close()">✕ Sulje</button>',
+                    '    </div>',
+                    '    <div>' + kuittiteksti.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</div>',
+                    '</body>',
+                    '</html>'
+                ].join('\n');
+
+                tulostusIkkuna.document.write(htmlSisalto);
+                
+                tulostusIkkuna.document.close();
+                tulostusIkkuna.focus();
+                
+                // Päivitä kuittinumero
+                kuittiNumero++;
+                
+                näytäIlmoitus('Kuitti-ikkuna avattu! Paina 🖨️ Tulosta nappia ikkunassa.', 'onnistui');
+                
+            } catch (error) {
+                console.error('Tulostusvirhe:', error);
+                näytäIlmoitus('Tulostus epäonnistui! Kokeile TXT-latausta.', 'virhe');
+            }
+        }
+
+        // 2. TXT-tiedoston lataus
+        function lataaTxtTiedosto() {
+            if (tuotteet.length === 0) {
+                näytäIlmoitus('Lisää ensin tuotteita kuittiin!', 'virhe');
+                return;
+            }
+
+            try {
+                const kuittiteksti = muodostaKuittiteksti();
+                const blob = new Blob([kuittiteksti], { type: 'text/plain;charset=utf-8' });
+                
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'LV_Electronics_Kuitti_' + String(kuittiNumero).padStart(6, '0') + '_' + new Date().toISOString().slice(0,10) + '.txt';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                // Päivitä kuittinumero
+                kuittiNumero++;
+                
+                näytäIlmoitus('TXT-tiedosto ladattu! Avaa Notepadissa ja tulosta Ctrl+P.', 'onnistui');
+                
+            } catch (error) {
+                console.error('Latausvirhe:', error);
+                näytäIlmoitus('TXT-lataus epäonnistui!', 'virhe');
+            }
+        }
+
+        // 3. Epson TM-T70II ohjeet
+        function näytäEpsonOhje() {
+            const ohje = document.getElementById('epsonOhje');
+            const näkyväksi = ohje.style.display === 'none';
+            ohje.style.display = näkyväksi ? 'block' : 'none';
+            
+            if (näkyväksi) {
+                näytäIlmoitus('Epson TM-T70II tulostusohje näytetään alapuolella.', 'info');
+                ohje.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // ========== ILMOITUSTEN NÄYTTÄMINEN ==========
+        function näytäIlmoitus(viesti, tyyppi = 'onnistui') {
+            // Poista vanhat ilmoitukset
+            const vanhatIlmoitukset = document.querySelectorAll('.ilmoitus');
+            vanhatIlmoitukset.forEach(ilmoitus => ilmoitus.remove());
+
+            // Luo uusi ilmoitus
+            const ilmoitus = document.createElement('div');
+            ilmoitus.className = 'ilmoitus ' + tyyppi;
+            ilmoitus.textContent = viesti;
+            document.body.appendChild(ilmoitus);
+
+            // Näytä animaatiolla
+            setTimeout(() => ilmoitus.classList.add('nakyva'), 10);
+
+            // Piilota ajan kanssa
+            const piilotusAika = tyyppi === 'info' ? 5000 : 3000;
+            setTimeout(() => {
+                ilmoitus.classList.remove('nakyva');
+                setTimeout(() => ilmoitus.remove(), 400);
+            }, piilotusAika);
+        }
+
+        // ========== NÄPPÄIMISTÖTUKI ==========
+        document.addEventListener('keydown', function(e) {
+            // Enter lisää tuotteen
+            if (e.key === 'Enter' && (
+                e.target.id === 'tuoteNimi' || 
+                e.target.id === 'tuoteMaara' || 
+                e.target.id === 'tuoteHinta'
+            )) {
+                e.preventDefault();
+                lisääTuote();
+            }
+            
+            // Ctrl+P tulostaa
+            if (e.ctrlKey && e.key === 'p') {
+                e.preventDefault();
+                tulostaSelaimestaWindow();
+            }
+            
+            // Ctrl+S tallentaa
+            if (e.ctrlKey && e.key === 's') {
+                e.preventDefault();
+                tallennaLocalStorage();
+            }
+            
+            // Delete/Backspace tyhjentää (kun ei ole kentässä)
+            if ((e.key === 'Delete' || e.key === 'Backspace') && 
+                !['INPUT', 'TEXTAREA'].includes(e.target.tagName) && 
+                tuotteet.length > 0) {
+                e.preventDefault();
+                tyhjennaKuitti();
+            }
+        });
+
+        // ========== ALUSTUS ==========
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 LV Electronics GitHub Pages Kassa käynnistetty!');
+            
+            // Lataa mahdollisesti tallennettu data
+            lataaLocalStorage();
+            
+            // Fokus ensimmäiseen kenttään
+            document.getElementById('tuoteNimi').focus();
+            
+            // Päivitä näkymät
+            päivitäKaikkiNäkymät();
+            
+            // Näytä tervetuloaviesti
+            setTimeout(() => {
+                näytäIlmoitus('Tervetuloa LV Electronics web-kassaan! 🛒', 'info');
+            }, 500);
+        });
+
+        // ========== PWA TUKI (lisätään myöhemmin) ==========
+        // Service Worker rekisteröinti GitHub Pages varten
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                // Voidaan lisätä offline-tuki myöhemmin
+                console.log('PWA-tuki käytettävissä');
+            });
+        }
+
+        // ========== KEHITTÄJÄTYÖKALUT ==========
+        window.lvElectronics = {
+            tuotteet: () => tuotteet,
+            lisääTesti: () => {
+                lisääTuote();
+                document.getElementById('tuoteNimi').value = 'iPhone 15 Pro';
+                document.getElementById('tuoteMaara').value = '1';
+                document.getElementById('tuoteHinta').value = '1299.00';
+            },
+            tyhjennäTesti: () => tyhjennaKuitti(),
+            kuittiteksti: () => muodostaKuittiteksti(),
+            versio: '1.0.0'
+        };
+        console.log('🛠️ Kehittäjätyökalut: window.lvElectronics');
+    </script>
+</body>
+</html>

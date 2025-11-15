@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LV Electronics - Web-kassa</title>
+    <style>
+        /* ========== YLEISET TYYLIT ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        /* ========== HEADER ========== */
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .logo {
+            font-family: 'Courier New', monospace;
+            margin-bottom: 10px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .logo-ascii {
+            font-size: 12px;
+            line-height: 1;
+            margin: 10px 0;
+            white-space: pre;
+        }
+
+        /* ========== MAIN LAYOUT ========== */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 0;
+            min-height: 600px;
+        }
+
+        .kassa-alue {
+            padding: 30px;
+        }
+
+        .kuitti-alue {
+            background: #f8f9fa;
+            border-left: 2px solid #e9ecef;
+            padding: 20px;
+        }
+
+        /* ========== TUOTE-LOMAKE ========== */
+        .tuote-lomake {
+            background: #ffffff;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .lomake-otsikko {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .lomake-kentat {
+            display: grid;
+            grid-template-columns: 1fr 100px 120px 120px;
+            gap: 15px;
+            align-items: end;
+        }
+
+        .kentta-ryhmä {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: 600;
+            color: #34495e;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        input[type="text"], input[type="number"] {
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus, input[type="number"]:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        .lisää-nappi {
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .lisää-nappi:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3);
+        }
+
+        /* ========== TUOTELISTA ========== */
+        .tuotelista-otsikko {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tuotelista {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+
+        .tuote-header {
+            background: #34495e;
+            color: white;
+            padding: 15px;
+            display: grid;
+            grid-template-columns: 2fr 80px 100px 100px 60px;
+            gap: 15px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .tuote-rivi {
+            display: grid;
+            grid-template-columns: 2fr 80px 100px 100px 60px;
+            gap: 15px;
+            padding: 15px;
+            border-bottom: 1px solid #e9ecef;
+            align-items: center;
+            transition: background-color 0.2s ease;
+        }
+
+        .tuote-rivi:hover {
+            background-color: #f8f9fa;
+        }
+
+        .tuote-rivi:last-child {
+            border-bottom: none;
+        }
+
+        .poista-nappi {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .poista-nappi:hover {
+            background: #c0392b;
+            transform: scale(1.1);
+        }
+
+        /* ========== SUMMAT ========== */
+        .summat {
+            background: linear-gradient(135deg, #ecf0f1 0%, #bdc3c7 100%);
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .summa-rivi {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .kokonaissumma {
+            font-size: 24px;
+            font-weight: bold;
+            color: #27ae60;
+            border-top: 2px solid #34495e;
+            padding-top: 15px;
+            margin-top: 15px;
+        }
+
+        /* ========== TOIMINTO-NAPIT ========== */
+        .toiminnot {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .toiminto-nappi {
+            padding: 15px 25px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .tulosta-nappi {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+        }
+
+        .tulosta-nappi:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.3);
+        }
+
+        .tyhjenna-nappi {
+            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+            color: white;
+        }
+
+        .tyhjenna-nappi:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(243, 156, 18, 0.3);
+        }
+
+        /* ========== KUITTI-ESIKATSELU ========== */
+        .kuitti-container {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .kuitti-otsikko {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .kuitti-esikatselu {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            flex: 1;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+
+        .kuitti-sisalto {
+            padding: 20px;
+            white-space: pre-line;
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .lomake-kentat {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .toiminnot {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .tuote-header, .tuote-rivi {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 10px;
+            }
+            
+            .tuote-header {
+                display: none; /* Piilota header mobiilissa */
+            }
+        }
+
+        /* ========== TULOSTUSTYYLIT ========== */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            
+            .kuitti-tulostus, .kuitti-tulostus * {
+                visibility: visible;
+            }
+            
+            .kuitti-tulostus {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+            }
+        }
+
+        .kuitti-tulostus {
+            display: none;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            line-height: 1.4;
+            white-space: pre-line;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        /* ========== ANIMAATIOT ========== */
+        @keyframes lisaysAnimaatio {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .tuote-rivi.uusi {
+            animation: lisaysAnimaatio 0.5s ease-out;
+        }
+
+        /* ========== ILMOITUKSET ========== */
+        .ilmoitus {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+            z-index: 1000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+
+        .ilmoitus.onnistui {
+            background: #27ae60;
+        }
+
+        .ilmoitus.virhe {
+            background: #e74c3c;
+        }
+
+        .ilmoitus.nakyva {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">LV Electronics</div>
+            <div class="logo-ascii">╔═══════════════════════════╗
+║    ██╗     ██╗   ██╗     ║
+║    ██║     ██║   ██║     ║
+║    ██║     ╚██╗ ██╔╝     ║
+║    ███████╗ ╚████╔╝      ║
+║    ╚══════╝  ╚═══╝       ║
+║   LV Electronics          ║
+╚═══════════════════════════╝</div>
+            <p>Hämeentie 123, 00500 Helsinki | Tel: +358 50 123 4567 | Y-tunnus: 1234567-8</p>
+        </div>
+
+        <div class="main-content">
+            <!-- Kassa-alue -->
+            <div class="kassa-alue">
+                <!-- Tuote-lomake -->
+                <div class="tuote-lomake">
+                    <div class="lomake-otsikko">
+                        🛒 Lisää tuote
+                    </div>
+                    <div class="lomake-kentat">
+                        <div class="kentta-ryhmä">
+                            <label for="tuoteNimi">Tuotteen nimi</label>
+                            <input type="text" id="tuoteNimi" placeholder="Esim. iPhone 15" required>
+                        </div>
+                        <div class="kentta-ryhmä">
+                            <label for="tuoteMaara">Määrä</label>
+                            <input type="number" id="tuoteMaara" value="1" min="1" required>
+                        </div>
+                        <div class="kentta-ryhmä">
+                            <label for="tuoteHinta">Hinta (€)</label>
+                            <input type="number" id="tuoteHinta" step="0.01" placeholder="0.00" required>
+                        </div>
+                        <div class="kentta-ryhmä">
+                            <label>&nbsp;</label>
+                            <button class="lisää-nappi" onclick="lisääTuote()">
+                                ➕ Lisää
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tuotelista -->
+                <div>
+                    <div class="tuotelista-otsikko">
+                        📋 Tuotteet kuitilla
+                    </div>
+                    <div class="tuotelista">
+                        <div class="tuote-header">
+                            <div>Tuote</div>
+                            <div>Määrä</div>
+                            <div>Hinta (€)</div>
+                            <div>Yhteensä (€)</div>
+                            <div></div>
+                        </div>
+                        <div id="tuoteListaContainer">
+                            <div style="padding: 40px; text-align: center; color: #7f8c8d; font-style: italic;">
+                                Ei tuotteita. Lisää tuotteita yllä olevan lomakkeen kautta.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Summat -->
+                <div class="summat">
+                    <div class="summa-rivi">
+                        <span>Välisumma (veroton):</span>
+                        <span id="valisumma">0.00 €</span>
+                    </div>
+                    <div class="summa-rivi">
+                        <span>ALV (24%):</span>
+                        <span id="alv">0.00 €</span>
+                    </div>
+                    <div class="summa-rivi kokonaissumma">
+                        <span>YHTEENSÄ:</span>
+                        <span id="kokonaissumma">0.00 €</span>
+                    </div>
+                </div>
+
+                <!-- Toiminto-napit -->
+                <div class="toiminnot">
+                    <button class="toiminto-nappi tulosta-nappi" onclick="tulostaKuitti()">
+                        🖨️ Tulosta kuitti
+                    </button>
+                    <button class="toiminto-nappi tyhjenna-nappi" onclick="tyhjennaKuitti()">
+                        🗑️ Tyhjennä kuitti
+                    </button>
+                </div>
+            </div>
+
+            <!-- Kuitti-esikatselu -->
+            <div class="kuitti-alue">
+                <div class="kuitti-container">
+                    <div class="kuitti-otsikko">
+                        📄 Kuitti-esikatselu
+                    </div>
+                    <div class="kuitti-esikatselu">
+                        <div class="kuitti-sisalto" id="kuittiSisalto">
+                            Lisää tuotteita nähdäksesi kuitin esikatselu...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Piilotettu tulostusalue -->
+    <div class="kuitti-tulostus" id="kuittiTulostus"></div>
+
+    <script>
+        // ========== GLOBAALIT MUUTTUJAT ==========
+        let tuotteet = [];
+        let seuraavaId = 1;
+
+        // ========== TUOTE-LUOKKA ==========
+        class Tuote {
+            constructor(id, nimi, maara, hinta) {
+                this.id = id;
+                this.nimi = nimi;
+                this.maara = parseInt(maara);
+                this.hinta = parseFloat(hinta);
+            }
+
+            yhteensa() {
+                return this.maara * this.hinta;
+            }
+        }
+
+        // ========== TUOTTEEN LISÄÄMINEN ==========
+        function lisääTuote() {
+            const nimi = document.getElementById('tuoteNimi').value.trim();
+            const maara = document.getElementById('tuoteMaara').value;
+            const hinta = document.getElementById('tuoteHinta').value;
+
+            // Validointi
+            if (!nimi || !maara || !hinta) {
+                näytäIlmoitus('Täytä kaikki kentät!', 'virhe');
+                return;
+            }
+
+            if (parseInt(maara) <= 0 || parseFloat(hinta) < 0) {
+                näytäIlmoitus('Määrä ja hinta pitää olla positiivisia!', 'virhe');
+                return;
+            }
+
+            // Lisää tuote
+            const tuote = new Tuote(seuraavaId++, nimi, maara, hinta);
+            tuotteet.push(tuote);
+
+            // Päivitä näkymät
+            päivitäTuotelista();
+            päivitäSummat();
+            päivitäKuittiEsikatselu();
+
+            // Tyhjennä lomake
+            document.getElementById('tuoteNimi').value = '';
+            document.getElementById('tuoteMaara').value = '1';
+            document.getElementById('tuoteHinta').value = '';
+            document.getElementById('tuoteNimi').focus();
+
+            näytäIlmoitus('Tuote lisätty!', 'onnistui');
+        }
+
+        // ========== TUOTTEEN POISTAMINEN ==========
+        function poistaTuote(id) {
+            tuotteet = tuotteet.filter(tuote => tuote.id !== id);
+            päivitäTuotelista();
+            päivitäSummat();
+            päivitäKuittiEsikatselu();
+            näytäIlmoitus('Tuote poistettu!', 'onnistui');
+        }
+
+        // ========== KUITIN TYHJENTÄMINEN ==========
+        function tyhjennaKuitti() {
+            if (tuotteet.length === 0) {
+                näytäIlmoitus('Kuitti on jo tyhjä!', 'virhe');
+                return;
+            }
+
+            if (confirm('Haluatko varmasti tyhjentää kuitin?')) {
+                tuotteet = [];
+                seuraavaId = 1;
+                päivitäTuotelista();
+                päivitäSummat();
+                päivitäKuittiEsikatselu();
+                näytäIlmoitus('Kuitti tyhjennetty!', 'onnistui');
+            }
+        }
+
+        // ========== TUOTELISTAN PÄIVITYS ==========
+        function päivitäTuotelista() {
+            const container = document.getElementById('tuoteListaContainer');
+            
+            if (tuotteet.length === 0) {
+                container.innerHTML = `
+                    <div style="padding: 40px; text-align: center; color: #7f8c8d; font-style: italic;">
+                        Ei tuotteita. Lisää tuotteita yllä olevan lomakkeen kautta.
+                    </div>
+                `;
+                return;
+            }
+
+            const html = tuotteet.map(tuote => `
+                <div class="tuote-rivi uusi">
+                    <div>${tuote.nimi}</div>
+                    <div>${tuote.maara} kpl</div>
+                    <div>${tuote.hinta.toFixed(2)} €</div>
+                    <div>${tuote.yhteensa().toFixed(2)} €</div>
+                    <div>
+                        <button class="poista-nappi" onclick="poistaTuote(${tuote.id})" title="Poista tuote">
+                            ✕
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            container.innerHTML = html;
+        }
+
+        // ========== SUMMIEN PÄIVITYS ==========
+        function päivitäSummat() {
+            const valisumma = tuotteet.reduce((summa, tuote) => summa + tuote.yhteensa(), 0);
+            const alv = valisumma * 0.24;
+            const kokonaissumma = valisumma + alv;
+
+            document.getElementById('valisumma').textContent = valisumma.toFixed(2) + ' €';
+            document.getElementById('alv').textContent = alv.toFixed(2) + ' €';
+            document.getElementById('kokonaissumma').textContent = kokonaissumma.toFixed(2) + ' €';
+        }
+
+        // ========== KUITTI-ESIKATSELUN PÄIVITYS ==========
+        function päivitäKuittiEsikatselu() {
+            const kuittiSisalto = document.getElementById('kuittiSisalto');
+            
+            if (tuotteet.length === 0) {
+                kuittiSisalto.textContent = 'Lisää tuotteita nähdäksesi kuitin esikatselu...';
+                return;
+            }
+
+            const kuittiteksti = muodostaKuittiteksti();
+            kuittiSisalto.textContent = kuittiteksti;
+        }
+
+        // ========== KUITTITEKSTI ==========
+        function muodostaKuittiteksti() {
+            const nyt = new Date();
+            const pvm = nyt.toLocaleDateString('fi-FI');
+            const aika = nyt.toLocaleTimeString('fi-FI');
+
+            let kuitti = `╔═══════════════════════════╗
+║                           ║
+║    ██╗     ██╗   ██╗     ║
+║    ██║     ██║   ██║     ║
+║    ██║     ██║   ██║     ║
+║    ██║     ╚██╗ ██╔╝     ║
+║    ███████╗ ╚████╔╝      ║
+║    ╚══════╝  ╚═══╝       ║
+║                           ║
+║   LV Electronics          ║
+║                           ║
+╚═══════════════════════════╝
+
+LV Electronics
+Hämeentie 123, 00500 Helsinki
+Tel: +358 50 123 4567
+Y-tunnus: 1234567-8
+
+==================================================
+KUITTI - ${pvm} ${aika}
+==================================================
+
+`;
+
+            if (tuotteet.length > 0) {
+                kuitti += `${'Tuote'.padEnd(25)} ${'Määrä'.padStart(5)} ${'À hinta'.padStart(10)} ${'Yht.'.padStart(10)}\n`;
+                kuitti += '-'.repeat(50) + '\n';
+
+                tuotteet.forEach(tuote => {
+                    const nimi = tuote.nimi.length > 25 ? tuote.nimi.substring(0, 22) + '...' : tuote.nimi;
+                    kuitti += `${nimi.padEnd(25)} ${tuote.maara.toString().padStart(5)} ${tuote.hinta.toFixed(2).padStart(10)}€ ${tuote.yhteensa().toFixed(2).padStart(10)}€\n`;
+                });
+            }
+
+            const valisumma = tuotteet.reduce((summa, tuote) => summa + tuote.yhteensa(), 0);
+            const alv = valisumma * 0.24;
+            const kokonaissumma = valisumma + alv;
+
+            kuitti += `
+${'-'.repeat(50)}
+${'Välisumma (veroton):'.padEnd(30)} ${valisumma.toFixed(2).padStart(18)}€
+${'ALV 24%:'.padEnd(30)} ${alv.toFixed(2).padStart(18)}€
+${'='.repeat(50)}
+${'YHTEENSÄ:'.padEnd(30)} ${kokonaissumma.toFixed(2).padStart(18)}€
+${'='.repeat(50)}
+
+Kiitos käynnistänne!
+
+`;
+            return kuitti;
+        }
+
+        // ========== KUITIN TULOSTUS ==========
+        function tulostaKuitti() {
+            if (tuotteet.length === 0) {
+                näytäIlmoitus('Lisää ensin tuotteita kuittiin!', 'virhe');
+                return;
+            }
+
+            try {
+                // Luo kuittiteksti
+                const kuittiteksti = muodostaKuittiteksti();
+                
+                // Aseta tulostusalueeseen
+                const tulostusAlue = document.getElementById('kuittiTulostus');
+                tulostusAlue.textContent = kuittiteksti;
+                tulostusAlue.style.display = 'block';
+
+                // Tulosta
+                window.print();
+
+                // Piilota tulostusalue
+                setTimeout(() => {
+                    tulostusAlue.style.display = 'none';
+                }, 1000);
+
+                näytäIlmoitus('Kuitti lähetetty tulostimeen!', 'onnistui');
+
+            } catch (error) {
+                console.error('Tulostusvirhe:', error);
+                näytäIlmoitus('Tulostus epäonnistui!', 'virhe');
+            }
+        }
+
+        // ========== ILMOITUSTEN NÄYTTÄMINEN ==========
+        function näytäIlmoitus(viesti, tyyppi = 'onnistui') {
+            // Poista vanhat ilmoitukset
+            const vanhatIlmoitukset = document.querySelectorAll('.ilmoitus');
+            vanhatIlmoitukset.forEach(ilmoitus => ilmoitus.remove());
+
+            // Luo uusi ilmoitus
+            const ilmoitus = document.createElement('div');
+            ilmoitus.className = `ilmoitus ${tyyppi}`;
+            ilmoitus.textContent = viesti;
+            document.body.appendChild(ilmoitus);
+
+            // Näytä animaatiolla
+            setTimeout(() => ilmoitus.classList.add('nakyva'), 10);
+
+            // Piilota 3 sekunnin kuluttua
+            setTimeout(() => {
+                ilmoitus.classList.remove('nakyva');
+                setTimeout(() => ilmoitus.remove(), 300);
+            }, 3000);
+        }
+
+        // ========== NÄPPÄIMISTÖTUKI ==========
+        document.addEventListener('keydown', function(e) {
+            // Enter lisää tuotteen
+            if (e.key === 'Enter' && (
+                e.target.id === 'tuoteNimi' || 
+                e.target.id === 'tuoteMaara' || 
+                e.target.id === 'tuoteHinta'
+            )) {
+                e.preventDefault();
+                lisääTuote();
+            }
+            
+            // Ctrl+P tulostaa
+            if (e.ctrlKey && e.key === 'p') {
+                e.preventDefault();
+                tulostaKuitti();
+            }
+        });
+
+        // ========== ALUSTUS ==========
+        document.addEventListener('DOMContentLoaded', function() {
+            // Fokus ensimmäiseen kenttään
+            document.getElementById('tuoteNimi').focus();
+            
+            // Päivitä esikatselu
+            päivitäKuittiEsikatselu();
+            
+            console.log('LV Electronics Web-kassa käynnistetty!');
+        });
+    </script>
+</body>
+</html>
