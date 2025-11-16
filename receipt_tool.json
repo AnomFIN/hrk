@@ -1,0 +1,27 @@
+{
+  "logo_ascii": "*** TEST LOGO ***\n*** LINE 2 ***",
+  "width": 50,
+  "vat_rate": 0.24,
+  "company_info": {
+    "name": "Harjun Raskaskone Oy",
+    "business_id": "FI12345678",
+    "address": "Teollisuustie 1, 00100 Helsinki",
+    "phone": "+358 40 123 4567",
+    "email": "info@hrk.fi"
+  },
+  "templates": {
+    "default": {
+      "name": "Oletus / Default",
+      "logo": "╔═══════════════════════════════════════╗\n║   HARJUN RASKASKONE OY (HRK)          ║\n║   Laadukasta laitevuokrausta          ║\n╚═══════════════════════════════════════╝",
+      "header_format": "{name}\nY-tunnus: {business_id}\n{address}\nPuh: {phone}",
+      "footer": "Kiitos ostoksesta! / Thank you for your purchase!"
+    },
+    "minimal": {
+      "name": "Minimaalinen / Minimal",
+      "logo": "*** {name} ***",
+      "header_format": "{name} | {business_id}",
+      "footer": "Kiitos!"
+    }
+  },
+  "history": []
+}
