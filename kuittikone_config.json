@@ -1,0 +1,142 @@
+{
+  "version": "1.0.0",
+  "presets": {
+    "hrk_default": {
+      "preset_id": "hrk_default",
+      "company_name": "Harjun Raskaskone Oy",
+      "business_id": "FI12345678",
+      "address": "Teollisuustie 1, 00100 Helsinki",
+      "phone": "+358 40 123 4567",
+      "email": "info@hrk.fi",
+      "logo_base64": "",
+      "template_type": "corporate",
+      "layout": {
+        "show_logo": true,
+        "show_header": true,
+        "show_products": true,
+        "show_totals": true,
+        "show_vat_breakdown": true,
+        "show_footer": true,
+        "show_warranty": false,
+        "show_promo": true,
+        "extra_lines_before_products": 0,
+        "extra_lines_after_totals": 0,
+        "header_font": "normal",
+        "product_font": "normal",
+        "footer_font": "normal"
+      },
+      "payment_presets": [
+        {
+          "card_type": "visa",
+          "enabled": true,
+          "name": "Visa",
+          "fee_percentage": 0.0,
+          "description": "Visa debit/credit",
+          "icon": "💳"
+        },
+        {
+          "card_type": "mastercard",
+          "enabled": true,
+          "name": "MasterCard",
+          "fee_percentage": 0.0,
+          "description": "MasterCard debit/credit",
+          "icon": "💳"
+        },
+        {
+          "card_type": "amex",
+          "enabled": true,
+          "name": "American Express",
+          "fee_percentage": 1.5,
+          "description": "American Express",
+          "icon": "💳"
+        }
+      ],
+      "footer_text": "Kiitos ostoksesta! Tervetuloa uudelleen!",
+      "slogan": "Laadukasta laitevuokrausta",
+      "promo_rules": [
+        {
+          "rule_id": "promo1",
+          "description": "Over 50€ bonus",
+          "condition_type": "amount_over",
+          "condition_value": 50.0,
+          "action_type": "add_line",
+          "action_value": "🎁 Seuraavasta ostoksesta -10% (koodi: KIITOS10)",
+          "enabled": true
+        }
+      ],
+      "vat_rate": 0.24,
+      "enabled": true
+    },
+    "minimal_company": {
+      "preset_id": "minimal_company",
+      "company_name": "Quick Services Oy",
+      "business_id": "FI87654321",
+      "address": "Pikatie 5",
+      "phone": "+358 50 999 8888",
+      "email": "quick@example.com",
+      "logo_base64": "",
+      "template_type": "minimal",
+      "layout": {
+        "show_logo": true,
+        "show_header": true,
+        "show_products": true,
+        "show_totals": true,
+        "show_vat_breakdown": false,
+        "show_footer": true,
+        "show_warranty": false,
+        "show_promo": true,
+        "extra_lines_before_products": 0,
+        "extra_lines_after_totals": 0,
+        "header_font": "normal",
+        "product_font": "normal",
+        "footer_font": "normal"
+      },
+      "payment_presets": [
+        {
+          "card_type": "visa",
+          "enabled": true,
+          "name": "Visa",
+          "fee_percentage": 0.0,
+          "description": "Visa debit/credit",
+          "icon": "💳"
+        },
+        {
+          "card_type": "mastercard",
+          "enabled": true,
+          "name": "MasterCard",
+          "fee_percentage": 0.0,
+          "description": "MasterCard debit/credit",
+          "icon": "💳"
+        },
+        {
+          "card_type": "amex",
+          "enabled": true,
+          "name": "American Express",
+          "fee_percentage": 1.5,
+          "description": "American Express",
+          "icon": "💳"
+        }
+      ],
+      "footer_text": "Kiitos!",
+      "slogan": "",
+      "promo_rules": [],
+      "vat_rate": 0.24,
+      "enabled": true
+    }
+  },
+  "warranty_database": {
+    "HRK-2025-001": {
+      "serial_number": "HRK-2025-001",
+      "purchase_date": "2025-11-18T01:51:05.451458",
+      "warranty_months": 12,
+      "product_name": "Kaivinkone 15t",
+      "return_days": 14,
+      "notes": "Vuokrattu laite"
+    }
+  },
+  "settings": {
+    "default_receipt_width": 50,
+    "enable_offline_logging": true,
+    "backup_directory": "./backups"
+  }
+}
