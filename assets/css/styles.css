@@ -565,7 +565,8 @@ header,
     backdrop-filter: blur(14px);
     box-shadow: 0 12px 34px rgba(4, 19, 31, 0.12);
     z-index: 1000;
-    transition: background 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+    transition: background 0.3s ease, box-shadow 0.3s ease, color 0.3s ease, transform 0.3s ease;
+    transform: translateY(0);
 }
 
 
@@ -618,9 +619,10 @@ header,
 
 .nav__link:hover,
 .nav__link:focus {
-    transform: translateY(-3px);
+    transform: translateY(-3px) scale(1.05);
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(229, 248, 244, 0.92));
     box-shadow: 0 26px 48px rgba(4, 19, 31, 0.22);
+    animation: navLinkPulse 0.6s ease-in-out;
 }
 
 .nav__link--active {
@@ -733,6 +735,18 @@ header,
     max-width: 580px;
     z-index: 1;
     color: rgba(248, 250, 252, 0.92);
+    animation: fadeInUp 1s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .hero__content h1 {
@@ -1340,8 +1354,9 @@ header,
 }
 
 .store-card:hover {
-    transform: translateY(-6px);
+    transform: translateY(-6px) scale(1.02);
     box-shadow: 0 28px 60px rgba(4, 19, 31, 0.18);
+    animation: cardFloat 2s ease-in-out infinite;
 }
 
 .store-card__body {
@@ -1613,6 +1628,7 @@ header,
     border-color: var(--color-primary-dark);
     outline: none;
     box-shadow: 0 0 0 4px rgba(45, 212, 191, 0.35);
+    animation: inputGlow 2s ease-in-out infinite;
 }
 
 .contact__disclaimer {
@@ -1880,6 +1896,33 @@ header,
     100% {
         transform: scale(0.8);
         opacity: 0.45;
+    }
+}
+
+@keyframes navLinkPulse {
+    0%, 100% {
+        box-shadow: 0 26px 48px rgba(4, 19, 31, 0.22);
+    }
+    50% {
+        box-shadow: 0 26px 48px rgba(45, 212, 191, 0.35);
+    }
+}
+
+@keyframes inputGlow {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(45, 212, 191, 0);
+    }
+    50% {
+        box-shadow: 0 0 20px 5px rgba(45, 212, 191, 0.4);
+    }
+}
+
+@keyframes cardFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
     }
 }
 
@@ -2271,6 +2314,7 @@ body.store-mode {
     outline: none;
     border-color: rgba(13, 148, 136, 0.8);
     box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.25);
+    animation: inputGlow 2s ease-in-out infinite;
 }
 
 .checkout-form__field textarea {
