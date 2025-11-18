@@ -1351,3 +1351,195 @@ document.addEventListener('DOMContentLoaded', () => {
 
     updateFloatingDynamics();
 });
+
+// ========== AWESOME JQUERY FEATURES ==========
+
+if ($) {
+    // Feature 1: Enhanced Hover Effects on Cards with jQuery
+    $('.store-card, .card, .feature, .alliance-card, .experience-card').each(function() {
+        const $card = $(this);
+        
+        $card.on('mouseenter', function() {
+            $(this).stop(true, true).animate({
+                'box-shadow': '0 35px 70px rgba(45, 212, 191, 0.25)'
+            }, 300, 'swing');
+            
+            // Add a subtle rotation effect
+            $(this).css('transition', 'transform 0.4s ease');
+            $(this).css('transform', 'translateY(-8px) rotateX(2deg)');
+        });
+        
+        $card.on('mouseleave', function() {
+            $(this).stop(true, true).animate({
+                'box-shadow': ''
+            }, 300, 'swing');
+            
+            $(this).css('transform', '');
+        });
+    });
+
+    // Feature 2: Keystroke Animation for Input Fields
+    const addKeystrokeEffect = (inputElement) => {
+        const $input = $(inputElement);
+        let typingTimer;
+        
+        $input.on('keydown', function() {
+            clearTimeout(typingTimer);
+            
+            // Add ripple effect on each keystroke
+            $(this).addClass('typing-active');
+            
+            // Animate border color
+            $(this).stop(true, true).animate({
+                'border-width': '2px'
+            }, 100, 'swing', function() {
+                $(this).animate({
+                    'border-width': '1px'
+                }, 100, 'swing');
+            });
+        });
+        
+        $input.on('keyup', function() {
+            const $this = $(this);
+            clearTimeout(typingTimer);
+            
+            typingTimer = setTimeout(function() {
+                $this.removeClass('typing-active');
+            }, 500);
+            
+            // Show character count feedback for longer inputs
+            if ($this.val().length > 3) {
+                $this.css({
+                    'background': 'linear-gradient(135deg, rgba(209, 250, 229, 0.2), rgba(241, 247, 246, 0.65))'
+                });
+            } else {
+                $this.css('background', '');
+            }
+        });
+    };
+    
+    // Apply keystroke effects to all input fields
+    $('input[type="text"], input[type="email"], input[type="tel"], input[type="number"], textarea').each(function() {
+        addKeystrokeEffect(this);
+    });
+    
+    // Feature 3: Smooth Onboard Hover Effects with Tooltips
+    $('.btn, .nav__link, .store-card__tag').each(function() {
+        const $element = $(this);
+        
+        $element.on('mouseenter', function() {
+            // Scale up slightly
+            $(this).stop(true, true).animate({
+                'padding-left': '+=5px',
+                'padding-right': '+=5px'
+            }, 200, 'swing');
+            
+            // Add a subtle glow effect
+            $(this).css('position', 'relative');
+            $(this).css('z-index', '10');
+        });
+        
+        $element.on('mouseleave', function() {
+            $(this).stop(true, true).animate({
+                'padding-left': '-=5px',
+                'padding-right': '-=5px'
+            }, 200, 'swing');
+            
+            $(this).css('z-index', '');
+        });
+    });
+    
+    // Bonus Feature: Smooth Scroll with jQuery
+    $('a[data-scroll]').on('click', function(e) {
+        const targetId = $(this).attr('data-scroll');
+        const $target = $('#' + targetId);
+        
+        if ($target.length && !isStoreOpen()) {
+            e.preventDefault();
+            
+            $('html, body').stop(true, true).animate({
+                scrollTop: $target.offset().top - 100
+            }, 800, 'swing', function() {
+                // Add a highlight effect when reaching the target
+                $target.css('background', 'rgba(45, 212, 191, 0.1)');
+                setTimeout(function() {
+                    $target.animate({
+                        'background': ''
+                    }, 1000);
+                }, 500);
+            });
+        }
+    });
+    
+    // Bonus Feature: Interactive Product Cards in Storefront
+    $('.storefront__product').on('click', function() {
+        $('.storefront__product').removeClass('pulse-highlight');
+        $(this).addClass('pulse-highlight');
+        
+        // Animate the selection
+        $(this).stop(true, true)
+            .css('transform', 'scale(0.95)')
+            .animate({ dummy: 1 }, {
+                duration: 100,
+                step: function(now) {
+                    $(this).css('transform', 'scale(' + (0.95 + (1 - 0.95) * now) + ')');
+                },
+                complete: function() {
+                    $(this).css('transform', 'scale(1.02)');
+                    setTimeout(() => {
+                        $(this).css('transform', '');
+                    }, 200);
+                }
+            });
+    });
+    
+    // Add CSS for typing effect dynamically
+    $('<style>')
+        .prop('type', 'text/css')
+        .html(`
+            .typing-active {
+                animation: inputPulse 0.3s ease-in-out !important;
+            }
+            
+            @keyframes inputPulse {
+                0%, 100% {
+                    transform: scale(1);
+                }
+                50% {
+                    transform: scale(1.01);
+                }
+            }
+            
+            .pulse-highlight {
+                position: relative;
+            }
+            
+            .pulse-highlight::after {
+                content: '';
+                position: absolute;
+                inset: -2px;
+                border-radius: inherit;
+                border: 2px solid rgba(45, 212, 191, 0.6);
+                animation: pulseHighlight 1s ease-in-out;
+                pointer-events: none;
+            }
+            
+            @keyframes pulseHighlight {
+                0% {
+                    opacity: 0;
+                    transform: scale(0.9);
+                }
+                50% {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+                100% {
+                    opacity: 0;
+                    transform: scale(1.1);
+                }
+            }
+        `)
+        .appendTo('head');
+    
+    window.console?.info?.('✨ Awesome jQuery features loaded successfully!');
+}
