@@ -20,7 +20,8 @@ Kuittikone is a comprehensive receipt printing system designed for offline opera
 
 - **`kuittikone.py`** - Main module with all features
 - **`test_kuittikone.py`** - Comprehensive test suite (34 tests)
-- **`kuittikone_config.json`** - Configuration file (auto-generated)
+- **`kuittikone_config.json.example`** - Example configuration template
+- **`kuittikone_config.json`** - Configuration file (auto-generated on first run, gitignored)
 
 ## 🚀 Quick Start
 

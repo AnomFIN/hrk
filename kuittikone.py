@@ -21,11 +21,8 @@ Complete offline receipt printer with:
 
 import json
 import os
-import base64
-import hashlib
 from datetime import datetime, timedelta
-from pathlib import Path
-from typing import List, Dict, Optional, Any, Tuple
+from typing import List, Dict, Optional, Any
 from dataclasses import dataclass, asdict
 from enum import Enum
 
@@ -115,12 +112,17 @@ class WarrantyInfo:
     notes: str = ""
     
     def is_warranty_valid(self) -> bool:
-        """Check if warranty is still valid"""
+        """
+        Check if warranty is still valid
+        
+        Note: Uses approximation of 30 days per month for simplicity.
+        A 12-month warranty is calculated as 360 days.
+        """
         try:
             purchase = datetime.fromisoformat(self.purchase_date)
             expiry = purchase + timedelta(days=30 * self.warranty_months)
             return datetime.now() < expiry
-        except:
+        except (ValueError, TypeError):
             return False
     
     def is_return_valid(self) -> bool:
@@ -129,7 +131,7 @@ class WarrantyInfo:
             purchase = datetime.fromisoformat(self.purchase_date)
             expiry = purchase + timedelta(days=self.return_days)
             return datetime.now() < expiry
-        except:
+        except (ValueError, TypeError):
             return False
     
     def warranty_text(self) -> str:

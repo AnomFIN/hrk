@@ -5,7 +5,6 @@ import os
 import sys
 import tempfile
 import unittest
-import json
 from datetime import datetime, timedelta
 from pathlib import Path
 
@@ -322,7 +321,8 @@ class TestKuittikoneManager(unittest.TestCase):
         """Clean up temporary files"""
         try:
             os.unlink(self.temp_file.name)
-        except:
+        except FileNotFoundError:
+            # File may already have been deleted; ignore this error
             pass
     
     def test_manager_creation(self):
@@ -646,7 +646,8 @@ class TestIntegration(unittest.TestCase):
         finally:
             try:
                 os.unlink(temp_file.name)
-            except:
+            except FileNotFoundError:
+                # It's OK if the file was already deleted
                 pass
 
 
