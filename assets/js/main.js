@@ -1426,7 +1426,6 @@ if ($) {
     // Feature 3: Smooth Onboard Hover Effects with Tooltips
     $('.btn, .nav__link, .store-card__tag').each(function() {
         const $element = $(this);
-        const originalText = $element.text();
         
         $element.on('mouseenter', function() {
             // Scale up slightly
@@ -1542,5 +1541,5 @@ if ($) {
         `)
         .appendTo('head');
     
-    console.log('✨ Awesome jQuery features loaded successfully!');
+    window.console?.info?.('✨ Awesome jQuery features loaded successfully!');
 }
