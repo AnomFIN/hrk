@@ -6,3 +6,6 @@ __pycache__/
 
 # Receipt Tool - User-specific configuration
 receipt_tool.json
+
+# Kuittikone - User-specific configuration
+kuittikone_config.json

@@ -1,0 +1,77 @@
+{
+  "version": "1.0.0",
+  "presets": {
+    "example_company": {
+      "preset_id": "example_company",
+      "company_name": "Example Company Oy",
+      "business_id": "FI12345678",
+      "address": "Example Street 1, 00100 Helsinki",
+      "phone": "+358 40 123 4567",
+      "email": "info@example.com",
+      "logo_base64": "",
+      "template_type": "corporate",
+      "layout": {
+        "show_logo": true,
+        "show_header": true,
+        "show_products": true,
+        "show_totals": true,
+        "show_vat_breakdown": true,
+        "show_footer": true,
+        "show_warranty": false,
+        "show_promo": true,
+        "extra_lines_before_products": 0,
+        "extra_lines_after_totals": 0,
+        "header_font": "normal",
+        "product_font": "normal",
+        "footer_font": "normal"
+      },
+      "payment_presets": [
+        {
+          "card_type": "visa",
+          "enabled": true,
+          "name": "Visa",
+          "fee_percentage": 0.0,
+          "description": "Visa debit/credit",
+          "icon": "💳"
+        },
+        {
+          "card_type": "mastercard",
+          "enabled": true,
+          "name": "MasterCard",
+          "fee_percentage": 0.0,
+          "description": "MasterCard debit/credit",
+          "icon": "💳"
+        },
+        {
+          "card_type": "amex",
+          "enabled": true,
+          "name": "American Express",
+          "fee_percentage": 1.5,
+          "description": "American Express",
+          "icon": "💳"
+        }
+      ],
+      "footer_text": "Kiitos ostoksesta!",
+      "slogan": "",
+      "promo_rules": [],
+      "vat_rate": 0.24,
+      "enabled": true
+    }
+  },
+  "warranty_database": {
+    "_comment": "Example warranty record - remove underscore from key to use",
+    "_SERIAL-EXAMPLE-001": {
+      "serial_number": "SERIAL-EXAMPLE-001",
+      "purchase_date": "2025-01-15T12:00:00.000000",
+      "warranty_months": 12,
+      "product_name": "Example Product",
+      "return_days": 14,
+      "notes": "Example warranty record"
+    }
+  },
+  "settings": {
+    "default_receipt_width": 50,
+    "enable_offline_logging": true,
+    "backup_directory": "./backups"
+  }
+}
