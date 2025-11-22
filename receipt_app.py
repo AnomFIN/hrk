@@ -233,11 +233,11 @@ class Receipt:
         # Maksutiedot / Payment information
         lines.append(f"\nMaksutapa / Payment method: {self.payment_info['method']}")
         if self.payment_info['card_type']:
-            lines.append(f"Korttitype / Card type: {self.payment_info['card_type']}")
+            lines.append(f"Korttityyppi / Card type: {self.payment_info['card_type']}")
         if self.payment_info['transaction_id']:
             lines.append(f"Tapahtumatunnus / Transaction ID: {self.payment_info['transaction_id']}")
         if self.payment_info['bank_reference']:
-            lines.append(f"Viitteen / Reference: {self.payment_info['bank_reference']}")
+            lines.append(f"Viite / Reference: {self.payment_info['bank_reference']}")
         
         # Lisähuomiot / Additional notes
         if self.receipt_notes:
@@ -842,7 +842,7 @@ class ReceiptAppGUI:
         payment_method_combo = ttk.Combobox(payment_frame, textvariable=payment_method_var, values=payment_methods, width=37)
         payment_method_combo.grid(row=0, column=1, pady=5)
         
-        tk.Label(payment_frame, text="Korttitype / Card type:").grid(row=1, column=0, sticky=tk.W, pady=5)
+        tk.Label(payment_frame, text="Korttityyppi / Card type:").grid(row=1, column=0, sticky=tk.W, pady=5)
         card_type_entry = tk.Entry(payment_frame, width=40)
         card_type_entry.insert(0, self.receipt.payment_info.get('card_type', ''))
         card_type_entry.grid(row=1, column=1, pady=5)
@@ -1250,7 +1250,7 @@ class ReceiptAppTerminal:
         }
         method = methods.get(method_choice, "Käteinen / Cash")
         
-        card_type = input("Korttitype / Card type (jos korttimaksu / if card): ").strip()
+        card_type = input("Korttityyppi / Card type (jos korttimaksu / if card): ").strip()
         transaction_id = input("Tapahtumatunnus / Transaction ID: ").strip()
         bank_ref = input("Pankkiviite / Bank reference: ").strip()
         
