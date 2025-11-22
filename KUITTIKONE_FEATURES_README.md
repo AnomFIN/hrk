@@ -9,33 +9,58 @@ Receipt printer application has been upgraded with offline-capable receipt print
 ## 🆕 Uudet ominaisuudet / New Features
 
 ### 1. ✨ ASCII Logo Generator
-Luo mukautettuja ASCII-logoja eri tyyleillä / Create custom ASCII logos with different styles:
+Luo mukautettuja tyylikäitä ASCII-logoja eri tyyleillä / Create custom stylish ASCII logos with different styles:
 
+**Perus tyylit / Basic styles:**
 - **Box** - Laatikkoreunukset / Box borders (╔═══╗)
-- **Stars** - Tähtireunukset / Star borders (***)
-- **Double** - Kaksoisviiva / Double line (═══)
 - **Simple** - Yksinkertainen / Simple (===)
-- **Banner** - Banneri / Banner style (┌───┐)
+- **Banner** - Pyöristetty banneri / Rounded banner (╭───╮)
+- **Double** - Kaksoisreuna / Double border
+
+**Tyylikäät tyylit / Stylish styles:**
+- **Fancy** - Koristeellinen / Fancy decorative (╔═╗╔═╗)
+- **Stars** - Koristellut tähdet / Decorated stars (✦···✦)
+- **Shadow** - Varjostusefekti / Shadow effect (▓)
+- **Diamond** - Timanttimuoto / Diamond shape (◆───◆)
+- **Wave** - Aaltoviiva / Wave pattern (～～～)
+- **Blocks** - Lohkokirjaimet / Block letters (▓▓▓)
+
+**HUOM:** Kaikki logot käyttävät ISOJA KIRJAIMIA tyylikkyyden vuoksi!
+**NOTE:** All logos use UPPERCASE letters for stylish appearance!
 
 **Käyttö / Usage:**
 ```python
 from receipt_app import ASCIILogoGenerator
 
-# Luo logo
+# Perus laatikko / Basic box
 logo = ASCIILogoGenerator.generate("HRK", "box")
 print(logo)
-
-# Output:
 # ╔═══════╗
 # ║  HRK  ║
 # ╚═══════╝
+
+# Tyylikäs varjostus / Stylish shadow
+logo = ASCIILogoGenerator.generate("HRK", "shadow")
+print(logo)
+# ┌───────┐
+# │  HRK  │▓
+# └───────┘▓
+#  ▓▓▓▓▓▓▓▓
+
+# Koristeellinen / Fancy
+logo = ASCIILogoGenerator.generate("HARJUN RASKASKONE", "fancy")
+# ╔══════════╗╔══════════╗
+# ║                       ║
+# ║   HARJUN RASKASKONE   ║
+# ║                       ║
+# ╚══════════╝╚══════════╝
 ```
 
 ### 2. 💳 Maksutiedot / Payment Information
 Lisää kattavat maksutiedot kuitteihin / Add comprehensive payment information to receipts:
 
 - Maksutapa / Payment method (Käteinen, Kortti, Lasku, Verkkopankki)
-- Korttitype / Card type (Visa, MasterCard, etc.)
+- Korttityyppi / Card type (Visa, MasterCard, etc.)
 - Tapahtumatunnus / Transaction ID
 - Pankkiviite / Bank reference
 

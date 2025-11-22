@@ -78,36 +78,98 @@ class ASCIILogoGenerator:
         - double: kaksoisviiva / double line
         - simple: yksinkertainen / simple
         - banner: banneri / banner style
+        - fancy: koristeellinen / fancy decorative
+        - shadow: varjostus / shadow effect
+        - blocks: lohkokirjaimet / block letters
+        - wave: aaltoviiva / wave pattern
+        - diamond: timantti / diamond pattern
         """
         if style == "box":
             width = len(text) + 6
             top = "╔" + "═" * (width - 2) + "╗"
-            middle = f"║  {text}  ║"
+            middle = f"║  {text.upper()}  ║"
             bottom = "╚" + "═" * (width - 2) + "╝"
             return f"{top}\n{middle}\n{bottom}"
         
         elif style == "stars":
-            width = len(text) + 4
-            border = "*" * width
-            middle = f"* {text} *"
-            return f"{border}\n{middle}\n{border}"
+            width = len(text) + 6
+            top = "✦" + "·" * (width - 2) + "✦"
+            middle = f"✦  {text.upper()}  ✦"
+            bottom = "✦" + "·" * (width - 2) + "✦"
+            return f"{top}\n{middle}\n{bottom}"
         
         elif style == "double":
-            width = len(text) + 6
-            border = "═" * width
-            middle = f"   {text}   "
-            return f"{border}\n{middle}\n{border}"
+            width = len(text) + 8
+            top = "╔" + "═" * (width - 2) + "╗"
+            top2 = "║" + " " * (width - 2) + "║"
+            middle = f"║   {text.upper()}   ║"
+            bottom2 = "║" + " " * (width - 2) + "║"
+            bottom = "╚" + "═" * (width - 2) + "╝"
+            return f"{top}\n{top2}\n{middle}\n{bottom2}\n{bottom}"
         
         elif style == "banner":
             width = len(text) + 8
+            top = "╭" + "─" * (width - 2) + "╮"
+            middle = f"│   {text.upper()}   │"
+            bottom = "╰" + "─" * (width - 2) + "╯"
+            return f"{top}\n{middle}\n{bottom}"
+        
+        elif style == "fancy":
+            width = len(text) + 8
+            top = "╔" + "═" * ((width - 4) // 2) + "╗" + "╔" + "═" * ((width - 4) // 2) + "╗"
+            top2 = "║" + " " * (width - 2) + "║"
+            middle = f"║   {text.upper()}   ║"
+            bottom2 = "║" + " " * (width - 2) + "║"
+            bottom = "╚" + "═" * ((width - 4) // 2) + "╝" + "╚" + "═" * ((width - 4) // 2) + "╝"
+            return f"{top}\n{top2}\n{middle}\n{bottom2}\n{bottom}"
+        
+        elif style == "shadow":
+            width = len(text) + 6
             top = "┌" + "─" * (width - 2) + "┐"
-            middle = f"│   {text}   │"
-            bottom = "└" + "─" * (width - 2) + "┘"
+            middle = f"│  {text.upper()}  │▓"
+            bottom = "└" + "─" * (width - 2) + "┘▓"
+            shadow = " " + "▓" * (width - 1)
+            return f"{top}\n{middle}\n{bottom}\n{shadow}"
+        
+        elif style == "blocks":
+            # Create block-style letters
+            result = []
+            for char in text.upper():
+                if char == ' ':
+                    result.append('   ')
+                elif char.isalnum():
+                    result.append(f'▓▓▓')
+                else:
+                    result.append('   ')
+            
+            # Create 3-line block letters
+            line1 = ''.join('▓▓▓ ' for c in text if c != ' ')
+            line2 = ''.join('▓▓▓ ' for c in text if c != ' ')
+            line3 = ''.join('▓▓▓ ' for c in text if c != ' ')
+            
+            width = len(line1) + 4
+            top = "╔" + "═" * width + "╗"
+            bottom = "╚" + "═" * width + "╝"
+            
+            return f"{top}\n║ {text.upper()} ║\n║ {line1}║\n{bottom}"
+        
+        elif style == "wave":
+            width = len(text) + 8
+            top = "～" * width
+            middle = f"～  {text.upper()}  ～"
+            bottom = "～" * width
+            return f"{top}\n{middle}\n{bottom}"
+        
+        elif style == "diamond":
+            width = len(text) + 8
+            top = "◆" + "─" * (width - 2) + "◆"
+            middle = f"│  {text.upper()}  │"
+            bottom = "◆" + "─" * (width - 2) + "◆"
             return f"{top}\n{middle}\n{bottom}"
         
         else:  # simple
             border = "=" * (len(text) + 4)
-            middle = f"  {text}  "
+            middle = f"  {text.upper()}  "
             return f"{border}\n{middle}\n{border}"
 
 
@@ -867,7 +929,7 @@ class ReceiptAppGUI:
         
         tk.Label(logo_frame, text="Tyyli / Style:").grid(row=1, column=0, sticky=tk.W, pady=5)
         logo_style_var = tk.StringVar(value=self.receipt.logo_style)
-        logo_styles = ["box", "stars", "double", "simple", "banner"]
+        logo_styles = ["box", "stars", "double", "simple", "banner", "fancy", "shadow", "blocks", "wave", "diamond"]
         logo_style_combo = ttk.Combobox(logo_frame, textvariable=logo_style_var, values=logo_styles, width=37)
         logo_style_combo.grid(row=1, column=1, pady=5)
         

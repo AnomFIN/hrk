@@ -122,7 +122,7 @@ def show_statistics(receipt):
     print(f"YHTEENSÄ / TOTAL: {receipt.get_total():.2f} €")
     
     print(f"\nMaksutapa / Payment method: {receipt.payment_info['method']}")
-    print(f"Korttitype / Card type: {receipt.payment_info['card_type']}")
+    print(f"Korttityyppi / Card type: {receipt.payment_info['card_type']}")
     
     print(f"\nYritys / Company: {receipt.company_info['name']}")
     print(f"Mukautettu logo käytössä / Custom logo: {'Kyllä / Yes' if receipt.custom_logo else 'Ei / No'}")
