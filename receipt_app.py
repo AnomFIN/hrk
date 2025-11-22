@@ -116,11 +116,12 @@ class ASCIILogoGenerator:
         
         elif style == "fancy":
             width = len(text) + 8
-            top = "╔" + "═" * ((width - 4) // 2) + "╗" + "╔" + "═" * ((width - 4) // 2) + "╗"
-            top2 = "║" + " " * (width - 2) + "║"
+            # Create decorative double-line border
+            top = "╔" + "═" * (width - 2) + "╗"
+            top2 = "║" + "·" * (width - 2) + "║"
             middle = f"║   {text.upper()}   ║"
-            bottom2 = "║" + " " * (width - 2) + "║"
-            bottom = "╚" + "═" * ((width - 4) // 2) + "╝" + "╚" + "═" * ((width - 4) // 2) + "╝"
+            bottom2 = "║" + "·" * (width - 2) + "║"
+            bottom = "╚" + "═" * (width - 2) + "╝"
             return f"{top}\n{top2}\n{middle}\n{bottom2}\n{bottom}"
         
         elif style == "shadow":
@@ -132,26 +133,19 @@ class ASCIILogoGenerator:
             return f"{top}\n{middle}\n{bottom}\n{shadow}"
         
         elif style == "blocks":
-            # Create block-style letters
-            result = []
-            for char in text.upper():
-                if char == ' ':
-                    result.append('   ')
-                elif char.isalnum():
-                    result.append(f'▓▓▓')
-                else:
-                    result.append('   ')
+            # Create stylized block representation
+            text_upper = text.upper()
+            width = len(text_upper) + 8
             
-            # Create 3-line block letters
-            line1 = ''.join('▓▓▓ ' for c in text if c != ' ')
-            line2 = ''.join('▓▓▓ ' for c in text if c != ' ')
-            line3 = ''.join('▓▓▓ ' for c in text if c != ' ')
+            # Create border and text with block styling
+            top = "╔" + "═" * (width - 2) + "╗"
+            middle1 = f"║   {text_upper}   ║"
+            # Add block underline effect
+            blocks = "▓" * len(text_upper)
+            middle2 = f"║   {blocks}   ║"
+            bottom = "╚" + "═" * (width - 2) + "╝"
             
-            width = len(line1) + 4
-            top = "╔" + "═" * width + "╗"
-            bottom = "╚" + "═" * width + "╝"
-            
-            return f"{top}\n║ {text.upper()} ║\n║ {line1}║\n{bottom}"
+            return f"{top}\n{middle1}\n{middle2}\n{bottom}"
         
         elif style == "wave":
             width = len(text) + 8
