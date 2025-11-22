@@ -1,0 +1,36 @@
+{
+  "timestamp": "2025-11-22T01:38:07.881005",
+  "company_info": {
+    "name": "Harjun Raskaskone Oy",
+    "business_id": "FI12345678",
+    "address": "Teollisuustie 1, 00100 Helsinki",
+    "phone": "+358 40 123 4567",
+    "email": "info@hrk.fi",
+    "website": "www.hrk.fi"
+  },
+  "payment_info": {
+    "method": "Käteinen / Cash",
+    "card_type": "",
+    "transaction_id": "",
+    "bank_reference": ""
+  },
+  "products": [
+    {
+      "name": "Kuorma-auto",
+      "quantity": 2,
+      "price": 450.0
+    },
+    {
+      "name": "Kaivinkone",
+      "quantity": 1,
+      "price": 850.0
+    }
+  ],
+  "subtotal": 1750.0,
+  "vat": 420.0,
+  "total": 2170.0,
+  "custom_logo": null,
+  "logo_style": "box",
+  "receipt_notes": "Testihum: Toimitus huomenna / Test note: Delivery tomorrow",
+  "filename": "kuitti_20251122_013807.json"
+}

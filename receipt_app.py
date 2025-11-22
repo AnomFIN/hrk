@@ -64,6 +64,53 @@ class Product:
         }
 
 
+class ASCIILogoGenerator:
+    """ASCII-logon generaattori / ASCII logo generator"""
+    
+    @staticmethod
+    def generate(text: str, style: str = "box") -> str:
+        """
+        Generoi ASCII-logo eri tyyleillä / Generate ASCII logo with different styles
+        
+        Tyylit / Styles:
+        - box: laatikkoreunukset / box borders
+        - stars: tähtireunukset / star borders
+        - double: kaksoisviiva / double line
+        - simple: yksinkertainen / simple
+        - banner: banneri / banner style
+        """
+        if style == "box":
+            width = len(text) + 6
+            top = "╔" + "═" * (width - 2) + "╗"
+            middle = f"║  {text}  ║"
+            bottom = "╚" + "═" * (width - 2) + "╝"
+            return f"{top}\n{middle}\n{bottom}"
+        
+        elif style == "stars":
+            width = len(text) + 4
+            border = "*" * width
+            middle = f"* {text} *"
+            return f"{border}\n{middle}\n{border}"
+        
+        elif style == "double":
+            width = len(text) + 6
+            border = "═" * width
+            middle = f"   {text}   "
+            return f"{border}\n{middle}\n{border}"
+        
+        elif style == "banner":
+            width = len(text) + 8
+            top = "┌" + "─" * (width - 2) + "┐"
+            middle = f"│   {text}   │"
+            bottom = "└" + "─" * (width - 2) + "┘"
+            return f"{top}\n{middle}\n{bottom}"
+        
+        else:  # simple
+            border = "=" * (len(text) + 4)
+            middle = f"  {text}  "
+            return f"{border}\n{middle}\n{border}"
+
+
 class Receipt:
     """Kuitti-olio / Receipt object"""
     
@@ -83,8 +130,19 @@ class Receipt:
             "name": "Harjun Raskaskone Oy",
             "business_id": "FI12345678",
             "address": "Teollisuustie 1, 00100 Helsinki",
-            "phone": "+358 40 123 4567"
+            "phone": "+358 40 123 4567",
+            "email": "info@hrk.fi",
+            "website": "www.hrk.fi"
         }
+        self.payment_info = {
+            "method": "Käteinen / Cash",
+            "card_type": "",
+            "transaction_id": "",
+            "bank_reference": ""
+        }
+        self.custom_logo = None
+        self.logo_style = "box"
+        self.receipt_notes = ""
     
     def add_product(self, name: str, quantity: int, price: float) -> bool:
         """Lisää tuote / Add product"""
@@ -118,14 +176,44 @@ class Receipt:
         """Kokonaissumma sisältäen ALV:in / Total including VAT"""
         return self.get_subtotal() + self.get_vat()
     
+    def set_custom_logo(self, text: str, style: str = "box"):
+        """Aseta mukautettu logo / Set custom logo"""
+        self.custom_logo = ASCIILogoGenerator.generate(text, style)
+        self.logo_style = style
+    
+    def set_payment_info(self, method: str, card_type: str = "", transaction_id: str = "", bank_reference: str = ""):
+        """Aseta maksutiedot / Set payment information"""
+        self.payment_info = {
+            "method": method,
+            "card_type": card_type,
+            "transaction_id": transaction_id,
+            "bank_reference": bank_reference
+        }
+    
+    def update_company_info(self, **kwargs):
+        """Päivitä yritystiedot / Update company information"""
+        self.company_info.update(kwargs)
+    
     def generate_text(self) -> str:
         """Luo tekstimuotoinen kuitti / Generate text receipt"""
         lines = []
-        lines.append(self.LOGO)
+        
+        # Logo
+        if self.custom_logo:
+            lines.append(self.custom_logo)
+        else:
+            lines.append(self.LOGO)
+        
+        # Yritystiedot / Company info
         lines.append(f"\n{self.company_info['name']}")
         lines.append(f"Y-tunnus: {self.company_info['business_id']}")
         lines.append(f"{self.company_info['address']}")
         lines.append(f"Puh: {self.company_info['phone']}")
+        if self.company_info.get('email'):
+            lines.append(f"Email: {self.company_info['email']}")
+        if self.company_info.get('website'):
+            lines.append(f"Web: {self.company_info['website']}")
+        
         lines.append(f"\nPäivämäärä: {datetime.now().strftime('%d.%m.%Y %H:%M')}")
         lines.append("\n" + "=" * 50)
         lines.append("\nTUOTTEET / PRODUCTS:")
@@ -141,10 +229,169 @@ class Receipt:
         lines.append("=" * 50)
         lines.append(f"YHTEENSÄ: {self.get_total():.2f} €")
         lines.append("=" * 50)
+        
+        # Maksutiedot / Payment information
+        lines.append(f"\nMaksutapa / Payment method: {self.payment_info['method']}")
+        if self.payment_info['card_type']:
+            lines.append(f"Korttitype / Card type: {self.payment_info['card_type']}")
+        if self.payment_info['transaction_id']:
+            lines.append(f"Tapahtumatunnus / Transaction ID: {self.payment_info['transaction_id']}")
+        if self.payment_info['bank_reference']:
+            lines.append(f"Viitteen / Reference: {self.payment_info['bank_reference']}")
+        
+        # Lisähuomiot / Additional notes
+        if self.receipt_notes:
+            lines.append(f"\nHuomiot / Notes:\n{self.receipt_notes}")
+        
         lines.append("\nKiitos ostoksesta! / Thank you for your purchase!")
         lines.append("\n")
         
         return "\n".join(lines)
+    
+    def to_dict(self) -> Dict:
+        """Muunna sanakirjaksi tallennusta varten / Convert to dictionary for saving"""
+        return {
+            "timestamp": datetime.now().isoformat(),
+            "company_info": self.company_info,
+            "payment_info": self.payment_info,
+            "products": [p.to_dict() for p in self.products],
+            "subtotal": self.get_subtotal(),
+            "vat": self.get_vat(),
+            "total": self.get_total(),
+            "custom_logo": self.custom_logo,
+            "logo_style": self.logo_style,
+            "receipt_notes": self.receipt_notes
+        }
+    
+    @classmethod
+    def from_dict(cls, data: Dict):
+        """Luo kuitti sanakirjasta / Create receipt from dictionary"""
+        receipt = cls()
+        receipt.company_info = data.get("company_info", receipt.company_info)
+        receipt.payment_info = data.get("payment_info", receipt.payment_info)
+        receipt.custom_logo = data.get("custom_logo")
+        receipt.logo_style = data.get("logo_style", "box")
+        receipt.receipt_notes = data.get("receipt_notes", "")
+        
+        for product_data in data.get("products", []):
+            receipt.add_product(
+                product_data["name"],
+                product_data["quantity"],
+                product_data["price"]
+            )
+        
+        return receipt
+
+
+class OfflineStorage:
+    """Offline-tallennusjärjestelmä / Offline storage system"""
+    
+    def __init__(self, storage_dir: str = "kuitit_offline"):
+        """Alusta tallennuskansio / Initialize storage directory"""
+        self.storage_dir = Path(storage_dir)
+        self.storage_dir.mkdir(exist_ok=True)
+        self.history_file = self.storage_dir / "kuitti_historia.json"
+        self.ensure_history_file()
+    
+    def ensure_history_file(self):
+        """Varmista että historian tiedosto on olemassa / Ensure history file exists"""
+        if not self.history_file.exists():
+            with open(self.history_file, 'w', encoding='utf-8') as f:
+                json.dump([], f)
+    
+    def save_receipt(self, receipt: Receipt) -> bool:
+        """
+        Tallenna kuitti offline-tilaan / Save receipt to offline storage
+        Returns: True jos onnistui / True if successful
+        """
+        try:
+            # Luo aikaleimapohjainen tiedostonimi
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            filename = f"kuitti_{timestamp}.json"
+            filepath = self.storage_dir / filename
+            
+            # Tallenna kuitti
+            receipt_data = receipt.to_dict()
+            receipt_data["filename"] = filename
+            
+            with open(filepath, 'w', encoding='utf-8') as f:
+                json.dump(receipt_data, f, indent=2, ensure_ascii=False)
+            
+            # Lisää historiaan
+            self._add_to_history(receipt_data)
+            
+            # Tallenna myös tekstimuotoisena
+            text_filepath = self.storage_dir / f"kuitti_{timestamp}.txt"
+            with open(text_filepath, 'w', encoding='utf-8') as f:
+                f.write(receipt.generate_text())
+            
+            return True
+        except Exception as e:
+            print(f"Tallennusvirhe / Save error: {e}")
+            return False
+    
+    def _add_to_history(self, receipt_data: Dict):
+        """Lisää kuitti historiaan / Add receipt to history"""
+        try:
+            history = self.load_history()
+            history.append({
+                "timestamp": receipt_data["timestamp"],
+                "filename": receipt_data["filename"],
+                "total": receipt_data["total"],
+                "company": receipt_data["company_info"]["name"],
+                "payment_method": receipt_data["payment_info"]["method"]
+            })
+            
+            # Pidä vain viimeisimmät 100 kuittia historiassa
+            if len(history) > 100:
+                history = history[-100:]
+            
+            with open(self.history_file, 'w', encoding='utf-8') as f:
+                json.dump(history, f, indent=2, ensure_ascii=False)
+        except Exception as e:
+            print(f"Historian päivitysvirhe / History update error: {e}")
+    
+    def load_history(self) -> List[Dict]:
+        """Lataa kuittihistoria / Load receipt history"""
+        try:
+            with open(self.history_file, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        except Exception:
+            return []
+    
+    def load_receipt(self, filename: str) -> Optional[Receipt]:
+        """Lataa kuitti tiedostosta / Load receipt from file"""
+        try:
+            filepath = self.storage_dir / filename
+            with open(filepath, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+            return Receipt.from_dict(data)
+        except Exception as e:
+            print(f"Latausvirhe / Load error: {e}")
+            return None
+    
+    def list_receipts(self) -> List[str]:
+        """Listaa kaikki tallennetut kuitit / List all saved receipts"""
+        try:
+            return [f.name for f in self.storage_dir.glob("kuitti_*.json")]
+        except Exception:
+            return []
+    
+    def delete_receipt(self, filename: str) -> bool:
+        """Poista kuitti / Delete receipt"""
+        try:
+            json_path = self.storage_dir / filename
+            txt_path = self.storage_dir / filename.replace('.json', '.txt')
+            
+            if json_path.exists():
+                json_path.unlink()
+            if txt_path.exists():
+                txt_path.unlink()
+            
+            return True
+        except Exception as e:
+            print(f"Poistovirhe / Delete error: {e}")
+            return False
 
 
 class ReceiptPrinter:
@@ -248,9 +495,10 @@ class ReceiptAppGUI:
     def __init__(self, root):
         self.root = root
         self.root.title("Kuittitulostin - HRK Receipt Printer")
-        self.root.geometry("700x600")
+        self.root.geometry("900x700")
         
         self.receipt = Receipt()
+        self.storage = OfflineStorage()
         
         # Keskiosa: tuotelista / Center: product list
         self.create_widgets()
@@ -367,6 +615,39 @@ class ReceiptAppGUI:
             pady=8
         )
         btn_save.pack(side=tk.LEFT, padx=5)
+        
+        btn_save_offline = tk.Button(
+            button_frame,
+            text="💾 Tallenna offline",
+            command=self.save_offline,
+            bg="#16a085",
+            fg="white",
+            padx=15,
+            pady=8
+        )
+        btn_save_offline.pack(side=tk.LEFT, padx=5)
+        
+        btn_settings = tk.Button(
+            button_frame,
+            text="⚙️ Asetukset",
+            command=self.show_settings,
+            bg="#f39c12",
+            fg="white",
+            padx=15,
+            pady=8
+        )
+        btn_settings.pack(side=tk.LEFT, padx=5)
+        
+        btn_history = tk.Button(
+            button_frame,
+            text="📋 Historia",
+            command=self.show_history,
+            bg="#8e44ad",
+            fg="white",
+            padx=15,
+            pady=8
+        )
+        btn_history.pack(side=tk.LEFT, padx=5)
         
         btn_clear = tk.Button(
             button_frame,
@@ -493,6 +774,231 @@ class ReceiptAppGUI:
                 self.receipt.products.clear()
                 self.update_display()
     
+    def save_offline(self):
+        """Tallenna kuitti offline-tilaan / Save receipt offline"""
+        if not self.receipt.products:
+            messagebox.showwarning("Virhe", "Lisää tuotteita ensin! / Add products first!")
+            return
+        
+        if self.storage.save_receipt(self.receipt):
+            messagebox.showinfo(
+                "Onnistui",
+                f"Kuitti tallennettu offline-tilaan!\nReceipt saved offline!\nKansio: {self.storage.storage_dir}"
+            )
+        else:
+            messagebox.showerror("Virhe", "Offline-tallennus epäonnistui! / Offline save failed!")
+    
+    def show_settings(self):
+        """Näytä asetusten / Show settings"""
+        settings_window = tk.Toplevel(self.root)
+        settings_window.title("Asetukset / Settings")
+        settings_window.geometry("600x600")
+        
+        # Notebook (tabs)
+        notebook = ttk.Notebook(settings_window)
+        notebook.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+        
+        # Tab 1: Yritystiedot / Company info
+        company_frame = tk.Frame(notebook, padx=20, pady=20)
+        notebook.add(company_frame, text="Yritystiedot / Company")
+        
+        tk.Label(company_frame, text="Yrityksen nimi / Company name:").grid(row=0, column=0, sticky=tk.W, pady=5)
+        company_name_entry = tk.Entry(company_frame, width=40)
+        company_name_entry.insert(0, self.receipt.company_info['name'])
+        company_name_entry.grid(row=0, column=1, pady=5)
+        
+        tk.Label(company_frame, text="Y-tunnus / Business ID:").grid(row=1, column=0, sticky=tk.W, pady=5)
+        business_id_entry = tk.Entry(company_frame, width=40)
+        business_id_entry.insert(0, self.receipt.company_info['business_id'])
+        business_id_entry.grid(row=1, column=1, pady=5)
+        
+        tk.Label(company_frame, text="Osoite / Address:").grid(row=2, column=0, sticky=tk.W, pady=5)
+        address_entry = tk.Entry(company_frame, width=40)
+        address_entry.insert(0, self.receipt.company_info['address'])
+        address_entry.grid(row=2, column=1, pady=5)
+        
+        tk.Label(company_frame, text="Puhelin / Phone:").grid(row=3, column=0, sticky=tk.W, pady=5)
+        phone_entry = tk.Entry(company_frame, width=40)
+        phone_entry.insert(0, self.receipt.company_info['phone'])
+        phone_entry.grid(row=3, column=1, pady=5)
+        
+        tk.Label(company_frame, text="Sähköposti / Email:").grid(row=4, column=0, sticky=tk.W, pady=5)
+        email_entry = tk.Entry(company_frame, width=40)
+        email_entry.insert(0, self.receipt.company_info.get('email', ''))
+        email_entry.grid(row=4, column=1, pady=5)
+        
+        tk.Label(company_frame, text="Verkkosivu / Website:").grid(row=5, column=0, sticky=tk.W, pady=5)
+        website_entry = tk.Entry(company_frame, width=40)
+        website_entry.insert(0, self.receipt.company_info.get('website', ''))
+        website_entry.grid(row=5, column=1, pady=5)
+        
+        # Tab 2: Maksutiedot / Payment info
+        payment_frame = tk.Frame(notebook, padx=20, pady=20)
+        notebook.add(payment_frame, text="Maksutiedot / Payment")
+        
+        tk.Label(payment_frame, text="Maksutapa / Payment method:").grid(row=0, column=0, sticky=tk.W, pady=5)
+        payment_method_var = tk.StringVar(value=self.receipt.payment_info['method'])
+        payment_methods = ["Käteinen / Cash", "Kortti / Card", "Lasku / Invoice", "Verkkopankki / Online banking"]
+        payment_method_combo = ttk.Combobox(payment_frame, textvariable=payment_method_var, values=payment_methods, width=37)
+        payment_method_combo.grid(row=0, column=1, pady=5)
+        
+        tk.Label(payment_frame, text="Korttitype / Card type:").grid(row=1, column=0, sticky=tk.W, pady=5)
+        card_type_entry = tk.Entry(payment_frame, width=40)
+        card_type_entry.insert(0, self.receipt.payment_info.get('card_type', ''))
+        card_type_entry.grid(row=1, column=1, pady=5)
+        
+        tk.Label(payment_frame, text="Tapahtumatunnus / Transaction ID:").grid(row=2, column=0, sticky=tk.W, pady=5)
+        transaction_id_entry = tk.Entry(payment_frame, width=40)
+        transaction_id_entry.insert(0, self.receipt.payment_info.get('transaction_id', ''))
+        transaction_id_entry.grid(row=2, column=1, pady=5)
+        
+        tk.Label(payment_frame, text="Pankkiviite / Bank reference:").grid(row=3, column=0, sticky=tk.W, pady=5)
+        bank_ref_entry = tk.Entry(payment_frame, width=40)
+        bank_ref_entry.insert(0, self.receipt.payment_info.get('bank_reference', ''))
+        bank_ref_entry.grid(row=3, column=1, pady=5)
+        
+        # Tab 3: ASCII Logo
+        logo_frame = tk.Frame(notebook, padx=20, pady=20)
+        notebook.add(logo_frame, text="ASCII Logo")
+        
+        tk.Label(logo_frame, text="Logo-teksti / Logo text:").grid(row=0, column=0, sticky=tk.W, pady=5)
+        logo_text_entry = tk.Entry(logo_frame, width=40)
+        logo_text_entry.grid(row=0, column=1, pady=5)
+        
+        tk.Label(logo_frame, text="Tyyli / Style:").grid(row=1, column=0, sticky=tk.W, pady=5)
+        logo_style_var = tk.StringVar(value=self.receipt.logo_style)
+        logo_styles = ["box", "stars", "double", "simple", "banner"]
+        logo_style_combo = ttk.Combobox(logo_frame, textvariable=logo_style_var, values=logo_styles, width=37)
+        logo_style_combo.grid(row=1, column=1, pady=5)
+        
+        tk.Label(logo_frame, text="Esikatselu / Preview:").grid(row=2, column=0, sticky=tk.NW, pady=5)
+        logo_preview_text = tk.Text(logo_frame, width=50, height=10, font=("Courier", 10))
+        logo_preview_text.grid(row=2, column=1, pady=5)
+        
+        def update_logo_preview():
+            text = logo_text_entry.get().strip()
+            if text:
+                style = logo_style_var.get()
+                preview = ASCIILogoGenerator.generate(text, style)
+                logo_preview_text.delete(1.0, tk.END)
+                logo_preview_text.insert(1.0, preview)
+        
+        btn_preview_logo = tk.Button(logo_frame, text="Päivitä esikatselu / Update preview", command=update_logo_preview)
+        btn_preview_logo.grid(row=3, column=1, pady=5)
+        
+        # Tab 4: Lisähuomiot / Notes
+        notes_frame = tk.Frame(notebook, padx=20, pady=20)
+        notebook.add(notes_frame, text="Huomiot / Notes")
+        
+        tk.Label(notes_frame, text="Kuitin lisähuomiot / Receipt notes:").pack(anchor=tk.W, pady=5)
+        notes_text = tk.Text(notes_frame, width=60, height=15)
+        notes_text.insert(1.0, self.receipt.receipt_notes)
+        notes_text.pack(pady=5)
+        
+        # Tallennuspainike / Save button
+        def save_settings():
+            # Yritystiedot
+            self.receipt.update_company_info(
+                name=company_name_entry.get(),
+                business_id=business_id_entry.get(),
+                address=address_entry.get(),
+                phone=phone_entry.get(),
+                email=email_entry.get(),
+                website=website_entry.get()
+            )
+            
+            # Maksutiedot
+            self.receipt.set_payment_info(
+                method=payment_method_var.get(),
+                card_type=card_type_entry.get(),
+                transaction_id=transaction_id_entry.get(),
+                bank_reference=bank_ref_entry.get()
+            )
+            
+            # Logo
+            logo_text = logo_text_entry.get().strip()
+            if logo_text:
+                self.receipt.set_custom_logo(logo_text, logo_style_var.get())
+            
+            # Huomiot
+            self.receipt.receipt_notes = notes_text.get(1.0, tk.END).strip()
+            
+            messagebox.showinfo("Tallennettu", "Asetukset tallennettu! / Settings saved!")
+            settings_window.destroy()
+        
+        save_button = tk.Button(settings_window, text="Tallenna / Save", command=save_settings, bg="#27ae60", fg="white", padx=20, pady=10)
+        save_button.pack(pady=10)
+    
+    def show_history(self):
+        """Näytä kuittihistoria / Show receipt history"""
+        history_window = tk.Toplevel(self.root)
+        history_window.title("Kuittihistoria / Receipt History")
+        history_window.geometry("800x500")
+        
+        tk.Label(history_window, text="Tallennetut kuitit / Saved receipts", font=("Arial", 14, "bold")).pack(pady=10)
+        
+        # Treeview historialle
+        columns = ("Aika / Time", "Yritys / Company", "Summa / Total", "Maksutapa / Payment")
+        tree = ttk.Treeview(history_window, columns=columns, show="headings", height=15)
+        
+        for col in columns:
+            tree.heading(col, text=col)
+            tree.column(col, width=190)
+        
+        tree.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+        
+        # Lataa historia
+        history = self.storage.load_history()
+        for entry in reversed(history):  # Näytä uusimmat ensin
+            tree.insert("", tk.END, values=(
+                entry.get("timestamp", ""),
+                entry.get("company", ""),
+                f"{entry.get('total', 0):.2f} €",
+                entry.get("payment_method", "")
+            ), tags=(entry.get("filename", ""),))
+        
+        # Toimintopainikkeet
+        button_frame = tk.Frame(history_window)
+        button_frame.pack(pady=10)
+        
+        def load_selected():
+            selected = tree.selection()
+            if not selected:
+                messagebox.showwarning("Virhe", "Valitse kuitti! / Select receipt!")
+                return
+            
+            item = tree.item(selected[0])
+            filename = item['tags'][0]
+            
+            loaded_receipt = self.storage.load_receipt(filename)
+            if loaded_receipt:
+                self.receipt = loaded_receipt
+                self.update_display()
+                messagebox.showinfo("Ladattu", "Kuitti ladattu! / Receipt loaded!")
+                history_window.destroy()
+            else:
+                messagebox.showerror("Virhe", "Lataus epäonnistui! / Load failed!")
+        
+        def delete_selected():
+            selected = tree.selection()
+            if not selected:
+                messagebox.showwarning("Virhe", "Valitse kuitti! / Select receipt!")
+                return
+            
+            if messagebox.askyesno("Vahvista", "Poistetaanko kuitti? / Delete receipt?"):
+                item = tree.item(selected[0])
+                filename = item['tags'][0]
+                
+                if self.storage.delete_receipt(filename):
+                    tree.delete(selected[0])
+                    messagebox.showinfo("Poistettu", "Kuitti poistettu! / Receipt deleted!")
+                else:
+                    messagebox.showerror("Virhe", "Poisto epäonnistui! / Delete failed!")
+        
+        tk.Button(button_frame, text="Lataa / Load", command=load_selected, bg="#3498db", fg="white", padx=15, pady=8).pack(side=tk.LEFT, padx=5)
+        tk.Button(button_frame, text="Poista / Delete", command=delete_selected, bg="#e74c3c", fg="white", padx=15, pady=8).pack(side=tk.LEFT, padx=5)
+        tk.Button(button_frame, text="Sulje / Close", command=history_window.destroy, bg="#95a5a6", fg="white", padx=15, pady=8).pack(side=tk.LEFT, padx=5)
+    
     def exit_app(self):
         """Lopeta sovellus / Exit application"""
         if messagebox.askyesno("Lopeta", "Haluatko varmasti lopettaa? / Do you want to exit?"):
@@ -504,6 +1010,7 @@ class ReceiptAppTerminal:
     
     def __init__(self):
         self.receipt = Receipt()
+        self.storage = OfflineStorage()
         self.running = True
     
     def print_colored(self, text: str, color: str = ""):
@@ -530,8 +1037,11 @@ class ReceiptAppTerminal:
         print("3. Näytä ostoskori / Show cart")
         print("4. Tulosta kuitti / Print receipt")
         print("5. Tallenna PNG / Save PNG")
-        print("6. Tyhjennä / Clear")
-        print("7. Lopeta / Exit")
+        print("6. 💾 Tallenna offline / Save offline")
+        print("7. ⚙️ Asetukset / Settings")
+        print("8. 📋 Historia / History")
+        print("9. Tyhjennä / Clear")
+        print("0. Lopeta / Exit")
         print("=" * 50)
     
     def add_product_interactive(self):
@@ -659,6 +1169,178 @@ class ReceiptAppTerminal:
         except KeyboardInterrupt:
             print("\n")
     
+    def save_offline_interactive(self):
+        """Tallenna offline / Save offline"""
+        if not self.receipt.products:
+            self.print_colored("Lisää tuotteita ensin! / Add products first!", "yellow")
+            return
+        
+        if self.storage.save_receipt(self.receipt):
+            self.print_colored(f"✓ Kuitti tallennettu offline-tilaan! / Receipt saved offline!", "green")
+            self.print_colored(f"Kansio / Directory: {self.storage.storage_dir}", "cyan")
+        else:
+            self.print_colored("✗ Tallennus epäonnistui! / Save failed!", "red")
+    
+    def show_settings_interactive(self):
+        """Asetukset / Settings"""
+        while True:
+            print("\n" + "=" * 50)
+            self.print_colored("ASETUKSET / SETTINGS", "cyan")
+            print("=" * 50)
+            print("1. Muokkaa yritystietoja / Edit company info")
+            print("2. Muokkaa maksutietoja / Edit payment info")
+            print("3. Luo ASCII-logo / Create ASCII logo")
+            print("4. Lisää huomioita / Add notes")
+            print("5. Takaisin / Back")
+            print("=" * 50)
+            
+            try:
+                choice = input("\nValitse / Choose: ").strip()
+                
+                if choice == "1":
+                    self._edit_company_info()
+                elif choice == "2":
+                    self._edit_payment_info()
+                elif choice == "3":
+                    self._create_ascii_logo()
+                elif choice == "4":
+                    self._add_notes()
+                elif choice == "5":
+                    break
+            except KeyboardInterrupt:
+                print("\n")
+                break
+    
+    def _edit_company_info(self):
+        """Muokkaa yritystietoja / Edit company info"""
+        print("\n--- Yritystiedot / Company Info ---")
+        name = input(f"Nimi [{self.receipt.company_info['name']}]: ").strip() or self.receipt.company_info['name']
+        business_id = input(f"Y-tunnus [{self.receipt.company_info['business_id']}]: ").strip() or self.receipt.company_info['business_id']
+        address = input(f"Osoite [{self.receipt.company_info['address']}]: ").strip() or self.receipt.company_info['address']
+        phone = input(f"Puhelin [{self.receipt.company_info['phone']}]: ").strip() or self.receipt.company_info['phone']
+        email = input(f"Email [{self.receipt.company_info.get('email', '')}]: ").strip() or self.receipt.company_info.get('email', '')
+        website = input(f"Verkkosivu [{self.receipt.company_info.get('website', '')}]: ").strip() or self.receipt.company_info.get('website', '')
+        
+        self.receipt.update_company_info(
+            name=name,
+            business_id=business_id,
+            address=address,
+            phone=phone,
+            email=email,
+            website=website
+        )
+        
+        self.print_colored("✓ Yritystiedot päivitetty! / Company info updated!", "green")
+    
+    def _edit_payment_info(self):
+        """Muokkaa maksutietoja / Edit payment info"""
+        print("\n--- Maksutiedot / Payment Info ---")
+        print("Maksutavat / Payment methods:")
+        print("1. Käteinen / Cash")
+        print("2. Kortti / Card")
+        print("3. Lasku / Invoice")
+        print("4. Verkkopankki / Online banking")
+        
+        method_choice = input("Valitse / Choose: ").strip()
+        methods = {
+            "1": "Käteinen / Cash",
+            "2": "Kortti / Card",
+            "3": "Lasku / Invoice",
+            "4": "Verkkopankki / Online banking"
+        }
+        method = methods.get(method_choice, "Käteinen / Cash")
+        
+        card_type = input("Korttitype / Card type (jos korttimaksu / if card): ").strip()
+        transaction_id = input("Tapahtumatunnus / Transaction ID: ").strip()
+        bank_ref = input("Pankkiviite / Bank reference: ").strip()
+        
+        self.receipt.set_payment_info(method, card_type, transaction_id, bank_ref)
+        self.print_colored("✓ Maksutiedot päivitetty! / Payment info updated!", "green")
+    
+    def _create_ascii_logo(self):
+        """Luo ASCII-logo / Create ASCII logo"""
+        print("\n--- ASCII Logo Generator ---")
+        text = input("Logo-teksti / Logo text: ").strip()
+        
+        if not text:
+            self.print_colored("Tyhjä teksti! / Empty text!", "yellow")
+            return
+        
+        print("\nTyylit / Styles:")
+        print("1. box - Laatikko / Box")
+        print("2. stars - Tähdet / Stars")
+        print("3. double - Kaksoisviiva / Double line")
+        print("4. simple - Yksinkertainen / Simple")
+        print("5. banner - Banneri / Banner")
+        
+        style_choice = input("Valitse tyyli / Choose style [1-5]: ").strip()
+        styles = {"1": "box", "2": "stars", "3": "double", "4": "simple", "5": "banner"}
+        style = styles.get(style_choice, "box")
+        
+        self.receipt.set_custom_logo(text, style)
+        
+        print("\nEsikatselu / Preview:")
+        print(self.receipt.custom_logo)
+        self.print_colored("✓ Logo luotu! / Logo created!", "green")
+    
+    def _add_notes(self):
+        """Lisää huomioita / Add notes"""
+        print("\n--- Huomiot / Notes ---")
+        print("Kirjoita huomiot (tyhjä rivi lopettaa / empty line to finish):")
+        
+        lines = []
+        while True:
+            try:
+                line = input()
+                if not line:
+                    break
+                lines.append(line)
+            except KeyboardInterrupt:
+                break
+        
+        self.receipt.receipt_notes = "\n".join(lines)
+        self.print_colored("✓ Huomiot lisätty! / Notes added!", "green")
+    
+    def show_history_interactive(self):
+        """Näytä historia / Show history"""
+        history = self.storage.load_history()
+        
+        if not history:
+            self.print_colored("Historia on tyhjä! / History is empty!", "yellow")
+            return
+        
+        print("\n" + "=" * 50)
+        self.print_colored("KUITTIHISTORIA / RECEIPT HISTORY", "cyan")
+        print("=" * 50)
+        
+        for i, entry in enumerate(reversed(history), 1):
+            print(f"\n{i}. {entry.get('timestamp', '')}")
+            print(f"   Yritys / Company: {entry.get('company', '')}")
+            print(f"   Summa / Total: {entry.get('total', 0):.2f} €")
+            print(f"   Maksutapa / Payment: {entry.get('payment_method', '')}")
+            print(f"   Tiedosto / File: {entry.get('filename', '')}")
+        
+        print("=" * 50)
+        
+        try:
+            choice = input("\nLataa kuitti numerolla (tyhjä = peruuta) / Load receipt by number (empty = cancel): ").strip()
+            if choice.isdigit():
+                idx = int(choice) - 1
+                if 0 <= idx < len(history):
+                    entry = list(reversed(history))[idx]
+                    filename = entry.get("filename", "")
+                    
+                    loaded_receipt = self.storage.load_receipt(filename)
+                    if loaded_receipt:
+                        self.receipt = loaded_receipt
+                        self.print_colored("✓ Kuitti ladattu! / Receipt loaded!", "green")
+                    else:
+                        self.print_colored("✗ Lataus epäonnistui! / Load failed!", "red")
+                else:
+                    self.print_colored("✗ Virheellinen numero! / Invalid number!", "red")
+        except KeyboardInterrupt:
+            print("\n")
+    
     def run(self):
         """Pääsilmukka / Main loop"""
         self.print_colored("\n=== Kuittitulostin käynnistetty terminaalitilassa ===", "cyan")
@@ -680,8 +1362,14 @@ class ReceiptAppTerminal:
                 elif choice == "5":
                     self.save_png_interactive()
                 elif choice == "6":
-                    self.clear_cart()
+                    self.save_offline_interactive()
                 elif choice == "7":
+                    self.show_settings_interactive()
+                elif choice == "8":
+                    self.show_history_interactive()
+                elif choice == "9":
+                    self.clear_cart()
+                elif choice == "0":
                     self.print_colored("\nKiitos käytöstä! / Thank you!", "green")
                     self.running = False
                 else:
