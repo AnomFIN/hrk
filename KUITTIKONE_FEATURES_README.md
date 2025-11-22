@@ -140,7 +140,56 @@ Lisää vapaita huomioita kuitteihin / Add free-form notes to receipts:
 receipt.receipt_notes = "Toimitus huomenna klo 10:00"
 ```
 
-### 7. 🔄 Kuittien vienti ja tuonti / Receipt Export and Import
+### 7. 📝 Kuittipohjan tallennus ja lataus / Receipt Template Save and Load
+Tallenna ja lataa kuittipohjia uudelleenkäyttöä varten / Save and load receipt templates for reuse:
+
+**Ominaisuudet / Features:**
+- Tallenna kuitin asetukset ilman tuotteita / Save receipt settings without products
+- Lataa pohja ja lisää tuotteita / Load template and add products
+- Säilytä yritystiedot, maksutiedot, logo ja huomiot / Preserve company info, payment info, logo and notes
+- Hallitse useita pohjia / Manage multiple templates
+
+**Käyttö / Usage:**
+```python
+from receipt_app import TemplateManager
+
+template_manager = TemplateManager()
+
+# Tallenna pohja / Save template
+receipt = Receipt()
+receipt.update_company_info(name="Yritys Oy", ...)
+receipt.set_custom_logo("YRITYS", "fancy")
+template_manager.save_template(receipt, "yrityksen_pohja")
+
+# Lataa pohja / Load template
+loaded_receipt = template_manager.load_template("yrityksen_pohja")
+loaded_receipt.add_product("Tuote", 1, 10.00)  # Lisää tuotteita
+
+# Listaa pohjat / List templates
+templates = template_manager.list_templates()
+for template in templates:
+    print(template)
+
+# Poista pohja / Delete template
+template_manager.delete_template("vanha_pohja")
+```
+
+**GUI-käyttö / GUI Usage:**
+- **📝 Tallenna pohja** - Tallenna nykyiset asetukset pohjana
+- **📂 Lataa pohja** - Lataa aiemmin tallennettu pohja
+
+**Terminaali-käyttö / Terminal Usage:**
+- `9` - Tallenna pohja / Save template
+- `a` - Lataa pohja / Load template
+
+**Pohjan sisältö / Template contents:**
+- Yritystiedot (nimi, Y-tunnus, osoite, puh, email, web)
+- Maksutiedot (maksutapa, korttitype, tapahtumatunnus, viite)
+- Logo-asetukset (mukautettu logo, tyyli)
+- Lisähuomiot
+- **EI sisällä tuotteita** - Lisää tuotteet pohjan lataamisen jälkeen
+
+### 8. 🔄 Kuittien vienti ja tuonti / Receipt Export and Import
 Vie ja tuo kuitteja JSON-muodossa / Export and import receipts in JSON format:
 
 ```python

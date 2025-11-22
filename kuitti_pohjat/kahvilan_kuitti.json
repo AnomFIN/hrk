@@ -1,0 +1,21 @@
+{
+  "template_name": "kahvilan_kuitti",
+  "created": "2025-11-22T02:29:19.831210",
+  "company_info": {
+    "name": "Kahvila Helmi",
+    "business_id": "FI22222222",
+    "address": "Keskuskatu 5, 00200 Helsinki",
+    "phone": "+358 50 222 2222",
+    "email": "info@kahvilahelmi.fi",
+    "website": "www.kahvilahelmi.fi"
+  },
+  "payment_info": {
+    "method": "Kortti / Card",
+    "card_type": "Visa",
+    "transaction_id": "",
+    "bank_reference": ""
+  },
+  "custom_logo": "✦·················✦\n✦  KAHVILA HELMI  ✦\n✦·················✦",
+  "logo_style": "stars",
+  "receipt_notes": "Tervetuloa uudelleen!"
+}

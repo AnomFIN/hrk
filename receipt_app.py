@@ -21,7 +21,7 @@ from typing import List, Dict, Optional
 GUI_AVAILABLE = False
 try:
     import tkinter as tk
-    from tkinter import ttk, messagebox, filedialog
+    from tkinter import ttk, messagebox, filedialog, simpledialog
     GUI_AVAILABLE = True
 except ImportError:
     pass
@@ -450,6 +450,112 @@ class OfflineStorage:
             return False
 
 
+class TemplateManager:
+    """Kuittipohjan hallintajärjestelmä / Receipt template management system"""
+    
+    def __init__(self, templates_dir: str = "kuitti_pohjat"):
+        """Alusta pohjakansio / Initialize templates directory"""
+        self.templates_dir = Path(templates_dir)
+        self.templates_dir.mkdir(exist_ok=True)
+    
+    def save_template(self, receipt: Receipt, template_name: str) -> bool:
+        """
+        Tallenna kuittipohja / Save receipt template
+        
+        Tallentaa kuitin asetukset (yritystiedot, maksutiedot, logo, huomiot)
+        ilman tuotteita, jotta pohjaa voi käyttää uudelleen.
+        
+        Saves receipt settings (company info, payment info, logo, notes)
+        without products, so template can be reused.
+        """
+        try:
+            template_file = self.templates_dir / f"{template_name}.json"
+            
+            # Luo pohja ilman tuotteita / Create template without products
+            template_data = {
+                "template_name": template_name,
+                "created": datetime.now().isoformat(),
+                "company_info": receipt.company_info,
+                "payment_info": receipt.payment_info,
+                "custom_logo": receipt.custom_logo,
+                "logo_style": receipt.logo_style,
+                "receipt_notes": receipt.receipt_notes
+            }
+            
+            with open(template_file, 'w', encoding='utf-8') as f:
+                json.dump(template_data, f, indent=2, ensure_ascii=False)
+            
+            return True
+        except Exception as e:
+            print(f"Pohjan tallennusvirhe / Template save error: {e}")
+            return False
+    
+    def load_template(self, template_name: str) -> Optional[Receipt]:
+        """
+        Lataa kuittipohja / Load receipt template
+        
+        Lataa pohjan asetukset ja luo uuden tyhjän kuitin näillä asetuksilla.
+        Loads template settings and creates new empty receipt with these settings.
+        """
+        try:
+            template_file = self.templates_dir / f"{template_name}.json"
+            
+            if not template_file.exists():
+                print(f"Pohjaa ei löydy / Template not found: {template_name}")
+                return None
+            
+            with open(template_file, 'r', encoding='utf-8') as f:
+                template_data = json.load(f)
+            
+            # Luo uusi kuitti pohjasta / Create new receipt from template
+            receipt = Receipt()
+            receipt.company_info = template_data.get("company_info", receipt.company_info)
+            receipt.payment_info = template_data.get("payment_info", receipt.payment_info)
+            receipt.custom_logo = template_data.get("custom_logo")
+            receipt.logo_style = template_data.get("logo_style", "box")
+            receipt.receipt_notes = template_data.get("receipt_notes", "")
+            
+            return receipt
+        except Exception as e:
+            print(f"Pohjan latausvirhe / Template load error: {e}")
+            return None
+    
+    def list_templates(self) -> List[str]:
+        """Listaa kaikki tallennetut pohjat / List all saved templates"""
+        try:
+            templates = []
+            for file in self.templates_dir.glob("*.json"):
+                templates.append(file.stem)
+            return sorted(templates)
+        except Exception:
+            return []
+    
+    def delete_template(self, template_name: str) -> bool:
+        """Poista pohja / Delete template"""
+        try:
+            template_file = self.templates_dir / f"{template_name}.json"
+            if template_file.exists():
+                template_file.unlink()
+                return True
+            return False
+        except Exception as e:
+            print(f"Pohjan poistovirhe / Template delete error: {e}")
+            return False
+    
+    def get_template_info(self, template_name: str) -> Optional[Dict]:
+        """Hae pohjan tiedot / Get template information"""
+        try:
+            template_file = self.templates_dir / f"{template_name}.json"
+            
+            if not template_file.exists():
+                return None
+            
+            with open(template_file, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        except Exception:
+            return None
+
+
 class ReceiptPrinter:
     """Kuitin tulostus / Receipt printing"""
     
@@ -555,6 +661,7 @@ class ReceiptAppGUI:
         
         self.receipt = Receipt()
         self.storage = OfflineStorage()
+        self.template_manager = TemplateManager()
         
         # Keskiosa: tuotelista / Center: product list
         self.create_widgets()
@@ -704,6 +811,28 @@ class ReceiptAppGUI:
             pady=8
         )
         btn_history.pack(side=tk.LEFT, padx=5)
+        
+        btn_save_template = tk.Button(
+            button_frame,
+            text="📝 Tallenna pohja",
+            command=self.save_template,
+            bg="#1abc9c",
+            fg="white",
+            padx=15,
+            pady=8
+        )
+        btn_save_template.pack(side=tk.LEFT, padx=5)
+        
+        btn_load_template = tk.Button(
+            button_frame,
+            text="📂 Lataa pohja",
+            command=self.load_template,
+            bg="#3498db",
+            fg="white",
+            padx=15,
+            pady=8
+        )
+        btn_load_template.pack(side=tk.LEFT, padx=5)
         
         btn_clear = tk.Button(
             button_frame,
@@ -1055,6 +1184,205 @@ class ReceiptAppGUI:
         tk.Button(button_frame, text="Poista / Delete", command=delete_selected, bg="#e74c3c", fg="white", padx=15, pady=8).pack(side=tk.LEFT, padx=5)
         tk.Button(button_frame, text="Sulje / Close", command=history_window.destroy, bg="#95a5a6", fg="white", padx=15, pady=8).pack(side=tk.LEFT, padx=5)
     
+    def save_template(self):
+        """Tallenna kuittipohja / Save receipt template"""
+        # Kysy pohjan nimi / Ask for template name
+        template_name = tk.simpledialog.askstring(
+            "Tallenna pohja / Save Template",
+            "Anna pohjan nimi / Enter template name:",
+            parent=self.root
+        )
+        
+        if not template_name:
+            return
+        
+        # Tallenna pohja / Save template
+        if self.template_manager.save_template(self.receipt, template_name):
+            messagebox.showinfo(
+                "Tallennettu",
+                f"Pohja '{template_name}' tallennettu!\nTemplate '{template_name}' saved!\n\n"
+                f"Sisältää / Contains:\n"
+                f"• Yritystiedot / Company info\n"
+                f"• Maksutiedot / Payment info\n"
+                f"• Logo-asetukset / Logo settings\n"
+                f"• Huomiot / Notes"
+            )
+        else:
+            messagebox.showerror("Virhe", "Pohjan tallennus epäonnistui! / Template save failed!")
+    
+    def load_template(self):
+        """Lataa kuittipohja / Load receipt template"""
+        # Hae lista pohjista / Get list of templates
+        templates = self.template_manager.list_templates()
+        
+        if not templates:
+            messagebox.showinfo(
+                "Ei pohjia",
+                "Ei tallennettuja pohjia!\nNo saved templates!\n\n"
+                "Tallenna ensin pohja 📝 Tallenna pohja -painikkeella."
+            )
+            return
+        
+        # Näytä pohjan valintaikkuna / Show template selection dialog
+        template_window = tk.Toplevel(self.root)
+        template_window.title("Lataa pohja / Load Template")
+        template_window.geometry("600x400")
+        
+        tk.Label(
+            template_window,
+            text="Valitse ladattava pohja / Select template to load",
+            font=("Arial", 12, "bold")
+        ).pack(pady=10)
+        
+        # Lista pohjista / List of templates
+        listbox_frame = tk.Frame(template_window)
+        listbox_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+        
+        scrollbar = tk.Scrollbar(listbox_frame)
+        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+        
+        template_listbox = tk.Listbox(
+            listbox_frame,
+            yscrollcommand=scrollbar.set,
+            font=("Arial", 11),
+            height=10
+        )
+        template_listbox.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        scrollbar.config(command=template_listbox.yview)
+        
+        # Lisää pohjat listaan / Add templates to list
+        for template in templates:
+            template_info = self.template_manager.get_template_info(template)
+            if template_info:
+                created = template_info.get("created", "")
+                if created:
+                    try:
+                        created_dt = datetime.fromisoformat(created)
+                        created_str = created_dt.strftime("%d.%m.%Y %H:%M")
+                    except:
+                        created_str = created
+                else:
+                    created_str = ""
+                
+                display_name = f"{template}  ({created_str})" if created_str else template
+                template_listbox.insert(tk.END, display_name)
+            else:
+                template_listbox.insert(tk.END, template)
+        
+        # Esikatselu / Preview
+        preview_frame = tk.Frame(template_window, padx=10, pady=10)
+        preview_frame.pack(fill=tk.X)
+        
+        preview_label = tk.Label(preview_frame, text="", justify=tk.LEFT, font=("Arial", 9))
+        preview_label.pack()
+        
+        def show_preview(event):
+            selection = template_listbox.curselection()
+            if selection:
+                idx = selection[0]
+                template_name = templates[idx]
+                template_info = self.template_manager.get_template_info(template_name)
+                
+                if template_info:
+                    company = template_info.get("company_info", {}).get("name", "N/A")
+                    logo_style = template_info.get("logo_style", "N/A")
+                    payment_method = template_info.get("payment_info", {}).get("method", "N/A")
+                    
+                    preview_text = (
+                        f"Yritys / Company: {company}\n"
+                        f"Logo-tyyli / Logo style: {logo_style}\n"
+                        f"Maksutapa / Payment: {payment_method}"
+                    )
+                    preview_label.config(text=preview_text)
+        
+        template_listbox.bind('<<ListboxSelect>>', show_preview)
+        
+        # Painikkeet / Buttons
+        button_frame = tk.Frame(template_window)
+        button_frame.pack(pady=10)
+        
+        def load_selected():
+            selection = template_listbox.curselection()
+            if not selection:
+                messagebox.showwarning("Virhe", "Valitse pohja! / Select a template!")
+                return
+            
+            idx = selection[0]
+            template_name = templates[idx]
+            
+            # Lataa pohja / Load template
+            loaded_receipt = self.template_manager.load_template(template_name)
+            
+            if loaded_receipt:
+                # Säilytä nykyiset tuotteet jos halutaan / Keep current products if desired
+                if self.receipt.products:
+                    keep = messagebox.askyesno(
+                        "Säilytä tuotteet?",
+                        "Säilytetäänkö nykyiset tuotteet?\nKeep current products?"
+                    )
+                    if keep:
+                        # Kopioi tuotteet uuteen kuittiin / Copy products to new receipt
+                        for product in self.receipt.products:
+                            loaded_receipt.add_product(product.name, product.quantity, product.price)
+                
+                self.receipt = loaded_receipt
+                self.update_display()
+                messagebox.showinfo("Ladattu", f"Pohja '{template_name}' ladattu! / Template loaded!")
+                template_window.destroy()
+            else:
+                messagebox.showerror("Virhe", "Pohjan lataus epäonnistui! / Template load failed!")
+        
+        def delete_selected():
+            selection = template_listbox.curselection()
+            if not selection:
+                messagebox.showwarning("Virhe", "Valitse pohja! / Select a template!")
+                return
+            
+            idx = selection[0]
+            template_name = templates[idx]
+            
+            if messagebox.askyesno(
+                "Vahvista poisto",
+                f"Poistetaanko pohja '{template_name}'?\nDelete template '{template_name}'?"
+            ):
+                if self.template_manager.delete_template(template_name):
+                    template_listbox.delete(idx)
+                    templates.pop(idx)
+                    preview_label.config(text="")
+                    messagebox.showinfo("Poistettu", "Pohja poistettu! / Template deleted!")
+                else:
+                    messagebox.showerror("Virhe", "Poisto epäonnistui! / Delete failed!")
+        
+        tk.Button(
+            button_frame,
+            text="Lataa / Load",
+            command=load_selected,
+            bg="#27ae60",
+            fg="white",
+            padx=20,
+            pady=8
+        ).pack(side=tk.LEFT, padx=5)
+        
+        tk.Button(
+            button_frame,
+            text="Poista / Delete",
+            command=delete_selected,
+            bg="#e74c3c",
+            fg="white",
+            padx=20,
+            pady=8
+        ).pack(side=tk.LEFT, padx=5)
+        
+        tk.Button(
+            button_frame,
+            text="Peruuta / Cancel",
+            command=template_window.destroy,
+            bg="#95a5a6",
+            fg="white",
+            padx=20,
+            pady=8
+        ).pack(side=tk.LEFT, padx=5)
+    
     def exit_app(self):
         """Lopeta sovellus / Exit application"""
         if messagebox.askyesno("Lopeta", "Haluatko varmasti lopettaa? / Do you want to exit?"):
@@ -1067,6 +1395,7 @@ class ReceiptAppTerminal:
     def __init__(self):
         self.receipt = Receipt()
         self.storage = OfflineStorage()
+        self.template_manager = TemplateManager()
         self.running = True
     
     def print_colored(self, text: str, color: str = ""):
@@ -1096,7 +1425,9 @@ class ReceiptAppTerminal:
         print("6. 💾 Tallenna offline / Save offline")
         print("7. ⚙️ Asetukset / Settings")
         print("8. 📋 Historia / History")
-        print("9. Tyhjennä / Clear")
+        print("9. 📝 Tallenna pohja / Save template")
+        print("a. 📂 Lataa pohja / Load template")
+        print("c. Tyhjennä / Clear")
         print("0. Lopeta / Exit")
         print("=" * 50)
     
@@ -1397,6 +1728,118 @@ class ReceiptAppTerminal:
         except KeyboardInterrupt:
             print("\n")
     
+    def save_template_interactive(self):
+        """Tallenna kuittipohja / Save receipt template"""
+        print("\n" + "=" * 50)
+        self.print_colored("TALLENNA KUITTIPOHJA / SAVE RECEIPT TEMPLATE", "cyan")
+        print("=" * 50)
+        
+        try:
+            template_name = input("Anna pohjan nimi / Enter template name: ").strip()
+            
+            if not template_name:
+                self.print_colored("Pohjan nimi ei voi olla tyhjä! / Template name cannot be empty!", "red")
+                return
+            
+            if self.template_manager.save_template(self.receipt, template_name):
+                self.print_colored(f"✓ Pohja '{template_name}' tallennettu!", "green")
+                self.print_colored(f"✓ Template '{template_name}' saved!", "green")
+                print("\nTallennetut tiedot / Saved information:")
+                print(f"  • Yritystiedot / Company info: {self.receipt.company_info['name']}")
+                print(f"  • Maksutapa / Payment: {self.receipt.payment_info['method']}")
+                print(f"  • Logo-tyyli / Logo style: {self.receipt.logo_style}")
+            else:
+                self.print_colored("✗ Pohjan tallennus epäonnistui! / Template save failed!", "red")
+        
+        except KeyboardInterrupt:
+            print("\n")
+    
+    def load_template_interactive(self):
+        """Lataa kuittipohja / Load receipt template"""
+        templates = self.template_manager.list_templates()
+        
+        if not templates:
+            self.print_colored("Ei tallennettuja pohjia! / No saved templates!", "yellow")
+            print("Tallenna ensin pohja valinnalla 9.")
+            return
+        
+        print("\n" + "=" * 50)
+        self.print_colored("LADAA KUITTIPOHJA / LOAD RECEIPT TEMPLATE", "cyan")
+        print("=" * 50)
+        
+        print("\nTallennetut pohjat / Saved templates:")
+        for i, template in enumerate(templates, 1):
+            template_info = self.template_manager.get_template_info(template)
+            if template_info:
+                company = template_info.get("company_info", {}).get("name", "N/A")
+                created = template_info.get("created", "")
+                if created:
+                    try:
+                        created_dt = datetime.fromisoformat(created)
+                        created_str = created_dt.strftime("%d.%m.%Y %H:%M")
+                    except:
+                        created_str = created
+                else:
+                    created_str = ""
+                
+                print(f"{i}. {template}")
+                print(f"   Yritys / Company: {company}")
+                if created_str:
+                    print(f"   Luotu / Created: {created_str}")
+            else:
+                print(f"{i}. {template}")
+        
+        print("=" * 50)
+        
+        try:
+            choice = input("\nValitse pohjan numero (tyhjä = peruuta) / Choose template number (empty = cancel): ").strip()
+            
+            if not choice:
+                return
+            
+            if not choice.isdigit():
+                self.print_colored("✗ Virheellinen valinta! / Invalid choice!", "red")
+                return
+            
+            idx = int(choice) - 1
+            if 0 <= idx < len(templates):
+                template_name = templates[idx]
+                
+                # Kysytään säilytetäänkö tuotteet
+                if self.receipt.products:
+                    keep = input("\nSäilytetäänkö nykyiset tuotteet? (k/e) / Keep current products? (y/n): ").strip().lower()
+                    keep_products = keep in ['k', 'y', 'yes', 'kyllä']
+                    
+                    if keep_products:
+                        old_products = self.receipt.products.copy()
+                else:
+                    keep_products = False
+                    old_products = []
+                
+                # Lataa pohja
+                loaded_receipt = self.template_manager.load_template(template_name)
+                
+                if loaded_receipt:
+                    # Palauta tuotteet tarvittaessa
+                    if keep_products:
+                        for product in old_products:
+                            loaded_receipt.add_product(product.name, product.quantity, product.price)
+                    
+                    self.receipt = loaded_receipt
+                    self.print_colored(f"✓ Pohja '{template_name}' ladattu!", "green")
+                    self.print_colored(f"✓ Template '{template_name}' loaded!", "green")
+                    print("\nLadatut tiedot / Loaded information:")
+                    print(f"  • Yritys / Company: {self.receipt.company_info['name']}")
+                    print(f"  • Maksutapa / Payment: {self.receipt.payment_info['method']}")
+                    print(f"  • Logo-tyyli / Logo style: {self.receipt.logo_style}")
+                else:
+                    self.print_colored("✗ Pohjan lataus epäonnistui! / Template load failed!", "red")
+            else:
+                self.print_colored("✗ Virheellinen numero! / Invalid number!", "red")
+        
+        except KeyboardInterrupt:
+            print("\n")
+    
     def run(self):
         """Pääsilmukka / Main loop"""
         self.print_colored("\n=== Kuittitulostin käynnistetty terminaalitilassa ===", "cyan")
@@ -1424,6 +1867,10 @@ class ReceiptAppTerminal:
                 elif choice == "8":
                     self.show_history_interactive()
                 elif choice == "9":
+                    self.save_template_interactive()
+                elif choice.lower() == "a":
+                    self.load_template_interactive()
+                elif choice.lower() == "c":
                     self.clear_cart()
                 elif choice == "0":
                     self.print_colored("\nKiitos käytöstä! / Thank you!", "green")
