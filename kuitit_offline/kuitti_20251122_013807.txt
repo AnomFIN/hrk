@@ -1,0 +1,38 @@
+
+    ╔═══════════════════════════════════════╗
+    ║   HARJUN RASKASKONE OY (HRK)          ║
+    ║   Laadukasta laitevuokrausta          ║
+    ╚═══════════════════════════════════════╝
+    
+
+Harjun Raskaskone Oy
+Y-tunnus: FI12345678
+Teollisuustie 1, 00100 Helsinki
+Puh: +358 40 123 4567
+Email: info@hrk.fi
+Web: www.hrk.fi
+
+Päivämäärä: 22.11.2025 01:38
+
+==================================================
+
+TUOTTEET / PRODUCTS:
+--------------------------------------------------
+1. Kuorma-auto
+   2 kpl x 450.00 € = 900.00 €
+2. Kaivinkone
+   1 kpl x 850.00 € = 850.00 €
+--------------------------------------------------
+Välisumma (ilman ALV): 1750.00 €
+ALV 24%: 420.00 €
+==================================================
+YHTEENSÄ: 2170.00 €
+==================================================
+
+Maksutapa / Payment method: Käteinen / Cash
+
+Huomiot / Notes:
+Testihum: Toimitus huomenna / Test note: Delivery tomorrow
+
+Kiitos ostoksesta! / Thank you for your purchase!
+
