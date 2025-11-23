@@ -1,0 +1,21 @@
+{
+  "template_name": "rakennusalan_kuitti",
+  "created": "2025-11-22T02:29:19.831003",
+  "company_info": {
+    "name": "Rakennus Oy ABC",
+    "business_id": "FI11111111",
+    "address": "Rakennustie 1, 00100 Helsinki",
+    "phone": "+358 40 111 1111",
+    "email": "info@rakennusabc.fi",
+    "website": "www.rakennusabc.fi"
+  },
+  "payment_info": {
+    "method": "Lasku / Invoice",
+    "card_type": "",
+    "transaction_id": "",
+    "bank_reference": "RF123456"
+  },
+  "custom_logo": "╔══════════════════╗\n║··················║\n║   RAKENNUS ABC   ║\n║··················║\n╚══════════════════╝",
+  "logo_style": "fancy",
+  "receipt_notes": "Maksuehdot: 14 päivää netto"
+}

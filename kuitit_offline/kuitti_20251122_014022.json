@@ -1,0 +1,46 @@
+{
+  "timestamp": "2025-11-22T01:40:22.503172",
+  "company_info": {
+    "name": "Harjun Raskaskone Oy",
+    "business_id": "FI12345678",
+    "address": "Teollisuustie 1, 00100 Helsinki, Suomi",
+    "phone": "+358 40 123 4567",
+    "email": "info@hrk.fi",
+    "website": "www.harjunraskaskone.fi"
+  },
+  "payment_info": {
+    "method": "Kortti / Card",
+    "card_type": "Visa Debit",
+    "transaction_id": "TX-20251122-014022",
+    "bank_reference": "RF202511220140"
+  },
+  "products": [
+    {
+      "name": "Kaivinkone 15t - Vuokraus (1 viikko)",
+      "quantity": 1,
+      "price": 850.0
+    },
+    {
+      "name": "Kuorma-auto Mercedes - Vuokraus (3 päivää)",
+      "quantity": 1,
+      "price": 450.0
+    },
+    {
+      "name": "Ajoneuvon kuljetus",
+      "quantity": 1,
+      "price": 120.0
+    },
+    {
+      "name": "Lisävakuutus",
+      "quantity": 2,
+      "price": 35.0
+    }
+  ],
+  "subtotal": 1490.0,
+  "vat": 357.59999999999997,
+  "total": 1847.6,
+  "custom_logo": "┌───────────────────────┐\n│   HARJUN RASKASKONE   │\n└───────────────────────┘",
+  "logo_style": "banner",
+  "receipt_notes": "\nTOIMITUSEHDOT / DELIVERY TERMS:\n- Kaivinkone toimitetaan huomenna klo 08:00\n- Polttoaine täytetty\n- Huoltokirja mukana\n- Palautus viimeistään 29.11.2024 klo 16:00\n\nLISÄTIEDOT / ADDITIONAL INFO:\n- Asiakas: Rakennus Oy ABC\n- Projekti: Uudisrakennus, Espoo\n- Yhteyshenkilö: Matti Meikäläinen, +358 50 123 4567\n",
+  "filename": "kuitti_20251122_014022.json"
+}
